@@ -1,0 +1,18 @@
+@import url("//fonts.googleapis.com/css?family=Lora:400,700,400italic");
+
+body { font-family: "Lora"; }
+
+h3 { font-weight: 500; font-size: 24px; }
+h4 { font-weight: 500; font-size: 18px; }
+em { font-style: italic; }
+
+$code-background: #000;
+$code-text: #fff;
+$code-comment: #93c;
+$code-constant: #aa7;
+$code-function: #fc0;
+$code-number: #399;
+$code-keyword: #f60;
+$code-regexp: #44b4cc;
+$code-string: #6f0;
+$code-string-delimiter: #6e0;

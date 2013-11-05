@@ -1,0 +1,18 @@
+sidebar {
+  float: left;
+  width: 0px;
+  img {
+    width: 0px;
+  }
+}
+@include at-breakpoint($desktop) {
+  sidebar {
+    width: 220px;
+    img {
+      display: block;
+      margin-right: 0;
+      margin-left: auto;
+      width: 213px;
+    }
+  }
+}

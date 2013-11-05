@@ -1,0 +1,68 @@
+!!!
+%html
+  %head
+    %meta{charset: "utf-8"}
+    %meta{http: { equiv: "X-UA-Compatible" }, content: "IE=edge,chrome=1"}
+    %title {{ page.title }} | gregat.es
+    %meta{name: "viewport", content: "width=device-width"}
+
+    %link{rel: "stylesheet", href: "/css/screen.css", type: "text/css", media: "screen, projection"}
+    %link{href: "//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css", rel: "stylesheet", type: "text/css"}
+
+    %body
+      %nav{role: "banner"}
+        .navbar-header
+          %button.navbar-toggle{type: "button", onclick: "toggleShown('nav')"}
+            - 3.times do
+              %span.icon-bar
+          %a.home{href: "/"} gregat.es
+        .nav.hide{role: "navigation"}
+          %ul
+            %li.active
+              %a{href: "/blog"} Blog
+            %li.dropdown
+              %a{href: "#", onclick: "toggleShown('dropdown-menu')"}
+                Social
+                %b.caret
+              %ul.dropdown-menu.hide
+                %li
+                  %a{href: "https://github.com/gregates", target: "_blank"}
+                    %span.icon-github
+                    github
+                %li
+                  %a{href: "https://twitter.com/gregates", target: "_blank"}
+                    %span.icon-twitter
+                    twitter
+                %li
+                  %a{href: 'http://stackoverflow.com/users/1619796/gregates', target: '_blank'}
+                    %span.icon-stackexchange
+                    stackoverflow
+                %li
+                  %a{href: 'http://www.linkedin.com/pub/greg-gates/20/824/874/', target: '_blank'}
+                    %span.icon-linkedin
+                    linkedin
+
+      %sidebar
+        %img{src: "images/sidepic.png", height: "718px"}
+
+      .site
+        .header
+          %h1.title
+            %a{href: "/"} {{ site.name }}
+          %a.extra{href: "/"} home
+
+        {{ content }}
+
+        .footer
+          .contact
+            %p
+              Your Name
+              %br
+              What You Are
+              %br
+              you@example.com
+          .contact
+            %p
+              %a{href: "https://github.com/yourusername"} github.com/yourusername
+              %a{href: "https://twitter.com/yourusername"} twitter.com/yourusername
+    %script{src: "js/gregat.es.js"}

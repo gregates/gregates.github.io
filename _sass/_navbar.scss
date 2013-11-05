@@ -1,0 +1,166 @@
+$nav-background-color: #563d7c;
+$nav-link-color: #cdbfe3;
+$nav-highlight-color: #fff;
+$nav-highlight-background-color: #463265;
+$nav-height: 36px;
+
+body { padding-top: $nav-height + 4px; }
+
+.caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 2px;
+  vertical-align: middle;
+  border-top: 4px solid;
+  border-right: 4px solid transparent;
+  border-bottom: 0 dotted;
+  border-left: 4px solid transparent;
+  content: "";
+}
+
+@include with-grid-settings(6, 4em, 1em, 0) {
+  nav {
+    @include container;
+    max-width: 100%;
+    background-color: $nav-background-color;
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 0;
+    border-width: 0 0 1px;
+    z-index: 1000;
+    min-height: $nav-height;
+    margin-right: 0;
+    margin-left: 0;
+    border-bottom: 1px solid $nav-highlight-background-color;
+
+    .navbar-header:before,
+    .navbar-header:after {
+      display: table;
+      content: " ";
+    }
+
+    .navbar-header:after {
+      clear: both;
+    }
+
+    a {
+      color: $nav-link-color;
+      font-size: 16px;
+      text-decoration: none;
+      padding: 7px 15px;
+    }
+    a:hover {
+      color: $nav-highlight-color;
+    }
+
+    .home {
+      color: $nav-highlight-color;
+      font-size: 20px;
+      float: left;
+      padding: 6px 15px;
+    }
+
+    .hide {
+      display: none;
+    }
+
+    .nav {
+      list-style: none;
+      max-height: 340px;
+      padding: 0px 15px;
+      overflow-x: visible;
+      overflow-y: auto;
+      border-top: 1px solid $nav-highlight-background-color;
+      -webkit-overflow-scrolling: touch;
+
+      .active {
+        background-color: $nav-highlight-background-color;
+        margin: 0px -15px;
+        padding: 0px 15px;
+        a {
+          color: $nav-highlight-color;
+        }
+      }
+
+      li {
+        position: relative;
+        display: block;
+      }
+      a {
+        padding: 10px 0px;
+        display: block;
+        span { padding-right: 4px; }
+      }
+
+      .dropdown-menu {
+        position: static;
+        float: none;
+        width: auto;
+        border: 0;
+        li > a {
+          padding: 5px 10px;
+        }
+      }
+    }
+
+    .navbar-toggle {
+      display: block;
+      position: relative;
+      float: right;
+      padding: 8px 10px;
+      background-color: transparent;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      border-color: $nav-background-color;
+      .icon-bar {
+        display: block;
+        width: 22px;
+        height: 2px;
+        border-radius: 1px;
+        background-color: $nav-highlight-color;
+      }
+      .icon-bar + .icon-bar {
+        margin-top: 4px
+      }
+    }
+    .navbar-toggle:hover {
+      background-color: $nav-highlight-background-color;
+      border-color: $nav-highlight-background-color;
+    }
+    @include at-breakpoint($desktop) {
+      .navbar-toggle { display: none; }
+    }
+
+    @include at-breakpoint($desktop) {
+      .navbar-header { float: left; }
+      .nav {
+        display:block!important;
+        border-top: 0;
+        overflow-y: visible;
+        float: left;
+        li { float: left; }
+        .active {
+          margin: 0px;
+          padding: 0px;
+        }
+        a { padding: 8px 15px; }
+        .dropdown-menu {
+          position: absolute;
+          top: 100%;
+          min-width: 9em;
+          padding: 5px 0;
+          border-top: 1px solid $nav-highlight-background-color;
+          background-color: $nav-background-color;
+          background-clip: padding-box;
+          a {
+            padding: 3px 20px;
+            clear: both;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+}

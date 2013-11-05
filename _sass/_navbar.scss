@@ -134,21 +134,27 @@ body { padding-top: $nav-height + 4px; }
     }
 
     @include at-breakpoint($desktop) {
-      .navbar-header { float: left; }
+      .navbar-header { float: left; height: $nav-height; }
       .nav {
+        height: $nav-height;;
         display:block!important;
         border-top: 0;
         overflow-y: visible;
         float: left;
-        li { float: left; }
+        li {
+          float: left;
+          height: $nav-height;
+          padding: 2px;
+        }
         .active {
           margin: 0px;
-          padding: 0px;
+          padding: 2px;
         }
         a { padding: 8px 15px; }
         .dropdown-menu {
           position: absolute;
           top: 100%;
+          left: 0;
           min-width: 9em;
           padding: 5px 0;
           border-top: 1px solid $nav-highlight-background-color;

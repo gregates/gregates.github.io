@@ -45,24 +45,7 @@
       %sidebar
         %img{src: "images/sidepic.png", height: "718px"}
 
-      .site
-        .header
-          %h1.title
-            %a{href: "/"} {{ site.name }}
-          %a.extra{href: "/"} home
-
+      %main
         {{ content }}
 
-        .footer
-          .contact
-            %p
-              Your Name
-              %br
-              What You Are
-              %br
-              you@example.com
-          .contact
-            %p
-              %a{href: "https://github.com/yourusername"} github.com/yourusername
-              %a{href: "https://twitter.com/yourusername"} twitter.com/yourusername
     %script{src: "js/gregat.es.js"}

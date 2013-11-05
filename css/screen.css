@@ -1,4 +1,5 @@
-@import url("//fonts.googleapis.com/css?family=Lora:400,700,400italic");
+@import url(//fonts.googleapis.com/css?family=Inconsolata:400);
+@import url(//fonts.googleapis.com/css?family=Lato:400,700,400italic);
 /* Welcome to Compass.
  * In this file you should write your main styles. (or centralize your imports)
  * Import this file using the following HTML or equivalent:
@@ -68,24 +69,29 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   display: block;
 }
 
-/* line 3, ../_sass/_typography.scss */
+/* line 4, ../_sass/_typography.scss */
 body {
-  font-family: "Lora";
+  font-family: "Proxima Nova Soft","Lato","Helvetica Neue","Helvetica","Arial","Sans Serif";
 }
 
 /* line 5, ../_sass/_typography.scss */
-h3 {
-  font-weight: 500;
-  font-size: 24px;
-}
-
-/* line 6, ../_sass/_typography.scss */
-h4 {
-  font-weight: 500;
-  font-size: 18px;
+nav {
+  font-family: "Georgia","Serif";
 }
 
 /* line 7, ../_sass/_typography.scss */
+h3 {
+  font-weight: 700;
+  font-size: 24px;
+}
+
+/* line 8, ../_sass/_typography.scss */
+h4 {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+/* line 9, ../_sass/_typography.scss */
 em {
   font-style: italic;
 }
@@ -250,38 +256,43 @@ nav .navbar-toggle:hover {
   /* line 137, ../_sass/_navbar.scss */
   nav .navbar-header {
     float: left;
+    height: 36px;
   }
   /* line 138, ../_sass/_navbar.scss */
   nav .nav {
+    height: 36px;
     display: block !important;
     border-top: 0;
     overflow-y: visible;
     float: left;
   }
-  /* line 143, ../_sass/_navbar.scss */
+  /* line 144, ../_sass/_navbar.scss */
   nav .nav li {
     float: left;
+    height: 36px;
+    padding: 2px;
   }
-  /* line 144, ../_sass/_navbar.scss */
+  /* line 149, ../_sass/_navbar.scss */
   nav .nav .active {
     margin: 0px;
-    padding: 0px;
+    padding: 2px;
   }
-  /* line 148, ../_sass/_navbar.scss */
+  /* line 153, ../_sass/_navbar.scss */
   nav .nav a {
     padding: 8px 15px;
   }
-  /* line 149, ../_sass/_navbar.scss */
+  /* line 154, ../_sass/_navbar.scss */
   nav .nav .dropdown-menu {
     position: absolute;
     top: 100%;
+    left: 0;
     min-width: 9em;
     padding: 5px 0;
     border-top: 1px solid #463265;
     background-color: #563d7c;
     background-clip: padding-box;
   }
-  /* line 157, ../_sass/_navbar.scss */
+  /* line 163, ../_sass/_navbar.scss */
   nav .nav .dropdown-menu a {
     padding: 3px 20px;
     clear: both;
@@ -312,6 +323,12 @@ sidebar img {
     width: 213px;
   }
 }
+/* line 20, ../_sass/_blog.scss */
+main {
+  overflow: hidden;
+  max-width: 768px;
+}
+
 /* line 12, ../_sass/screen.scss */
 * {
   -webkit-box-sizing: border-box;

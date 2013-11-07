@@ -11,6 +11,7 @@ body { padding-top: $nav-height + 4px; }
   width: 0;
   height: 0;
   margin-left: 2px;
+  margin-right: -2px;
   vertical-align: middle;
   border-top: 4px solid;
   border-right: 4px solid transparent;
@@ -136,7 +137,7 @@ body { padding-top: $nav-height + 4px; }
     @include at-breakpoint($desktop) {
       .navbar-header { float: left; height: $nav-height; }
       .nav {
-        height: $nav-height;;
+        height: $nav-height;
         display:block!important;
         border-top: 0;
         overflow-y: visible;
@@ -167,6 +168,13 @@ body { padding-top: $nav-height + 4px; }
           }
         }
       }
+    }
+  }
+  @include at-breakpoint($desktop) {
+    body { padding-top: 0; }
+    nav {
+      position: relative;
+      margin-bottom: 4px;
     }
   }
 }

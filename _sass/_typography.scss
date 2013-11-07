@@ -1,15 +1,17 @@
 @import url(//fonts.googleapis.com/css?family=Inconsolata:400);
 @import url(//fonts.googleapis.com/css?family=Lato:400,700,400italic);
 
-body { font-family: "Proxima Nova Soft","Lato","Helvetica Neue","Helvetica","Arial","Sans Serif"; }
-nav { font-family: "Georgia","Serif"; }
+body { font-family: "Proxima Nova Soft","Lato","Helvetica Neue","Helvetica","Arial","sans-serif"; }
+nav { font-family: "Georgia","serif"; }
 
+h2 { font-weight: 700; font-size: 30px; }
 h3 { font-weight: 700; font-size: 24px; }
 h4 { font-weight: 700; font-size: 18px; }
 em { font-style: italic; }
 
 $code-background: #000;
 $code-text: #fff;
+$code-bracket: #eee;
 $code-comment: #93c;
 $code-constant: #aa7;
 $code-function: #fc0;
@@ -18,3 +20,24 @@ $code-keyword: #f60;
 $code-regexp: #44b4cc;
 $code-string: #6f0;
 $code-string-delimiter: #6e0;
+$code-string-escape: #3a0;
+
+.highlight {
+  background: $code-background;
+  border-radius: 0.2em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  padding: 0.5em;
+  line-height: 1.2em;
+  font-family: "Inconsolata","monospace";
+  color: $code-text;
+  .k { color: $code-keyword; font-weight: bold; }
+  .c, .cm, .cp, .c1, .cs { color: $code-comment; }
+  .s, .sc, .sd, .sh, .sx, .s1, .s2, { color: $code-string; }
+  .se, .si { color: $code-string-escape; }
+  .sr { color: $code-regexp; }
+  .p, .o { color: $code-bracket; }
+  .nf { color: $code-function; }
+  .ss, .kp, .m, .mf, .mh, .mi, .mo, .il { color: $code-number; }
+  .nc, .no { color: $code-constant; }
+}

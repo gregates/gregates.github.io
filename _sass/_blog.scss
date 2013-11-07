@@ -1,3 +1,5 @@
+$blog-background-color: #f2f3f4;
+
 sidebar {
   float: left;
   width: 0px;
@@ -20,4 +22,27 @@ sidebar {
 main {
   overflow:hidden;
   max-width: 768px;
+  padding: 0.5em 1em;
+  article {
+    background-color: $blog-background-color;
+    border-radius: 0.5em;
+    padding: 1em;
+  }
+}
+
+.meta {
+  margin: 0.5em 0;
+  font-size: 12pt;
+  color: $nav-highlight-background-color;
+}
+
+.post {
+  p {
+    font-size: 14pt;
+    line-height: 1.2em;
+    margin: 0.8em 0;
+  }
+  a {
+    color: $nav-highlight-background-color;
+  }
 }

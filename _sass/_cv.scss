@@ -1,0 +1,46 @@
+main.wide {
+  @include container;
+  max-width: 768px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+section {
+  background-color: $blog-background-color;
+  padding: 0.5em;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  @include background(linear-gradient(left, #ccc, #333, #ccc));
+}
+
+.entry {
+  padding-bottom: 1em;
+  .heading {
+    @include span-columns(5);
+    @include at-breakpoint($tablet) {
+      @include span-columns(4)
+    }
+    float: left;
+    font-weight: bold;
+  }
+
+  .date {
+    padding-left: 1px;
+    padding-top: 1px;
+    @include span-columns(2);
+    @include at-breakpoint($tablet) {
+      @include span-columns(2 omega);
+      text-align: right;
+    }
+  }
+
+  .description {
+    clear: both;
+    p {
+      padding: 3px 1px;
+    }
+  }
+}

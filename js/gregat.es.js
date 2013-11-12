@@ -14,6 +14,12 @@ var gregates = {
   closeMenus: function() {
     gregates.toggleShown('nav', true);
     gregates.toggleShown('dropdown-menu', true);
+  },
+  setActiveNav: function() {
+    var id = "nav-" + window.location.pathname.split('/')[1];
+    var link = document.getElementById(id);
+    if ( link === null ) { return; };
+    link.className = link.className + " active";
   }
 }
 
@@ -28,4 +34,5 @@ document.addEventListener("DOMContentLoaded", function(){
   };
   nav.addEventListener('click', function(evt){ gregates.toggleShown('nav'); });
   dropdown.addEventListener('click', function(evt){ gregates.toggleShown('dropdown-menu'); });
+  gregates.setActiveNav();
 });

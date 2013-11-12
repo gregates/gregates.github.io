@@ -5,9 +5,28 @@ main.wide {
   margin-right: auto;
 }
 
+#cv {
+  padding: 0.5em;
+  p {
+    font-size: 12pt;
+    margin: 0;
+    line-height: 1em;
+  }
+}
+
 section {
   background-color: $blog-background-color;
   padding: 0.5em;
+}
+
+section:before,
+section:after {
+  display: table;
+  content: " ";
+}
+
+section:after {
+  clear: both;
 }
 
 hr {
@@ -16,7 +35,17 @@ hr {
   @include background(linear-gradient(left, #ccc, #333, #ccc));
 }
 
+.table {
+  .heading { font-weight: bold; }
+  float: left;
+  width: 10em;
+  padding-right: 1em;
+  padding-bottom: 0.5em;
+}
+
 .entry {
+  a { text-decoration: none; }
+
   padding-bottom: 1em;
   .heading {
     @include span-columns(5);
@@ -25,14 +54,17 @@ hr {
     }
     float: left;
     font-weight: bold;
+    &.light { font-weight: normal; }
   }
 
   .date {
     padding-left: 1px;
     padding-top: 1px;
-    @include span-columns(2);
+    font-size: 10pt;
+    @include span-columns(3);
     @include at-breakpoint($tablet) {
       @include span-columns(2 omega);
+      font-size: 12pt;
       text-align: right;
     }
   }
@@ -41,6 +73,10 @@ hr {
     clear: both;
     p {
       padding: 3px 1px;
+    }
+    ul {
+      list-style: circle;
+      margin-left: 1.5em;
     }
   }
 }

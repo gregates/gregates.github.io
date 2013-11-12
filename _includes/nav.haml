@@ -1,0 +1,37 @@
+%nav{role: "banner"}
+  .navbar-header
+    %button.navbar-toggle.toggle{type: "button"}
+      - 3.times do
+        %span.icon-bar
+    %a.home{href: "/"} gregat.es
+  .nav.hide{role: "navigation"}
+    %ul
+      %li.active
+        %a{href: "/blog"} Blog
+      %li.dropdown
+        %a.toggle{href: "#"}
+          Contact
+          %b.caret
+        %ul.dropdown-menu.hide
+          %li
+            %a{href: "https://github.com/gregates", target: "_blank"}
+              %span.icon-github
+              github
+          %li
+            %a{href: "https://twitter.com/gregates", target: "_blank"}
+              %span.icon-twitter
+              twitter
+          %li
+            %a{href: 'http://stackoverflow.com/users/1619796/gregates', target: '_blank'}
+              %span.icon-stackexchange
+              stackoverflow
+          %li
+            %a{href: 'http://www.linkedin.com/pub/greg-gates/20/824/874/', target: '_blank'}
+              %span.icon-linkedin
+              linkedin
+          %li
+            %a{href: 'mailto:greg@webkite.com'}
+              %span.icon-envelope
+              email
+      %li
+        %a{href: "/cv"} CV

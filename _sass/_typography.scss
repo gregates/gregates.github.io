@@ -4,10 +4,18 @@
 body { font-family: "Proxima Nova Soft","Lato","Helvetica Neue","Helvetica","Arial","sans-serif"; }
 nav { font-family: "Georgia","serif"; }
 
+h1 { font-weight: 700; font-size: 36px; }
 h2 { font-weight: 700; font-size: 30px; }
 h3 { font-weight: 700; font-size: 24px; }
 h4 { font-weight: 700; font-size: 18px; }
 em { font-style: italic; }
+p { font-size: 14pt; line-height: 1.4em; }
+
+$dark-purple: #463265;
+
+a { color: $dark-purple; }
+
+.spacer { height: 1em; }
 
 $code-background: #000;
 $code-text: #fff;

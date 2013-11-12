@@ -3,12 +3,42 @@ layout: default
 title: gregat.es
 ---
 
-%main
-  %h1 Blog Posts ahoy
-  %ul.posts
-    {% for post in site.posts %}
-    %li
-      %span {{ post.date | date_to_string }}
-      &raquo;
-      %a{href: "{{ post.url }}"} {{ post.title }}
-    {% endfor %}
+%h2 Greg Gates's personal website
+.spacer
+%article
+  %h3 About Me
+  %p
+    I used to be a philosopher. I guess that sticks with you, so maybe I still
+    am.
+
+  %p
+    These days I'm also a software developer, working primarily in Ruby on Rails
+    but very eager to learn more.
+
+  %p
+    You can read a bit about my experience in making the jump from academia
+    to coding on
+    %a{href: "http://webkite.com/2012/a-force-for-career-change-learning-to-code/", target: "_blank"} Webkite's blog
+    (that's my current employer, and the company that took a chance on training
+    me from scratch).
+
+  %p
+    Please don't hesitate to get in touch.
+
+  %p
+    I'm a novice at
+    %a{href: "http://www.pairprogramwith.me", target: "_blank"}
+      remote pair programming
+    but would love to try it. I'd say
+    at this point I'm pretty knowledgeable about Ruby and Rails, competent but
+    with a lot to learn about javascript and jQuery, and eager to learn some
+    cutting-edge web technologies like angular.js or meteor and compiled
+    languages like Go or Rust.
+
+  %p
+    I <em>really</em> enjoy working with people who are new to web development.
+    But I am still learning myself, and could also benefit a lot from working
+    closely with more experienced developers.
+
+  %a{href: "mailto:greg@webkite.com", title: "Pair program with me!"}
+    %img{src: "http://pairprogramwith.me/badge.png", alt: "Pair program with me!"}

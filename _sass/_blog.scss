@@ -36,13 +36,8 @@ main {
   color: $nav-highlight-background-color;
 }
 
-.post {
+article {
   p {
-    font-size: 14pt;
-    line-height: 1.2em;
     margin: 0.8em 0;
-  }
-  a {
-    color: $nav-highlight-background-color;
   }
 }

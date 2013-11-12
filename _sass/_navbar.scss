@@ -1,7 +1,7 @@
 $nav-background-color: #563d7c;
 $nav-link-color: #cdbfe3;
 $nav-highlight-color: #fff;
-$nav-highlight-background-color: #463265;
+$nav-highlight-background-color: $dark-purple;
 $nav-height: 36px;
 
 body { padding-top: $nav-height + 4px; }
@@ -46,7 +46,12 @@ body { padding-top: $nav-height + 4px; }
       clear: both;
     }
 
-    a {
+    button {
+      background:none;
+      border:none;
+    }
+
+    a, button {
       color: $nav-link-color;
       font-size: 16px;
       text-decoration: none;

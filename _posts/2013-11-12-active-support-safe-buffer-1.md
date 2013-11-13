@@ -62,7 +62,7 @@ So that's the setup. Why in the world would we get different return values for
 first code snippet above? The two strings are the *same*, right!?
 
 {% highlight ruby %}
-2.0.0p247 :08 > string_one == string_two
+2.0.0p247 :008 > string_one == string_two
  => true
 {% endhighlight %}
 

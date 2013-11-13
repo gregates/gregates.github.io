@@ -59,6 +59,6 @@ p > code { padding: 4px 2px; font-weight: bold; }
     .p, .o { color: $code-bracket; }
     .nf { color: $code-function; }
     .ss, .kp, .m, .mf, .mh, .mi, .mo, .il { color: $code-number; }
-    .nc, .no { color: $code-constant; }
+    .nc, .no, .nb { color: $code-constant; }
   }
 }

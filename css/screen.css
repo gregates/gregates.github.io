@@ -124,7 +124,28 @@ a {
   height: 1em;
 }
 
-/* line 33, ../_sass/_typography.scss */
+/* line 22, ../_sass/_typography.scss */
+blockquote {
+  background: #e2e3e4;
+  border-radius: 0.2em;
+}
+/* line 25, ../_sass/_typography.scss */
+blockquote p {
+  padding: 0.5em 1em;
+}
+
+/* line 41, ../_sass/_typography.scss */
+code {
+  font-family: "Inconsolata","monospace";
+}
+
+/* line 42, ../_sass/_typography.scss */
+p > code {
+  padding: 4px 2px;
+  font-weight: bold;
+}
+
+/* line 45, ../_sass/_typography.scss */
 .highlight {
   background: black;
   border-radius: 0.2em;
@@ -132,44 +153,46 @@ a {
   margin-bottom: 0.5em;
   padding: 0.5em;
   line-height: 1.2em;
-  font-family: "Inconsolata","monospace";
+}
+/* line 52, ../_sass/_typography.scss */
+.highlight .ruby {
   color: white;
 }
-/* line 42, ../_sass/_typography.scss */
-.highlight .k {
+/* line 54, ../_sass/_typography.scss */
+.highlight .ruby .k {
   color: #ff6600;
   font-weight: bold;
 }
-/* line 43, ../_sass/_typography.scss */
-.highlight .c, .highlight .cm, .highlight .cp, .highlight .c1, .highlight .cs {
+/* line 55, ../_sass/_typography.scss */
+.highlight .ruby .c, .highlight .ruby .cm, .highlight .ruby .cp, .highlight .ruby .c1, .highlight .ruby .cs {
   color: #9933cc;
 }
-/* line 44, ../_sass/_typography.scss */
-.highlight .s, .highlight .sc, .highlight .sd, .highlight .sh, .highlight .sx, .highlight .s1, .highlight .s2 {
+/* line 56, ../_sass/_typography.scss */
+.highlight .ruby .s, .highlight .ruby .sc, .highlight .ruby .sd, .highlight .ruby .sh, .highlight .ruby .sx, .highlight .ruby .s1, .highlight .ruby .s2 {
   color: #66ff00;
 }
-/* line 45, ../_sass/_typography.scss */
-.highlight .se, .highlight .si {
+/* line 57, ../_sass/_typography.scss */
+.highlight .ruby .se, .highlight .ruby .si {
   color: #33aa00;
 }
-/* line 46, ../_sass/_typography.scss */
-.highlight .sr {
+/* line 58, ../_sass/_typography.scss */
+.highlight .ruby .sr {
   color: #44b4cc;
 }
-/* line 47, ../_sass/_typography.scss */
-.highlight .p, .highlight .o {
+/* line 59, ../_sass/_typography.scss */
+.highlight .ruby .p, .highlight .ruby .o {
   color: #eeeeee;
 }
-/* line 48, ../_sass/_typography.scss */
-.highlight .nf {
+/* line 60, ../_sass/_typography.scss */
+.highlight .ruby .nf {
   color: #ffcc00;
 }
-/* line 49, ../_sass/_typography.scss */
-.highlight .ss, .highlight .kp, .highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .mo, .highlight .il {
+/* line 61, ../_sass/_typography.scss */
+.highlight .ruby .ss, .highlight .ruby .kp, .highlight .ruby .m, .highlight .ruby .mf, .highlight .ruby .mh, .highlight .ruby .mi, .highlight .ruby .mo, .highlight .ruby .il {
   color: #339999;
 }
-/* line 50, ../_sass/_typography.scss */
-.highlight .nc, .highlight .no {
+/* line 62, ../_sass/_typography.scss */
+.highlight .ruby .nc, .highlight .ruby .no {
   color: #aaaa77;
 }
 

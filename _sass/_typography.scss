@@ -17,6 +17,14 @@ a { color: $dark-purple; }
 
 .spacer { height: 1em; }
 
+$quote-background: #e2e3e4;
+
+blockquote {
+  background: $quote-background;
+  border-radius: 0.2em;
+  p { padding: 0.5em 1em; }
+}
+
 $code-background: #000;
 $code-text: #fff;
 $code-bracket: #eee;
@@ -30,6 +38,10 @@ $code-string: #6f0;
 $code-string-delimiter: #6e0;
 $code-string-escape: #3a0;
 
+code { font-family: "Inconsolata","monospace"; }
+p > code { padding: 4px 2px; font-weight: bold; }
+
+
 .highlight {
   background: $code-background;
   border-radius: 0.2em;
@@ -37,15 +49,16 @@ $code-string-escape: #3a0;
   margin-bottom: 0.5em;
   padding: 0.5em;
   line-height: 1.2em;
-  font-family: "Inconsolata","monospace";
-  color: $code-text;
-  .k { color: $code-keyword; font-weight: bold; }
-  .c, .cm, .cp, .c1, .cs { color: $code-comment; }
-  .s, .sc, .sd, .sh, .sx, .s1, .s2, { color: $code-string; }
-  .se, .si { color: $code-string-escape; }
-  .sr { color: $code-regexp; }
-  .p, .o { color: $code-bracket; }
-  .nf { color: $code-function; }
-  .ss, .kp, .m, .mf, .mh, .mi, .mo, .il { color: $code-number; }
-  .nc, .no { color: $code-constant; }
+  .ruby {
+    color: $code-text;
+    .k { color: $code-keyword; font-weight: bold; }
+    .c, .cm, .cp, .c1, .cs { color: $code-comment; }
+    .s, .sc, .sd, .sh, .sx, .s1, .s2, { color: $code-string; }
+    .se, .si { color: $code-string-escape; }
+    .sr { color: $code-regexp; }
+    .p, .o { color: $code-bracket; }
+    .nf { color: $code-function; }
+    .ss, .kp, .m, .mf, .mh, .mi, .mo, .il { color: $code-number; }
+    .nc, .no { color: $code-constant; }
+  }
 }

@@ -1,0 +1,19 @@
+---
+layout: default
+title: Blog
+---
+
+{% for post in site.posts %}
+<article>
+  <h3> {{ post.title }} </h3>
+  <p class="meta">{{ post.date | date_to_string }}</p>
+
+  <div class="post">
+    {{ post.content | split:'<!--break-->' | first }}
+    {% if post.content contains '<!--break-->' %}
+    <a href="{{ post.url }}"> read more</a> &raquo;
+    {% endif %}
+  </div>
+</article>
+{% endfor %}
+

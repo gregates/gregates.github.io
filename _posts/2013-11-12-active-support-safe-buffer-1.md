@@ -38,7 +38,7 @@ concatenating two strings is `html_safe?` when one of the concatenated strings
 is and the other isn't. But what possible difference could the *order* of
 concatenation make for the safety of the resulting string?
 
-By the way, if you're not clear on the semantics of `#html_safe?`, it's intended
+By the way, if you're not clear on the semantics of `#html_safe`, it's intended
 to indicate that we know this particular string does not contain any html tags
 that need to be escaped before rendering. If the users of your dating site
 application can store arbitrary text explaining why you should ask them out,

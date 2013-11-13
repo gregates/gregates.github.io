@@ -192,7 +192,7 @@ p > code {
   color: #339999;
 }
 /* line 62, ../_sass/_typography.scss */
-.highlight .ruby .nc, .highlight .ruby .no {
+.highlight .ruby .nc, .highlight .ruby .no, .highlight .ruby .nb {
   color: #aaaa77;
 }
 

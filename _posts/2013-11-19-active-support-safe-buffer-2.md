@@ -61,7 +61,7 @@ initialize and return an `ActiveSupport::SafeBuffer` object, passing in the reci
 `#html_safe`. But what the heck is an `ActiveSupport::SafeBuffer`? We can find
 out by typing that in the search bar....
 
-<a href="http://api.rubyonrails.org/classes/ActiveSupport/SafeBuffer.html" target="_blank">The docs for ActiveSupport::SafeBuffer</a> tell us what we need to
+<a href="http://api.rubyonrails.org/classes/ActiveSupport/SafeBuffer.html" target="_blank">The docs for `ActiveSupport::SafeBuffer`</a> tell us what we need to
 know. Right at the top of the page we see that it's a subclass
 of `String`. So now we know what happens when we call `#html_safe` on a string. We create a
 new instance of a subclass of `String` &mdash; which is why the result still

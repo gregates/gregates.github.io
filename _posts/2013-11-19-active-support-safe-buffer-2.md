@@ -84,6 +84,8 @@ so you can just ask them!
 0/lib/active_support/core_ext/string/output_safety.rb", 191]
 {% endhighlight %}
 
+Ruby core methods will return `nil`.
+
 [part-one]: /blog/active-support-safe-buffer-1/
 [part-three]: /blog/active-support-safe-buffer-3/
 [part-four]: /blog/active-supprot-safe-buffer-4/

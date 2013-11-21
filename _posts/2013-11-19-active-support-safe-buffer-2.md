@@ -38,10 +38,7 @@ Not knowing exactly where to look for documentation on a method is not unusual i
 you're working with ruby &mdash; ruby allows re-opening classes and adding
 to them, so gems like rails can define new methods on core classes that are only available when that gem is loaded. Rails in particular does this liberally with ruby core classes. So the next place
 to look is the api documentation for rails, at <a href="http://api.rubyonrails.org" target="_blank">api.rubyonrails.org</a>.
-Personally I like the search feature on the left here a lot more than the
-search feature for the ruby api docs, although it's in a *&lt;frame&gt;* (ugh!),
-so if you follow a direct link to the documentation for a specific class or
-method you won't get the search, sadly. But if you type "html_safe" in the
+If you type "html_safe" in the
 search bar there, you'll get four results &mdash; rails is indeed the library
 that defines this method. Interestingly, there are *three* 
 results for `#html_safe?`, which we'll get to in [Part Three][part-three].

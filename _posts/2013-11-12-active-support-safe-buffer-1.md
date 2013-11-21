@@ -1,6 +1,7 @@
 ---
 layout: post
-title:  "Understanding ActiveSupport::SafeBuffer, Part One: A Puzzle"
+title:  "Understanding ActiveSupport::SafeBuffer (part one)"
+subtitle: "A Puzzle"
 date:   2013-11-12 17:25:00
 ---
 
@@ -73,5 +74,5 @@ relative novice, like I was not long ago. And so I'm going to spend some time
 talking about how you'd go about finding the explanation for this puzzle on
 your own, if you didn't have someone to explain it to you.
 
-[part-two]: http://gregat.es/blog/active-support-safe-buffer-2/
-[part-three]: http://gregat.es/blog/active-support-safe-buffer-3/
+[part-two]: /blog/active-support-safe-buffer-2/
+[part-three]: /blog/active-support-safe-buffer-3/

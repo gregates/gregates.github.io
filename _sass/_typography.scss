@@ -25,6 +25,18 @@ blockquote {
   p { padding: 0.5em 1em; }
 }
 
+aside {
+  font-size: 12pt;
+  line-height: 1.2em;
+  float: right;
+  width: 33%;
+  min-width: 10em;
+  background-color: $quote-background;
+  padding: 0.3em 0.5em;
+  margin-left: 0.3em;
+  border-radius: 0.2em;
+}
+
 $code-background: #000;
 $code-text: #fff;
 $code-bracket: #eee;
@@ -49,12 +61,12 @@ p > code { padding: 4px 2px; font-weight: bold; }
   margin-bottom: 0.5em;
   padding: 0.5em;
   line-height: 1.2em;
-  font-size: 10pt;
+  font-size: 11pt;
   @include at-breakpoint(30em) {
     font-size: 12pt;
   }
   @include at-breakpoint($desktop) {
-    font-size: 14pt;
+    font-size: 13pt;
   }
   .ruby {
     color: $code-text;

@@ -1,12 +1,13 @@
 ---
 layout: default
 ---
-%article
+%article{ id: "{{ page.url | split:'/' | last }}" }
   %h3 {{ page.title }}
+  %h4.subtitle {{ page.subtitle }}
   %p.meta {{ page.date | date_to_string }}
 
   .post
     {{ content }}
 
   &laquo;
-  %a{href: "/blog"} blog index
+  %a{href: "/blog/#\{{ page.url | split:'/' | last }}"} blog index

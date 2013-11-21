@@ -4,7 +4,16 @@ $nav-highlight-color: #fff;
 $nav-highlight-background-color: $dark-purple;
 $nav-height: 36px;
 
-body { padding-top: $nav-height + 4px; }
+body { padding-top: $nav-height; }
+
+#content {
+  overflow: scroll;
+  position: absolute;
+  padding-top: 0.5em;
+  top: $nav-height;
+  bottom: 0px;
+  width: 100%;
+}
 
 .caret {
   display: inline-block;

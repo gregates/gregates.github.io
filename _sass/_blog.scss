@@ -23,7 +23,7 @@ sidebar {
 main {
   overflow:hidden;
   max-width: 1024px;
-  padding: 0.5em 1em;
+  padding: 0 0.5em;
   article {
     background-color: $blog-background-color;
     border-radius: 0.5em;
@@ -37,7 +37,12 @@ main {
   color: $nav-highlight-background-color;
 }
 
+h4.subtitle {
+  padding-top: 0.5em;
+}
+
 article {
+  margin-bottom: 1em;
   p {
     margin: 0.8em 0;
   }

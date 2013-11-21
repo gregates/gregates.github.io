@@ -134,18 +134,31 @@ blockquote p {
   padding: 0.5em 1em;
 }
 
-/* line 41, ../_sass/_typography.scss */
+/* line 28, ../_sass/_typography.scss */
+aside {
+  font-size: 12pt;
+  line-height: 1.2em;
+  float: right;
+  width: 33%;
+  min-width: 10em;
+  background-color: #e2e3e4;
+  padding: 0.3em 0.5em;
+  margin-left: 0.3em;
+  border-radius: 0.2em;
+}
+
+/* line 53, ../_sass/_typography.scss */
 code {
   font-family: "Inconsolata","monospace";
 }
 
-/* line 42, ../_sass/_typography.scss */
+/* line 54, ../_sass/_typography.scss */
 p > code {
   padding: 4px 2px;
   font-weight: bold;
 }
 
-/* line 45, ../_sass/_typography.scss */
+/* line 57, ../_sass/_typography.scss */
 .highlight {
   background: black;
   border-radius: 0.2em;
@@ -153,68 +166,78 @@ p > code {
   margin-bottom: 0.5em;
   padding: 0.5em;
   line-height: 1.2em;
-  font-size: 10pt;
+  font-size: 11pt;
 }
 @media (min-width: 30em) {
-  /* line 45, ../_sass/_typography.scss */
+  /* line 57, ../_sass/_typography.scss */
   .highlight {
     font-size: 12pt;
   }
 }
 @media (min-width: 768px) {
-  /* line 45, ../_sass/_typography.scss */
+  /* line 57, ../_sass/_typography.scss */
   .highlight {
-    font-size: 14pt;
+    font-size: 13pt;
   }
 }
-/* line 59, ../_sass/_typography.scss */
+/* line 71, ../_sass/_typography.scss */
 .highlight .ruby {
   color: white;
 }
-/* line 61, ../_sass/_typography.scss */
+/* line 73, ../_sass/_typography.scss */
 .highlight .ruby .k {
   color: #ff6600;
   font-weight: bold;
 }
-/* line 62, ../_sass/_typography.scss */
+/* line 74, ../_sass/_typography.scss */
 .highlight .ruby .c, .highlight .ruby .cm, .highlight .ruby .cp, .highlight .ruby .c1, .highlight .ruby .cs {
   color: #9933cc;
 }
-/* line 63, ../_sass/_typography.scss */
+/* line 75, ../_sass/_typography.scss */
 .highlight .ruby .s, .highlight .ruby .sc, .highlight .ruby .sd, .highlight .ruby .sh, .highlight .ruby .sx, .highlight .ruby .s1, .highlight .ruby .s2 {
   color: #66ff00;
 }
-/* line 64, ../_sass/_typography.scss */
+/* line 76, ../_sass/_typography.scss */
 .highlight .ruby .se, .highlight .ruby .si {
   color: #33aa00;
 }
-/* line 65, ../_sass/_typography.scss */
+/* line 77, ../_sass/_typography.scss */
 .highlight .ruby .sr {
   color: #44b4cc;
 }
-/* line 66, ../_sass/_typography.scss */
+/* line 78, ../_sass/_typography.scss */
 .highlight .ruby .p, .highlight .ruby .o {
   color: #eeeeee;
 }
-/* line 67, ../_sass/_typography.scss */
+/* line 79, ../_sass/_typography.scss */
 .highlight .ruby .nf {
   color: #ffcc00;
 }
-/* line 68, ../_sass/_typography.scss */
+/* line 80, ../_sass/_typography.scss */
 .highlight .ruby .ss, .highlight .ruby .kp, .highlight .ruby .m, .highlight .ruby .mf, .highlight .ruby .mh, .highlight .ruby .mi, .highlight .ruby .mo, .highlight .ruby .il {
   color: #339999;
 }
-/* line 69, ../_sass/_typography.scss */
+/* line 81, ../_sass/_typography.scss */
 .highlight .ruby .nc, .highlight .ruby .no, .highlight .ruby .nb {
   color: #aaaa77;
 }
 
 /* line 7, ../_sass/_navbar.scss */
 body {
-  padding-top: 40px;
+  padding-top: 36px;
 }
 
 /* line 9, ../_sass/_navbar.scss */
+#content {
+  overflow: scroll;
+  position: absolute;
+  padding-top: 0.5em;
+  top: 36px;
+  bottom: 0px;
+  width: 100%;
+}
+
+/* line 18, ../_sass/_navbar.scss */
 .caret {
   display: inline-block;
   width: 0;
@@ -229,7 +252,7 @@ body {
   content: "";
 }
 
-/* line 24, ../_sass/_navbar.scss */
+/* line 33, ../_sass/_navbar.scss */
 nav {
   *zoom: 1;
   padding-left: 0;
@@ -255,44 +278,44 @@ nav:after {
   display: table;
   clear: both;
 }
-/* line 40, ../_sass/_navbar.scss */
+/* line 49, ../_sass/_navbar.scss */
 nav .navbar-header:before,
 nav .navbar-header:after {
   display: table;
   content: " ";
 }
-/* line 45, ../_sass/_navbar.scss */
+/* line 54, ../_sass/_navbar.scss */
 nav .navbar-header:after {
   clear: both;
 }
-/* line 49, ../_sass/_navbar.scss */
+/* line 58, ../_sass/_navbar.scss */
 nav button {
   background: none;
   border: none;
 }
-/* line 54, ../_sass/_navbar.scss */
+/* line 63, ../_sass/_navbar.scss */
 nav a, nav button {
   color: #cdbfe3;
   font-size: 16px;
   text-decoration: none;
   padding: 7px 15px;
 }
-/* line 60, ../_sass/_navbar.scss */
+/* line 69, ../_sass/_navbar.scss */
 nav a:hover {
   color: white;
 }
-/* line 64, ../_sass/_navbar.scss */
+/* line 73, ../_sass/_navbar.scss */
 nav .home {
   color: white;
   font-size: 20px;
   float: left;
   padding: 6px 15px;
 }
-/* line 71, ../_sass/_navbar.scss */
+/* line 80, ../_sass/_navbar.scss */
 nav .hide {
   display: none;
 }
-/* line 75, ../_sass/_navbar.scss */
+/* line 84, ../_sass/_navbar.scss */
 nav .nav {
   list-style: none;
   max-height: 340px;
@@ -302,42 +325,42 @@ nav .nav {
   border-top: 1px solid #463265;
   -webkit-overflow-scrolling: touch;
 }
-/* line 84, ../_sass/_navbar.scss */
+/* line 93, ../_sass/_navbar.scss */
 nav .nav .active {
   background-color: #463265;
   margin: 0px -15px;
   padding: 0px 15px;
 }
-/* line 88, ../_sass/_navbar.scss */
+/* line 97, ../_sass/_navbar.scss */
 nav .nav .active a {
   color: white;
 }
-/* line 93, ../_sass/_navbar.scss */
+/* line 102, ../_sass/_navbar.scss */
 nav .nav li {
   position: relative;
   display: block;
 }
-/* line 97, ../_sass/_navbar.scss */
+/* line 106, ../_sass/_navbar.scss */
 nav .nav a {
   padding: 10px 0px;
   display: block;
 }
-/* line 100, ../_sass/_navbar.scss */
+/* line 109, ../_sass/_navbar.scss */
 nav .nav a span {
   padding-right: 4px;
 }
-/* line 103, ../_sass/_navbar.scss */
+/* line 112, ../_sass/_navbar.scss */
 nav .nav .dropdown-menu {
   position: static;
   float: none;
   width: auto;
   border: 0;
 }
-/* line 108, ../_sass/_navbar.scss */
+/* line 117, ../_sass/_navbar.scss */
 nav .nav .dropdown-menu li > a {
   padding: 5px 10px;
 }
-/* line 114, ../_sass/_navbar.scss */
+/* line 123, ../_sass/_navbar.scss */
 nav .navbar-toggle {
   display: block;
   position: relative;
@@ -348,7 +371,7 @@ nav .navbar-toggle {
   border-radius: 4px;
   border-color: #563d7c;
 }
-/* line 123, ../_sass/_navbar.scss */
+/* line 132, ../_sass/_navbar.scss */
 nav .navbar-toggle .icon-bar {
   display: block;
   width: 22px;
@@ -356,28 +379,28 @@ nav .navbar-toggle .icon-bar {
   border-radius: 1px;
   background-color: white;
 }
-/* line 130, ../_sass/_navbar.scss */
+/* line 139, ../_sass/_navbar.scss */
 nav .navbar-toggle .icon-bar + .icon-bar {
   margin-top: 4px;
 }
-/* line 134, ../_sass/_navbar.scss */
+/* line 143, ../_sass/_navbar.scss */
 nav .navbar-toggle:hover {
   background-color: #463265;
   border-color: #463265;
 }
 @media (min-width: 768px) {
-  /* line 139, ../_sass/_navbar.scss */
+  /* line 148, ../_sass/_navbar.scss */
   nav .navbar-toggle {
     display: none;
   }
 }
 @media (min-width: 768px) {
-  /* line 143, ../_sass/_navbar.scss */
+  /* line 152, ../_sass/_navbar.scss */
   nav .navbar-header {
     float: left;
     height: 36px;
   }
-  /* line 144, ../_sass/_navbar.scss */
+  /* line 153, ../_sass/_navbar.scss */
   nav .nav {
     height: 36px;
     display: block !important;
@@ -385,22 +408,22 @@ nav .navbar-toggle:hover {
     overflow-y: visible;
     float: left;
   }
-  /* line 150, ../_sass/_navbar.scss */
+  /* line 159, ../_sass/_navbar.scss */
   nav .nav li {
     float: left;
     height: 36px;
     padding: 2px;
   }
-  /* line 155, ../_sass/_navbar.scss */
+  /* line 164, ../_sass/_navbar.scss */
   nav .nav .active {
     margin: 0px;
     padding: 2px;
   }
-  /* line 159, ../_sass/_navbar.scss */
+  /* line 168, ../_sass/_navbar.scss */
   nav .nav a {
     padding: 8px 15px;
   }
-  /* line 160, ../_sass/_navbar.scss */
+  /* line 169, ../_sass/_navbar.scss */
   nav .nav .dropdown-menu {
     position: absolute;
     top: 100%;
@@ -411,7 +434,7 @@ nav .navbar-toggle:hover {
     background-color: #563d7c;
     background-clip: padding-box;
   }
-  /* line 169, ../_sass/_navbar.scss */
+  /* line 178, ../_sass/_navbar.scss */
   nav .nav .dropdown-menu a {
     padding: 3px 20px;
     clear: both;
@@ -420,12 +443,12 @@ nav .navbar-toggle:hover {
 }
 
 @media (min-width: 768px) {
-  /* line 179, ../_sass/_navbar.scss */
+  /* line 188, ../_sass/_navbar.scss */
   body {
     padding-top: 0;
   }
 
-  /* line 180, ../_sass/_navbar.scss */
+  /* line 189, ../_sass/_navbar.scss */
   nav {
     position: relative;
     margin-bottom: 4px;
@@ -459,7 +482,7 @@ sidebar img {
 main {
   overflow: hidden;
   max-width: 1024px;
-  padding: 0.5em 1em;
+  padding: 0 0.5em;
 }
 /* line 27, ../_sass/_blog.scss */
 main article {
@@ -475,7 +498,16 @@ main article {
   color: #463265;
 }
 
-/* line 41, ../_sass/_blog.scss */
+/* line 40, ../_sass/_blog.scss */
+h4.subtitle {
+  padding-top: 0.5em;
+}
+
+/* line 44, ../_sass/_blog.scss */
+article {
+  margin-bottom: 1em;
+}
+/* line 46, ../_sass/_blog.scss */
 article p {
   margin: 0.8em 0;
 }

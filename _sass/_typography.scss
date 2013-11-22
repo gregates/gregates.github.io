@@ -55,6 +55,11 @@ p > code { padding: 4px 2px; font-weight: bold; }
 
 
 .highlight {
+  pre {
+    overflow: auto;
+    overflow-x: scroll;
+    width: 100%;
+  }
   background: $code-background;
   border-radius: 0.2em;
   margin-top: 0.5em;

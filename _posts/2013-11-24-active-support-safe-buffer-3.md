@@ -82,7 +82,8 @@ checks every class or module in the ancestry chain for `ActiveSupport::SafeBuffe
 in order, for an instance method `#ancestors`. When it finds none, it raises
 a `NoMethodError`. But since `Module` is the first ancestor of `Class`, when
 you send `:ancestors` to an instance of `Class`, it's `Module#ancestors` that
-gets called (you can verify for yourself that `Class#ancestors` is undefined).
+gets called (you can check the docs to see that `Class` does not define its own
+`#ancestors` method).
 
 Remember in [Part Two][part-two] when we noticed that the [api docs for rails](http://api.rubyonrails.org/)
 had entries for three different methods named `#html_safe?`? Here's where it

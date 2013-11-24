@@ -43,6 +43,7 @@ $code-bracket: #eee;
 $code-comment: #93c;
 $code-constant: #aa7;
 $code-function: #fc0;
+$code-ivar: #cf3;
 $code-number: #399;
 $code-keyword: #f60;
 $code-regexp: #44b4cc;
@@ -52,7 +53,13 @@ $code-string-escape: #3a0;
 
 code { font-family: "Inconsolata","monospace"; }
 p > code { padding: 4px 2px; font-weight: bold; }
-
+li > code {
+  margin-left: 1em;
+  padding: 4px 2px;
+  font-weight: bold;
+  font-size: 14pt;
+  line-height: 1.4em;
+}
 
 .highlight {
   pre {
@@ -84,5 +91,6 @@ p > code { padding: 4px 2px; font-weight: bold; }
     .nf { color: $code-function; }
     .ss, .kp, .m, .mf, .mh, .mi, .mo, .il { color: $code-number; }
     .nc, .no, .nb { color: $code-constant; }
+    .vi { color: $code-ivar; }
   }
 }

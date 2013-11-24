@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Understanding ActiveSupport::SafeBuffer (part two)"
-subtitle: "Don't Be Afraid of Source Code"
+subtitle: "Finding the Right Docs"
 date:   2013-11-19 23:42:00
 ---
 

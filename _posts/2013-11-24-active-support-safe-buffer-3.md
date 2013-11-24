@@ -232,7 +232,7 @@ be seen when we combine strings that actually include unsafe characters.
 So that's it. Now we know why the unexpected behavior from the puzzle in
 [Part One][part-one] occurs. [Part Four][part-four] won't really be about code.
 Instead, I'd like to explore what we've learned about the *semantics* of ruby,
-or at least of "==" as applied to strings, from
+or at least of "+" and "==" as applied to strings, from
 the perspective of philosophical logic.
 
 [part-one]: /blog/active-support-safe-buffer-1/

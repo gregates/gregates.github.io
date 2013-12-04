@@ -490,43 +490,50 @@ sidebar img {
   }
   /* line 13, ../_sass/_blog.scss */
   sidebar img {
+    position: fixed;
     display: block;
     border-radius: 0.5em;
     margin-right: 0;
-    margin-left: auto;
+    margin-left: 7px;
     width: 213px;
   }
 }
-/* line 23, ../_sass/_blog.scss */
+/* line 24, ../_sass/_blog.scss */
 main {
   overflow: hidden;
   max-width: 1024px;
   padding: 0 0.5em;
 }
-/* line 27, ../_sass/_blog.scss */
+/* line 28, ../_sass/_blog.scss */
 main article {
   background-color: #f2f3f4;
   border-radius: 0.5em;
   padding: 1em;
 }
+@media (min-width: 768px) {
+  /* line 24, ../_sass/_blog.scss */
+  main {
+    margin-left: 220px;
+  }
+}
 
-/* line 34, ../_sass/_blog.scss */
+/* line 38, ../_sass/_blog.scss */
 .meta {
   margin: 0.5em 0;
   font-size: 12pt;
   color: #463265;
 }
 
-/* line 40, ../_sass/_blog.scss */
+/* line 44, ../_sass/_blog.scss */
 h4.subtitle {
   padding-top: 0.5em;
 }
 
-/* line 44, ../_sass/_blog.scss */
+/* line 48, ../_sass/_blog.scss */
 article {
   margin-bottom: 1em;
 }
-/* line 46, ../_sass/_blog.scss */
+/* line 50, ../_sass/_blog.scss */
 article p {
   margin: 0.8em 0;
 }

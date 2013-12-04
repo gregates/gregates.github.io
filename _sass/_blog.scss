@@ -11,10 +11,11 @@ sidebar {
   sidebar {
     width: 220px;
     img {
+      position: fixed;
       display: block;
       border-radius: 0.5em;
       margin-right: 0;
-      margin-left: auto;
+      margin-left: 7px;
       width: 213px;
     }
   }
@@ -28,6 +29,9 @@ main {
     background-color: $blog-background-color;
     border-radius: 0.5em;
     padding: 1em;
+  }
+  @include at-breakpoint($desktop) {
+    margin-left: 220px;
   }
 }
 

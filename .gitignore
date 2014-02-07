@@ -3,3 +3,4 @@ _site
 *.swo
 
 .sass-cache
+.bundle

@@ -2,7 +2,7 @@
 layout: post
 title:  "Understanding ActiveSupport::SafeBuffer (part four)"
 subtitle: "Metaphysics!"
-date:   2013-11-24 14:10:00
+date:   2014-02-06 13:46:00
 ---
 
 In [Part One][part-one] of this series, I introduced a puzzle that can be

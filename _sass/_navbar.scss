@@ -66,15 +66,9 @@ body { padding-top: $nav-height; }
       text-decoration: none;
       padding: 7px 15px;
     }
-    a:hover {
-      color: $nav-highlight-color;
-    }
-    a:visited {
-      color: $nav-highlight-color;
-    }
-    a:active {
-      color: $nav-highlight-color;
-    }
+    a:hover { color: $nav-highlight-color; }
+    a:visited { color: $nav-highlight-color; }
+    a:active { color: $nav-highlight-color; }
 
     .home {
       color: $nav-highlight-color;

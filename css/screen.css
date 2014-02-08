@@ -340,26 +340,26 @@ nav a, nav button {
 nav a:hover {
   color: white;
 }
-/* line 72, ../_sass/_navbar.scss */
+/* line 70, ../_sass/_navbar.scss */
 nav a:visited {
   color: white;
 }
-/* line 75, ../_sass/_navbar.scss */
+/* line 71, ../_sass/_navbar.scss */
 nav a:active {
   color: white;
 }
-/* line 79, ../_sass/_navbar.scss */
+/* line 73, ../_sass/_navbar.scss */
 nav .home {
   color: white;
   font-size: 20px;
   float: left;
   padding: 6px 15px;
 }
-/* line 86, ../_sass/_navbar.scss */
+/* line 80, ../_sass/_navbar.scss */
 nav .hide {
   display: none;
 }
-/* line 90, ../_sass/_navbar.scss */
+/* line 84, ../_sass/_navbar.scss */
 nav .nav {
   list-style: none;
   max-height: 340px;
@@ -369,42 +369,42 @@ nav .nav {
   border-top: 1px solid #463265;
   -webkit-overflow-scrolling: touch;
 }
-/* line 99, ../_sass/_navbar.scss */
+/* line 93, ../_sass/_navbar.scss */
 nav .nav .active {
   background-color: #463265;
   margin: 0px -15px;
   padding: 0px 15px;
 }
-/* line 103, ../_sass/_navbar.scss */
+/* line 97, ../_sass/_navbar.scss */
 nav .nav .active a {
   color: white;
 }
-/* line 108, ../_sass/_navbar.scss */
+/* line 102, ../_sass/_navbar.scss */
 nav .nav li {
   position: relative;
   display: block;
 }
-/* line 112, ../_sass/_navbar.scss */
+/* line 106, ../_sass/_navbar.scss */
 nav .nav a {
   padding: 10px 0px;
   display: block;
 }
-/* line 115, ../_sass/_navbar.scss */
+/* line 109, ../_sass/_navbar.scss */
 nav .nav a span {
   padding-right: 4px;
 }
-/* line 118, ../_sass/_navbar.scss */
+/* line 112, ../_sass/_navbar.scss */
 nav .nav .dropdown-menu {
   position: static;
   float: none;
   width: auto;
   border: 0;
 }
-/* line 123, ../_sass/_navbar.scss */
+/* line 117, ../_sass/_navbar.scss */
 nav .nav .dropdown-menu li > a {
   padding: 5px 10px;
 }
-/* line 129, ../_sass/_navbar.scss */
+/* line 123, ../_sass/_navbar.scss */
 nav .navbar-toggle {
   display: block;
   position: relative;
@@ -415,7 +415,7 @@ nav .navbar-toggle {
   border-radius: 4px;
   border-color: #563d7c;
 }
-/* line 138, ../_sass/_navbar.scss */
+/* line 132, ../_sass/_navbar.scss */
 nav .navbar-toggle .icon-bar {
   display: block;
   width: 22px;
@@ -423,28 +423,28 @@ nav .navbar-toggle .icon-bar {
   border-radius: 1px;
   background-color: white;
 }
-/* line 145, ../_sass/_navbar.scss */
+/* line 139, ../_sass/_navbar.scss */
 nav .navbar-toggle .icon-bar + .icon-bar {
   margin-top: 4px;
 }
-/* line 149, ../_sass/_navbar.scss */
+/* line 143, ../_sass/_navbar.scss */
 nav .navbar-toggle:hover {
   background-color: #463265;
   border-color: #463265;
 }
 @media (min-width: 768px) {
-  /* line 154, ../_sass/_navbar.scss */
+  /* line 148, ../_sass/_navbar.scss */
   nav .navbar-toggle {
     display: none;
   }
 }
 @media (min-width: 768px) {
-  /* line 158, ../_sass/_navbar.scss */
+  /* line 152, ../_sass/_navbar.scss */
   nav .navbar-header {
     float: left;
     height: 36px;
   }
-  /* line 159, ../_sass/_navbar.scss */
+  /* line 153, ../_sass/_navbar.scss */
   nav .nav {
     height: 36px;
     display: block !important;
@@ -452,22 +452,22 @@ nav .navbar-toggle:hover {
     overflow-y: visible;
     float: left;
   }
-  /* line 165, ../_sass/_navbar.scss */
+  /* line 159, ../_sass/_navbar.scss */
   nav .nav li {
     float: left;
     height: 36px;
     padding: 2px;
   }
-  /* line 170, ../_sass/_navbar.scss */
+  /* line 164, ../_sass/_navbar.scss */
   nav .nav .active {
     margin: 0px;
     padding: 2px;
   }
-  /* line 174, ../_sass/_navbar.scss */
+  /* line 168, ../_sass/_navbar.scss */
   nav .nav a {
     padding: 8px 15px;
   }
-  /* line 175, ../_sass/_navbar.scss */
+  /* line 169, ../_sass/_navbar.scss */
   nav .nav .dropdown-menu {
     position: absolute;
     top: 100%;
@@ -478,7 +478,7 @@ nav .navbar-toggle:hover {
     background-color: #563d7c;
     background-clip: padding-box;
   }
-  /* line 184, ../_sass/_navbar.scss */
+  /* line 178, ../_sass/_navbar.scss */
   nav .nav .dropdown-menu a {
     padding: 3px 20px;
     clear: both;
@@ -487,12 +487,12 @@ nav .navbar-toggle:hover {
 }
 
 @media (min-width: 768px) {
-  /* line 194, ../_sass/_navbar.scss */
+  /* line 188, ../_sass/_navbar.scss */
   body {
     padding-top: 0;
   }
 
-  /* line 195, ../_sass/_navbar.scss */
+  /* line 189, ../_sass/_navbar.scss */
   nav {
     position: relative;
     margin-bottom: 4px;

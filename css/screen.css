@@ -114,27 +114,37 @@ p {
   line-height: 1.4em;
 }
 
-/* line 16, ../_sass/_typography.scss */
+/* line 18, ../_sass/_typography.scss */
 a {
+  color: #0047ab;
+}
+
+/* line 19, ../_sass/_typography.scss */
+a:visited {
   color: #463265;
 }
 
-/* line 18, ../_sass/_typography.scss */
+/* line 20, ../_sass/_typography.scss */
+a:active, a:hover {
+  color: #007fff;
+}
+
+/* line 22, ../_sass/_typography.scss */
 .spacer {
   height: 1em;
 }
 
-/* line 22, ../_sass/_typography.scss */
+/* line 26, ../_sass/_typography.scss */
 blockquote {
   background: #e2e3e4;
   border-radius: 0.2em;
 }
-/* line 25, ../_sass/_typography.scss */
+/* line 29, ../_sass/_typography.scss */
 blockquote p {
   padding: 0.5em 1em;
 }
 
-/* line 28, ../_sass/_typography.scss */
+/* line 32, ../_sass/_typography.scss */
 aside {
   font-size: 12pt;
   line-height: 1.2em;
@@ -147,18 +157,25 @@ aside {
   border-radius: 0.2em;
 }
 
-/* line 54, ../_sass/_typography.scss */
+/* line 44, ../_sass/_typography.scss */
+.prop {
+  text-align: center;
+  font-size: 14pt;
+  line-height: 1.4em;
+}
+
+/* line 63, ../_sass/_typography.scss */
 code {
   font-family: "Inconsolata","monospace";
 }
 
-/* line 55, ../_sass/_typography.scss */
+/* line 64, ../_sass/_typography.scss */
 p > code {
   padding: 4px 2px;
   font-weight: bold;
 }
 
-/* line 56, ../_sass/_typography.scss */
+/* line 65, ../_sass/_typography.scss */
 li > code {
   margin-left: 1em;
   padding: 4px 2px;
@@ -167,7 +184,7 @@ li > code {
   line-height: 1.4em;
 }
 
-/* line 64, ../_sass/_typography.scss */
+/* line 73, ../_sass/_typography.scss */
 .highlight {
   background: black;
   border-radius: 0.2em;
@@ -177,66 +194,66 @@ li > code {
   line-height: 1.2em;
   font-size: 11pt;
 }
-/* line 65, ../_sass/_typography.scss */
+/* line 74, ../_sass/_typography.scss */
 .highlight pre {
   overflow: auto;
   overflow-x: auto;
   width: 100%;
 }
 @media (min-width: 30em) {
-  /* line 64, ../_sass/_typography.scss */
+  /* line 73, ../_sass/_typography.scss */
   .highlight {
     font-size: 12pt;
   }
 }
 @media (min-width: 768px) {
-  /* line 64, ../_sass/_typography.scss */
+  /* line 73, ../_sass/_typography.scss */
   .highlight {
     font-size: 13pt;
   }
 }
-/* line 83, ../_sass/_typography.scss */
+/* line 92, ../_sass/_typography.scss */
 .highlight .ruby {
   color: white;
 }
-/* line 85, ../_sass/_typography.scss */
+/* line 94, ../_sass/_typography.scss */
 .highlight .ruby .k {
   color: #ff6600;
   font-weight: bold;
 }
-/* line 86, ../_sass/_typography.scss */
+/* line 95, ../_sass/_typography.scss */
 .highlight .ruby .c, .highlight .ruby .cm, .highlight .ruby .cp, .highlight .ruby .c1, .highlight .ruby .cs {
   color: #9933cc;
 }
-/* line 87, ../_sass/_typography.scss */
+/* line 96, ../_sass/_typography.scss */
 .highlight .ruby .s, .highlight .ruby .sc, .highlight .ruby .sd, .highlight .ruby .sh, .highlight .ruby .sx, .highlight .ruby .s1, .highlight .ruby .s2 {
   color: #66ff00;
 }
-/* line 88, ../_sass/_typography.scss */
+/* line 97, ../_sass/_typography.scss */
 .highlight .ruby .se, .highlight .ruby .si {
   color: #33aa00;
 }
-/* line 89, ../_sass/_typography.scss */
+/* line 98, ../_sass/_typography.scss */
 .highlight .ruby .sr {
   color: #44b4cc;
 }
-/* line 90, ../_sass/_typography.scss */
+/* line 99, ../_sass/_typography.scss */
 .highlight .ruby .p, .highlight .ruby .o {
   color: #eeeeee;
 }
-/* line 91, ../_sass/_typography.scss */
+/* line 100, ../_sass/_typography.scss */
 .highlight .ruby .nf {
   color: #ffcc00;
 }
-/* line 92, ../_sass/_typography.scss */
+/* line 101, ../_sass/_typography.scss */
 .highlight .ruby .ss, .highlight .ruby .kp, .highlight .ruby .m, .highlight .ruby .mf, .highlight .ruby .mh, .highlight .ruby .mi, .highlight .ruby .mo, .highlight .ruby .il {
   color: #339999;
 }
-/* line 93, ../_sass/_typography.scss */
+/* line 102, ../_sass/_typography.scss */
 .highlight .ruby .nc, .highlight .ruby .no, .highlight .ruby .nb {
   color: #aaaa77;
 }
-/* line 94, ../_sass/_typography.scss */
+/* line 103, ../_sass/_typography.scss */
 .highlight .ruby .vi {
   color: #ccff33;
 }

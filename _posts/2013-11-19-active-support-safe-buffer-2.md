@@ -22,7 +22,7 @@ to look is the api documentation for the ruby `String` class. For ruby's core
 classes and classes defined in the standard library, you can find api
 documentation at
 <a href="http://ruby-doc.org/" target="_blank">ruby-doc.org</a>.
-You can go there an type
+You can go there and type
 the class name into the search bar, or really I usually just google "ruby #{class\_name}", e.g., "ruby string". If you do that, you'll see that you get results
 for different versions of the language &mdash; it's always helpful to know which
 version of ruby you're using. The top result is *usually* the documentation

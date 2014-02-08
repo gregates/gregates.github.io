@@ -11,9 +11,13 @@ h4 { font-weight: 700; font-size: 18px; }
 em { font-style: italic; }
 p { font-size: 14pt; line-height: 1.4em; }
 
+$light-blue: #007fff;
+$blue: #0047ab;
 $dark-purple: #463265;
 
-a { color: $dark-purple; }
+a { color: $blue }
+a:visited { color: $dark-purple; }
+a:active, a:hover { color: $light-blue; }
 
 .spacer { height: 1em; }
 
@@ -35,6 +39,11 @@ aside {
   padding: 0.3em 0.5em;
   margin-left: 0.3em;
   border-radius: 0.2em;
+}
+
+.prop {
+  text-align: center;
+  font-size: 14pt; line-height: 1.4em;
 }
 
 $code-background: #000;

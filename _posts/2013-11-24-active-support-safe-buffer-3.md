@@ -238,4 +238,4 @@ the perspective of philosophical logic.
 
 [part-one]: /blog/active-support-safe-buffer-1/
 [part-two]: /blog/active-support-safe-buffer-2/
-[part-four]: /blog/active-supprot-safe-buffer-4/
+[part-four]: /blog/active-support-safe-buffer-4/

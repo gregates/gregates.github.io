@@ -337,11 +337,11 @@ nav a, nav button {
   padding: 7px 15px;
 }
 /* line 69, ../_sass/_navbar.scss */
-nav a:hover {
-  color: white;
+nav a:visited {
+  color: #cdbfe3;
 }
 /* line 70, ../_sass/_navbar.scss */
-nav a:visited {
+nav a:hover {
   color: white;
 }
 /* line 71, ../_sass/_navbar.scss */
@@ -349,7 +349,7 @@ nav a:active {
   color: white;
 }
 /* line 73, ../_sass/_navbar.scss */
-nav .home {
+nav .home, nav .home:visited {
   color: white;
   font-size: 20px;
   float: left;

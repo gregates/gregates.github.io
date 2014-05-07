@@ -9,7 +9,7 @@ In [Part One][part-one], I presented a puzzle about the Rails method
 `#html_safe`. It's possible to concatenate two identical strings, after sending
 `#html_safe` to one of them, where the result's
 `#html_safe?` property depends on the *order* of concatenation, even though the results
-*appear* to be identitical strings (i.e., `string_one == string_two` returns `true`).
+*appear* to be identical strings (i.e., `string_one == string_two` returns `true`).
 In [Part Three][part-three], we'll reason through the explanation for this surprising fact. This post is about finding the solution to this puzzle without the benefit of [Part Three][part-three]. For a novice
 programmer like myself-a-year-ago, developing this skill is much more valuable
 than knowing the answer to any single question about ruby or rails. Teach a

@@ -1,0 +1,49 @@
+---
+layout: default
+title: Webkite
+---
+
+<script type="application/javascript" id="webkite-results">
+  var webkiteConfig = {
+    pageType      : "results",
+    resultsServer : "//results.webkite.org",
+    //resultsServer : "//results.bestnerf.com",
+    //resultsServer : "http://localhost:1730",
+    //resultsServer   : "http://dev.webkite.us:1730",
+    //themeServer   : "//iago.webkite.org",
+    themeServer   : "//iago.bestnerf.com",
+    //themeServer   : '..',
+    //datasetId     : "ad634537-5b47-43bd-990c-61f207fb59de",
+    //prod business sample
+    //datasetId     : "d71bd33c-3598-48bc-ac83-53cfcfdc3d65",
+    //prod contact list IE10
+    //datasetId     : "e5582c49-8f7f-41ae-b17f-2f21b78ef956",
+    //prod menu data
+    datasetId     : "ec38c5a2-c29f-4f70-beaf-2facbabb8ae9",
+    //local contact list
+    //datasetId     : "3ddefdd8-b6ba-4d17-8df2-f12e058698a7",
+    //staging wine list
+    //datasetId     : "6393f8ed-c955-4d1c-8085-80d1d4e73976",
+    //staging beer list
+    //datasetId     : "9f45ff2b-877f-4f09-809c-e1acf35d6b48",
+    //devbox event list
+    //datasetId     : "3b805339-a586-4da4-8f73-89c95295361d",
+    theme         : "Webkite-Themes/menu-landscape-international",
+    style         : "light",
+    perPage       : 12,
+    sorts         : ["Item Name", "Price", "Calories", "Total Fat (g)", "Cholesterol (mg)"],
+    filters       : ["Meal", "Dish Type", "Diet"],
+    groups        : { "Meal": [ "Breakfast", "Lunch", "Dinner" ] }
+  };
+
+  (function(){
+    var wk = document.createElement('script');
+    wk.type = 'application/javascript';
+    wk.src = '//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js';
+    wk.setAttribute('data-main', '//jafar.webkite.org/stable/webkite-embed.min.js');
+    //wk.setAttribute('data-main', 'http://jafar.bestnerf.com/edge/webkite-embed.min.js');
+    //wk.setAttribute('data-main', 'http://jafar.webkite.org/stable/webkite-embed.min.js');
+    wk.async = true;
+    document.body.appendChild(wk);
+   })();
+</script>

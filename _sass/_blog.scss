@@ -21,12 +21,14 @@ sidebar {
   }
 }
 
+body { background-color: $blog-background-color; }
+
 main {
   overflow:hidden;
   max-width: 1024px;
   padding: 0 0.5em;
   article {
-    background-color: $blog-background-color;
+    background-color: #fff;
     border-radius: 0.5em;
     padding: 1em;
   }

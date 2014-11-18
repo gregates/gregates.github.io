@@ -1,0 +1,66 @@
+---
+layout: nopic
+title: Shoefitr Review Indexer
+---
+:css
+  #cv p { margin-top: 1em; font-size: 14pt; }
+  #cv h3 { margin-top: 1em; }
+%article#cv
+  %section
+    %h2 README
+    %hr
+    %p So, I tried several different implementations of this review-indexer, and I wanted to talk through some of my thought processes.
+    %p First of all, the two languages I am most comfortable with are Ruby and JavaScript. It's impossible to do concurrency with threads in JavaScript, so I ruled that out given that half of the assignment is implementing a parallel solution. Ruby has a reputation for being bad at concurrency. Both are somewhat annoying in that, as scripting languages, you'd need to install an interpreter for my scripts to even run. So I decided to try something less familiar. This turned out be a mistake, as you'll see below.
+    %h3 Attempt #1: Haskell
+    %p "I would love to learn some more Haskell," I thought. "This project might be just the right opportunity." Plus, Haskell has built-in concurrency features, so I thought I might benefit from that. Unfortunately, I never even got that far.
+    %p 
+      As you can see if you
+      %a{href: "haskell.zip"} download this zip,
+      there is a "working" serial implementation, but it works only for very
+      small lists of urls (it's currently hardcoded to use a subset of 5).
+    %p
+      The main reason for this limitation is the immutable nature of Haskell data structures. To create the Data.Map that constitutes the search index, I end up building a function that looks something like
+      %code String -> [ReviewFile] -> [(String, Int)]
+      which takes a word and the entire set of review files, and returns a list of (shoe, review count) tuples for that word.
+
+      Once we have that, we can build a Map by getting the set of all words that appear in the reviews and applying this function once for each word. Obviously, that's a very expensive procedure, since we need to iterate over all the review files for each word. It quickly gets out of control even at relatively small N.
+    %p
+      Obviously, that strategy was no good, and, worse, lookup times for a Map data structure in Haskell are O(n), so there's no guarantee of instanteous results even after we build up an index for large numbers of words. I intended to try to remedy this by using a mutable hash table, but I got lost in a sea of monads (couldn't figure out how to do IO both for user input and output and IO to the mutable hash table), and gave up.
+    %p
+      (I'm sure it's possible to improve on the solution I have even without using a mutable hash table, but after that plan failed I decided it wasn't worth going back to try to optimize the existing implementation.)
+    %h3 Attempt #2: Go
+    %p
+      Still thinking I'd use a language built with concurrency in mind, but in which I could use a more comfortable imperative coding style, I switched to Go (which I'm also not that familiar with but have done a small amount of work in).
+    %p
+      %a{href: "go.zip"}Download my Go effort
+      (To try it out, you can hopefully just run the 
+    %p This went a little better, as I managed a serial implementation that can actually handle the full list of urls. Still not exactly fast, but it's clear enough to me that the latency here is primarily from the serial http requests, which is what I'd expect.
+    %p Where this effort started to go wrong was when I began reading about concurrency in Go. While I'm sure with sufficient time I could figure out how to make the http requests process in parallel, it became clear that the amount of time that would take was too great. So I abandoned this effort and decided, somewhat defeated, to fall back to Ruby.
+    %h3 Attempt #3: Ruby
+    %p
+      %a{href: "ruby.zip"}Download my Ruby effort
+    %p
+      To run my program(s), you'll need a ruby interpreter and the bundler gem (to install dependencies). Once you've
+      %a{href: "https://www.ruby-lang.org/en/installation/", target: "_blank"}installed ruby
+      you should be able to just run
+    %p
+      %code gem install bundler
+    %p and then my scripts will take care of the rest, assuming you're on a unix-like OS. From the serial or parallel folder, run
+    %p
+      %code ./review-indexer
+    %p
+      If you're not on a unix-like OS, you can manually run
+    %p
+      %code bundle install
+    %p and then
+    %p
+      %code bundle exec ruby review-indexer.rb
+    %p
+      There will be a little bit of overhead as we install a couple of http libraries that I depend on. You may also see stuttering during indexing, this may of course be latency on the wire, but it can also be the ruby garbage collector. Unfortunately, with ruby there's no way around this.
+    %p
+      I was surprised that I didn't run into too many memory limitations with ruby; I had initially thought I would have to use 
+      %a{href: "http://redis.io/", target: "_blank"} Redis
+      or another strategy for actually storing the review index, rather than using a simple ruby Hash, but it turned out that for the size of the index this was unnecessary, and the latency for requests to the redis server significantly slowed down building the index, so I abandoned that strategy (I had built a version that used it). For a larger index, my solution would probably benefit from offloading some of the work to Redis or some other storage solution, but for this number of review files, storing the index in-memory in the ruby process gave the best performance.
+    %p As you'll see, I managed to achieve parallelization of the major source of latency simply by using a different http library that has support for concurrency built-in. Even though ruby has a reputation for being bad for that sort of this, in this particular case that library made it quite simple to gain a massive decrease in the time to build the search index.
+    %h3 Lessons Learned
+    %p Ok, I knew I was making it hard on myself from the outset when I decided to try this assignment in unfamiliar languages. That's definitely something I rely on my co-workers for in my current job &mdash; bringing me back to earth when I let my excitement for learning something new overwhelm the obvious practical benefits of using the tools I already understand. Sometimes the best tool is the one that gets the job done quickly and well enough, not the one that's theoretically best if you were equally competent with all of them.

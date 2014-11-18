@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
+    <title>Understanding ActiveSupport::SafeBuffer (part two) | gregat.es</title>
+    <meta content='width=device-width' name='viewport'>
+    <link href='/css/screen.css' media='screen, projection' rel='stylesheet' type='text/css'>
+    <link href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <nav role='banner'>
+  <div class='navbar-header'>
+    <button class='navbar-toggle toggle' type='button'>
+      <span class='icon-bar'></span>
+      <span class='icon-bar'></span>
+      <span class='icon-bar'></span>
+    </button>
+    <a class='home' href='/'>gregat.es</a>
+  </div>
+  <div class='nav hide' role='navigation'>
+    <ul>
+      <li id='nav-blog'>
+        <a href='/blog'>Blog</a>
+      </li>
+      <li class='dropdown' id='nav-contact'>
+        <a class='toggle' href='#'>
+          Contact
+          <b class='caret'></b>
+        </a>
+        <ul class='dropdown-menu hide'>
+          <li>
+            <a href='https://github.com/gregates' target='_blank'>
+              <span class='fa fa-github-square'></span>
+              github
+            </a>
+          </li>
+          <li>
+            <a href='https://twitter.com/gregates' target='_blank'>
+              <span class='fa fa-twitter-square'></span>
+              twitter
+            </a>
+          </li>
+          <li>
+            <a href='http://stackoverflow.com/users/1619796/gregates' target='_blank'>
+              <span class='fa fa-stack-overflow'></span>
+              stackoverflow
+            </a>
+          </li>
+          <li>
+            <a href='http://www.linkedin.com/pub/greg-gates/20/824/874/' target='_blank'>
+              <span class='fa fa-linkedin-square'></span>
+              linkedin
+            </a>
+          </li>
+          <li>
+            <a href='mailto:greg@webkite.com'>
+              <span class='fa fa-envelope'></span>
+              email
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li id='nav-cv'>
+        <a href='/cv'>CV</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+    <div id='content'>
+      <sidebar>
+        <img height='718px' src='/images/sidepic-min.png'>
+      </sidebar>
+      <main>
+        <article id="active-support-safe-buffer-2">
+  <h3>Understanding ActiveSupport::SafeBuffer (part two)</h3>
+  <h4 class='subtitle'>Finding the Right Docs</h4>
+  <p class='meta'>19 Nov 2013</p>
+  <div class='post'>
+    <p>In <a href="/blog/active-support-safe-buffer-1/">Part One</a>, I presented a puzzle about the Rails method
+<code>#html_safe</code>. It&#39;s possible to concatenate two identical strings, after sending
+<code>#html_safe</code> to one of them, where the result&#39;s
+<code>#html_safe?</code> property depends on the <em>order</em> of concatenation, even though the results
+<em>appear</em> to be identical strings (i.e., <code>string_one == string_two</code> returns <code>true</code>).
+In <a href="/blog/active-support-safe-buffer-3/">Part Three</a>, we&#39;ll reason through the explanation for this surprising fact. This post is about finding the solution to this puzzle without the benefit of <a href="/blog/active-support-safe-buffer-3/">Part Three</a>. For a novice
+programmer like myself-a-year-ago, developing this skill is much more valuable
+than knowing the answer to any single question about ruby or rails. Teach a
+person to fish, and all that.</p>
+
+<!--break-->
+
+<p>If you want to know what a ruby <code>String</code> method does, the obvious first place
+to look is the api documentation for the ruby <code>String</code> class. For ruby&#39;s core
+classes and classes defined in the standard library, you can find api
+documentation at
+<a href="http://ruby-doc.org/" target="_blank">ruby-doc.org</a>.
+You can go there and type
+the class name into the search bar, or really I usually just google &quot;ruby #{class_name}&quot;, e.g., &quot;ruby string&quot;. If you do that, you&#39;ll see that you get results
+for different versions of the language &mdash; it&#39;s always helpful to know which
+version of ruby you&#39;re using. The top result is <em>usually</em> the documentation
+for the latest version.</p>
+
+<p><aside>If you aren&#39;t familiar with the convention for these docs, <code>#</code> before a method name indicates an <em>instance</em> method for the class, whereas <code>::</code> before a method name indicates a <em>class</em> method.</aside></p>
+
+<p>If you click through to the <a href="http://ruby-doc.org/core/String.html" target="_blank">api docs for <code>String</code></a>,
+you will see, if you scan the method list in the sidebar, that there is no
+<code>#html_safe</code> method defined for the core <code>String</code> class. These aren&#39;t the docs we&#39;re looking for.</p>
+
+<p>Not knowing exactly where to look for documentation on a method is not unusual if
+you&#39;re working with ruby &mdash; ruby allows re-opening classes and adding
+to them, so gems like rails can define new methods on core classes that are only available when that gem is loaded. Rails in particular does this liberally with ruby core classes. So the next place
+to look is the api documentation for rails, at <a href="http://api.rubyonrails.org" target="_blank">api.rubyonrails.org</a>.
+If you type &quot;html_safe&quot; in the
+search bar there, you&#39;ll get four results &mdash; rails is indeed the library
+that defines this method. Interestingly, there are <em>three</em> 
+results for <code>#html_safe?</code>, which we&#39;ll get to in <a href="/blog/active-support-safe-buffer-3/">Part Three</a>.
+But right now we want the documentation for <code>#html_safe</code>, so if we click on that....</p>
+
+<p>Uh oh, <a href="http://api.rubyonrails.org/classes/String.html#method-i-html_safe" target="_blank">there&#39;s no documentation</a>!</p>
+
+<p>Don&#39;t panic. They say that good ruby code is self-documenting. And every method
+documented here has links to view the source code for that method or even
+visit github for the source for the entire file. If you click on the &quot;show&quot; link, you&#39;ll see</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="k">def</span> <span class="nf">html_safe</span>
+  <span class="no">ActiveSupport</span><span class="err">​</span><span class="o">::</span><span class="no">SafeBuffer</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
+<span class="k">end</span>
+</code></pre></div>
+
+<p>Phew! That&#39;s actually pretty easy to understand &mdash; all the method does is
+initialize and return an <code>ActiveSupport::SafeBuffer</code> object, passing in the recipient of
+<code>#html_safe</code>. But what the heck is an <code>ActiveSupport::SafeBuffer</code>? We can find
+out by typing that in the search bar....</p>
+
+<p><a href="http://api.rubyonrails.org/classes/ActiveSupport/SafeBuffer.html" target="_blank">The docs for <code>ActiveSupport::SafeBuffer</code></a> tell us what we need to
+know. Right at the top of the page we see that it&#39;s a subclass
+of <code>String</code>. So now we know what happens when we call <code>#html_safe</code> on a string. We create a
+new instance of a subclass of <code>String</code> &mdash; which is why the result still
+<code>is_a?(String)</code> &mdash; and return that.</p>
+
+<p>That&#39;s not actually the full answer to our puzzle. But now we know the key fact
+that, if we understand class inheritance in ruby and are comfortable with using the
+rails api docs and reading some source code, will let us reason through the rest of the answer in
+<a href="/blog/active-support-safe-buffer-3/">Part Three</a>.</p>
+
+<h4>Advanced Tip</h4>
+
+<p>It can sometimes be frustrating not knowing where to look for the definition
+of a method you&#39;re using. But ruby methods actually know where they&#39;re defined,
+so you can just ask them!</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="mi">2</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="n">p247</span> <span class="p">:</span><span class="mo">001</span> <span class="o">&gt;</span> <span class="nb">String</span><span class="o">.</span><span class="n">instance_method</span><span class="p">(</span><span class="ss">:html_safe</span><span class="p">)</span><span class="o">.</span><span class="n">source_location</span>
+ <span class="o">=&gt;</span> <span class="o">[</span><span class="s2">&quot;/Users/greg/.rvm/gems/ruby-2.0.0-p247@default/gems/activesupport-4.0.</span>
+<span class="s2">0/lib/active_support/core_ext/string/output_safety.rb&quot;</span><span class="p">,</span> <span class="mi">191</span><span class="o">]</span>
+</code></pre></div>
+
+<p>Ruby core methods will return <code>nil</code>.</p>
+
+  </div>
+  &laquo;
+  <a href="/blog/#active-support-safe-buffer-2">blog index</a>
+</article>
+
+      </main>
+    </div>
+  </body>
+  <script src='/js/gregat.es.js'></script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+    ga('create', 'UA-45778206-1', 'gregat.es');
+    ga('send', 'pageview');
+  </script>
+</html>

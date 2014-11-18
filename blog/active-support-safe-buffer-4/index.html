@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
+    <title>Understanding ActiveSupport::SafeBuffer (part four) | gregat.es</title>
+    <meta content='width=device-width' name='viewport'>
+    <link href='/css/screen.css' media='screen, projection' rel='stylesheet' type='text/css'>
+    <link href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <nav role='banner'>
+  <div class='navbar-header'>
+    <button class='navbar-toggle toggle' type='button'>
+      <span class='icon-bar'></span>
+      <span class='icon-bar'></span>
+      <span class='icon-bar'></span>
+    </button>
+    <a class='home' href='/'>gregat.es</a>
+  </div>
+  <div class='nav hide' role='navigation'>
+    <ul>
+      <li id='nav-blog'>
+        <a href='/blog'>Blog</a>
+      </li>
+      <li class='dropdown' id='nav-contact'>
+        <a class='toggle' href='#'>
+          Contact
+          <b class='caret'></b>
+        </a>
+        <ul class='dropdown-menu hide'>
+          <li>
+            <a href='https://github.com/gregates' target='_blank'>
+              <span class='fa fa-github-square'></span>
+              github
+            </a>
+          </li>
+          <li>
+            <a href='https://twitter.com/gregates' target='_blank'>
+              <span class='fa fa-twitter-square'></span>
+              twitter
+            </a>
+          </li>
+          <li>
+            <a href='http://stackoverflow.com/users/1619796/gregates' target='_blank'>
+              <span class='fa fa-stack-overflow'></span>
+              stackoverflow
+            </a>
+          </li>
+          <li>
+            <a href='http://www.linkedin.com/pub/greg-gates/20/824/874/' target='_blank'>
+              <span class='fa fa-linkedin-square'></span>
+              linkedin
+            </a>
+          </li>
+          <li>
+            <a href='mailto:greg@webkite.com'>
+              <span class='fa fa-envelope'></span>
+              email
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li id='nav-cv'>
+        <a href='/cv'>CV</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+    <div id='content'>
+      <sidebar>
+        <img height='718px' src='/images/sidepic-min.png'>
+      </sidebar>
+      <main>
+        <article id="active-support-safe-buffer-4">
+  <h3>Understanding ActiveSupport::SafeBuffer (part four)</h3>
+  <h4 class='subtitle'>Metaphysics!</h4>
+  <p class='meta'>06 Feb 2014</p>
+  <div class='post'>
+    <p>In <a href="/blog/active-support-safe-buffer-1/">Part One</a> of this series, I introduced a puzzle that can be
+seen in the following code snippet:</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="mi">2</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">p353</span> <span class="p">:</span><span class="mo">001</span> <span class="o">&gt;</span> <span class="n">string_one</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span> <span class="o">+</span> <span class="s1">&#39;a&#39;</span><span class="o">.</span><span class="n">html_safe</span>
+ <span class="o">=&gt;</span> <span class="s2">&quot;aa&quot;</span>
+<span class="mi">2</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">p353</span> <span class="p">:</span><span class="mo">002</span> <span class="o">&gt;</span> <span class="n">string_two</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span><span class="o">.</span><span class="n">html_safe</span> <span class="o">+</span> <span class="s1">&#39;a&#39;</span>
+ <span class="o">=&gt;</span> <span class="s2">&quot;aa&quot;</span>
+<span class="mi">2</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">p353</span> <span class="p">:</span><span class="mo">003</span> <span class="o">&gt;</span> <span class="n">string_one</span> <span class="o">==</span> <span class="n">string_two</span>
+ <span class="o">=&gt;</span> <span class="kp">true</span>
+<span class="mi">2</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">p353</span> <span class="p">:</span><span class="mo">004</span> <span class="o">&gt;</span> <span class="n">string_one</span><span class="o">.</span><span class="n">html_safe?</span>
+ <span class="o">=&gt;</span> <span class="kp">false</span>
+<span class="mi">2</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">p353</span> <span class="p">:</span><span class="mo">005</span> <span class="o">&gt;</span> <span class="n">string_two</span><span class="o">.</span><span class="n">html_safe?</span>
+ <span class="o">=&gt;</span> <span class="kp">true</span>
+</code></pre></div>
+
+<p>After learning <em>why</em> <code>string_two</code> is html safe and <code>string_one</code> is not in
+<a href="/blog/active-support-safe-buffer-3/">Part Three</a>, this series of expressions might no longer seem
+puzzling. In this post,
+I want to offer an explanation of why these ruby expressions were jointly
+puzzling in the first place. The answer will take us away from code and into
+the realm of philosophical logic.</p>
+
+<!--break-->
+
+<p><aside>It&#39;s important to distinguish Leibniz&#39;s Law, which is about as
+uncontroversial as it&#39;s possible for a proposition to be in philosophy, from
+Leibniz&#39;s more famous principle known as the &quot;Identity of Indiscernibles&quot; (II),
+which is the converse of Leibniz&#39;s Law. That is, (II) says that if two objects
+have all their properties in common, then they are identical. Although this may
+sound just as trivial as Leibniz&#39;s Law, it&#39;s actually much more controversial.
+Confusingly, (II) is itself sometimes referred to as Leibniz&#39;s Law, as in the
+<a href="http://plato.stanford.edu/entries/identity-indiscernible/">Stanford Encyclopedia of Philosophy article</a> on (II), and
+sometimes people use &quot;Leibniz&#39;s Law&quot; to mean the conjunction of both
+principles. (What I&#39;m calling Leibniz&#39;s Law can also be called the
+&quot;Indiscernibility of Identicals.&quot;)</aside></p>
+
+<p>I propose that the explanation for why the set of expressions above seems
+puzzling is that the last two statements &mdash; that <code>string_one</code> is <em>not</em>
+safe but <code>string_two</code> is &mdash; seem to jointly entail that <code>string_one</code>
+and <code>string_two</code> are not identical. The fact that it&#39;s natural to make this
+inference is part of the intuitive support for the idea that <a href="http://plato.stanford.edu/entries/identity/">&quot;Leibniz&#39;s Law&quot; is
+central to our concept of identity</a>. Leibniz&#39;s Law is the name often
+given to the following logical principle:</p>
+
+<div class="prop">x = y → (∀F)(Fx ↔ Fy)</div>
+
+<p>In words, this principle says that if two things are identical, then they share
+all the same properties. So if <code>string_one</code> is unsafe and <code>string_two</code> is safe,
+then <code>string_one</code> and <code>string_two</code> are not identical.</p>
+
+<p>This can seem puzzling because a natural interpretation of <code>==</code> in ruby is
+that it expresses identity: one expects <code>a == b</code> to be true if and only if a
+and b are the <em>same</em> object. But there&#39;s identity and there&#39;s identity &mdash;
+Leibniz&#39;s Law is a proposition about <em>ontology</em>, about what there is in the
+broadest possible sense, and does not hold of looser ways of talking about
+identity. I may be the <em>same</em> person that I was when I was
+fifteen years old, and yet I may without contradicting myself say &quot;I&#39;m not at
+all the same person I was when I was in high school.&quot; This is because the
+relation we express by saying that two things are the &quot;same&quot; may be a very
+different relation than ontological identity, as becomes very clear with even
+a cursory investigation into the thorny philosophical problem of
+<a href="http://plato.stanford.edu/entries/identity-personal/">personal identity</a>. For the rest of this post, I
+will reserve the word &quot;identity&quot; to mean a relationship that obeys Leibniz&#39;s Law.</p>
+
+<p>So what we actually learned in <a href="/blog/active-support-safe-buffer-3/">Part Three</a> of this series could
+be put this way: the <code>==</code> method for the <code>String</code> class in ruby does not
+express <em>identity</em>, but some other relation of sameness. And really this should
+not be surprising, because, like <code>+</code>, <code>==</code> is a method in ruby, not an operator.
+So its semantics may well vary from class to class. If we wanted, we could mess
+with people by overriding <code>String#==</code> to always return true, so that any string
+is always the &quot;same&quot; as any other object it&#39;s compared to!</p>
+
+<p>I&#39;m not particularly good at reading C code, and I won&#39;t expect you to be, so we
+will ignore the precise implementation details of <code>String#==</code>. But
+the <a href="http://www.ruby-doc.org/core-2.1.0/String.html#method-i-3D-3D">documentation</a> tells us what it&#39;s intended to mean.</p>
+
+<blockquote>
+<p>returns similarly to #eql?, comparing length and content.</p>
+</blockquote>
+
+<p>(There are some other details about comparing strings to non-strings, but we
+can ignore those for our purposes.)</p>
+
+<p>The key is that this documentation tells us which properties matter for string
+equality &mdash; length and content (and membership in the <code>String</code> class).
+Other properties, such as html-safety,
+don&#39;t matter as far as string equality is concerned. So two strings are said to
+be the same string if they have the same content and the same length.
+Content and length, in the jargon of metaphysics, would be the 
+<a href="http://plato.stanford.edu/entries/essential-accidental/">essential properties</a> of strings. What this means exactly is
+difficult to define precisely, but the idea
+goes all the way back to <a href="http://plato.stanford.edu/entries/aristotle-metaphysics/">Aristotle</a>, who would have said that
+two objects are the same &quot;<em>qua</em> string&quot; if they are the same with respect to
+length and content and both belong to the <code>String</code> class. But two objects which
+are the same <em>qua</em> string may be different <em>qua</em> some other type, e.g.,
+different <em>qua</em> <code>ActiveSupport::SafeBuffer</code>. (<code>ActiveSupport::SafeBuffer</code> does
+not define it&#39;s own method for testing equality <em>qua</em>
+<code>ActiveSupport::SafeBuffer</code>, however. After all, all it takes to be the
+same <em>qua</em> <code>ActiveSupport::SafeBuffer</code> is to be the same <em>qua</em> string and to
+also be the same with respect to html safety, which is easy enough to test for.)</p>
+
+<p>With this philosophical terminology under our belt, we can easily express what
+was puzzling about our puzzle in <a href="/blog/active-support-safe-buffer-1/">Part One</a>: it&#39;s natural to
+intepret <code>==</code> as expressing an identity relation, but it does
+not obey Leibniz&#39;s Law, as our puzzle shows. And we can easily express the
+resolution to the puzzle: <code>==</code> is not an identity relation in ruby, 
+but rather expresses
+a class-relative notion of sameness <em>qua</em> class, and sameness <em>qua</em> string is
+a matter of sameness of content and length alone.</p>
+
+<p>In fact this is quite natural, and I think the semantics the designers of ruby
+chose for <code>String#==</code> is exactly what it should be. And for the most part you&#39;d
+just use <code>==</code> without thinking about it, and it would mean what you&#39;d expect it
+to mean. The cool part is that programming languages can give rise to
+philosophical puzzles just as natural languages can.</p>
+
+  </div>
+  &laquo;
+  <a href="/blog/#active-support-safe-buffer-4">blog index</a>
+</article>
+
+      </main>
+    </div>
+  </body>
+  <script src='/js/gregat.es.js'></script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+    ga('create', 'UA-45778206-1', 'gregat.es');
+    ga('send', 'pageview');
+  </script>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
+    <title>Shoefitr Review Indexer | gregat.es</title>
+    <meta content='width=device-width' name='viewport'>
+    <link href='/css/screen.css' media='screen, projection' rel='stylesheet' type='text/css'>
+    <link href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <nav role='banner'>
+  <div class='navbar-header'>
+    <button class='navbar-toggle toggle' type='button'>
+      <span class='icon-bar'></span>
+      <span class='icon-bar'></span>
+      <span class='icon-bar'></span>
+    </button>
+    <a class='home' href='/'>gregat.es</a>
+  </div>
+  <div class='nav hide' role='navigation'>
+    <ul>
+      <li id='nav-blog'>
+        <a href='/blog'>Blog</a>
+      </li>
+      <li class='dropdown' id='nav-contact'>
+        <a class='toggle' href='#'>
+          Contact
+          <b class='caret'></b>
+        </a>
+        <ul class='dropdown-menu hide'>
+          <li>
+            <a href='https://github.com/gregates' target='_blank'>
+              <span class='fa fa-github-square'></span>
+              github
+            </a>
+          </li>
+          <li>
+            <a href='https://twitter.com/gregates' target='_blank'>
+              <span class='fa fa-twitter-square'></span>
+              twitter
+            </a>
+          </li>
+          <li>
+            <a href='http://stackoverflow.com/users/1619796/gregates' target='_blank'>
+              <span class='fa fa-stack-overflow'></span>
+              stackoverflow
+            </a>
+          </li>
+          <li>
+            <a href='http://www.linkedin.com/pub/greg-gates/20/824/874/' target='_blank'>
+              <span class='fa fa-linkedin-square'></span>
+              linkedin
+            </a>
+          </li>
+          <li>
+            <a href='mailto:greg@webkite.com'>
+              <span class='fa fa-envelope'></span>
+              email
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li id='nav-cv'>
+        <a href='/cv'>CV</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+    <div id='content'>
+      <main class='wide'>
+        <style>
+  #cv p { margin-top: 1em; font-size: 14pt; }
+  #cv h3 { margin-top: 1em; }
+</style>
+<article id='cv'>
+  <section>
+    <h2>README</h2>
+    <hr>
+    <p>So, I tried several different implementations of this review-indexer, and I wanted to talk through some of my thought processes.</p>
+    <p>First of all, the two languages I am most comfortable with are Ruby and JavaScript. It's impossible to do concurrency with threads in JavaScript, so I ruled that out given that half of the assignment is implementing a parallel solution. Ruby has a reputation for being bad at concurrency. Both are somewhat annoying in that, as scripting languages, you'd need to install an interpreter for my scripts to even run. So I decided to try something less familiar. This turned out be a mistake, as you'll see below.</p>
+    <h3>Attempt #1: Haskell</h3>
+    <p>"I would love to learn some more Haskell," I thought. "This project might be just the right opportunity." Plus, Haskell has built-in concurrency features, so I thought I might benefit from that. Unfortunately, I never even got that far.</p>
+    <p>
+      As you can see if you
+      <a href='haskell.zip'>download this zip,</a>
+      there is a "working" serial implementation, but it works only for very
+      small lists of urls (it's currently hardcoded to use a subset of 5).
+    </p>
+    <p>
+      The main reason for this limitation is the immutable nature of Haskell data structures. To create the Data.Map that constitutes the search index, I end up building a function that looks something like
+      <code>String -> [ReviewFile] -> [(String, Int)]</code>
+      which takes a word and the entire set of review files, and returns a list of (shoe, review count) tuples for that word.
+      Once we have that, we can build a Map by getting the set of all words that appear in the reviews and applying this function once for each word. Obviously, that's a very expensive procedure, since we need to iterate over all the review files for each word. It quickly gets out of control even at relatively small N.
+    </p>
+    <p>
+      Obviously, that strategy was no good, and, worse, lookup times for a Map data structure in Haskell are O(n), so there's no guarantee of instanteous results even after we build up an index for large numbers of words. I intended to try to remedy this by using a mutable hash table, but I got lost in a sea of monads (couldn't figure out how to do IO both for user input and output and IO to the mutable hash table), and gave up.
+    </p>
+    <p>
+      (I'm sure it's possible to improve on the solution I have even without using a mutable hash table, but after that plan failed I decided it wasn't worth going back to try to optimize the existing implementation.)
+    </p>
+    <h3>Attempt #2: Go</h3>
+    <p>
+      Still thinking I'd use a language built with concurrency in mind, but in which I could use a more comfortable imperative coding style, I switched to Go (which I'm also not that familiar with but have done a small amount of work in).
+    </p>
+    <p>
+      <a href='go.zip'>Download my Go effort</a>
+      (To try it out, you can hopefully just run the
+    </p>
+    <p>This went a little better, as I managed a serial implementation that can actually handle the full list of urls. Still not exactly fast, but it's clear enough to me that the latency here is primarily from the serial http requests, which is what I'd expect.</p>
+    <p>Where this effort started to go wrong was when I began reading about concurrency in Go. While I'm sure with sufficient time I could figure out how to make the http requests process in parallel, it became clear that the amount of time that would take was too great. So I abandoned this effort and decided, somewhat defeated, to fall back to Ruby.</p>
+    <h3>Attempt #3: Ruby</h3>
+    <p>
+      <a href='ruby.zip'>Download my Ruby effort</a>
+    </p>
+    <p>
+      To run my program(s), you'll need a ruby interpreter and the bundler gem (to install dependencies). Once you've
+      <a href='https://www.ruby-lang.org/en/installation/' target='_blank'>installed ruby</a>
+      you should be able to just run
+    </p>
+    <p>
+      <code>gem install bundler</code>
+    </p>
+    <p>and then my scripts will take care of the rest, assuming you're on a unix-like OS. From the serial or parallel folder, run</p>
+    <p>
+      <code>./review-indexer</code>
+    </p>
+    <p>
+      If you're not on a unix-like OS, you can manually run
+    </p>
+    <p>
+      <code>bundle install</code>
+    </p>
+    <p>and then</p>
+    <p>
+      <code>bundle exec ruby review-indexer.rb</code>
+    </p>
+    <p>
+      There will be a little bit of overhead as we install a couple of http libraries that I depend on. You may also see stuttering during indexing, this may of course be latency on the wire, but it can also be the ruby garbage collector. Unfortunately, with ruby there's no way around this.
+    </p>
+    <p>
+      I was surprised that I didn't run into too many memory limitations with ruby; I had initially thought I would have to use
+      <a href='http://redis.io/' target='_blank'>Redis</a>
+      or another strategy for actually storing the review index, rather than using a simple ruby Hash, but it turned out that for the size of the index this was unnecessary, and the latency for requests to the redis server significantly slowed down building the index, so I abandoned that strategy (I had built a version that used it). For a larger index, my solution would probably benefit from offloading some of the work to Redis or some other storage solution, but for this number of review files, storing the index in-memory in the ruby process gave the best performance.
+    </p>
+    <p>As you'll see, I managed to achieve parallelization of the major source of latency simply by using a different http library that has support for concurrency built-in. Even though ruby has a reputation for being bad for that sort of this, in this particular case that library made it quite simple to gain a massive decrease in the time to build the search index.</p>
+    <h3>Lessons Learned</h3>
+    <p>Ok, I knew I was making it hard on myself from the outset when I decided to try this assignment in unfamiliar languages. That's definitely something I rely on my co-workers for in my current job &mdash; bringing me back to earth when I let my excitement for learning something new overwhelm the obvious practical benefits of using the tools I already understand. Sometimes the best tool is the one that gets the job done quickly and well enough, not the one that's theoretically best if you were equally competent with all of them.</p>
+  </section>
+</article>
+
+      </main>
+    </div>
+  </body>
+  <script src='/js/gregat.es.js'></script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+    ga('create', 'UA-45778206-1', 'gregat.es');
+    ga('send', 'pageview');
+  </script>
+</html>

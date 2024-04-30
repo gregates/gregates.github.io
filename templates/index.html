@@ -1,8 +1,15 @@
 
 {% extends "base.html" %}
 
-
 {% block content %}
-<p>nothing here right now</p>
-<p>except <a href="/keybase.txt">my keybase proof</a></p>
+<main>
+    <div id="index">
+      <!-- If you are using pagination, section.pages will be empty. You need to use the paginator object -->  
+      {% for page in section.pages %}
+      <div class="row">
+          <span>{{ page.date }}</span><a href="{{ page.permalink | safe }}">{{ page.title }}</a></li>
+      </div>
+      {% endfor %}
+    </div>
+</main>
 {% endblock content %}

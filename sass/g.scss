@@ -24,6 +24,10 @@
     }
 }
 
+body {
+    max-width: 100ch;
+}
+
 main {
     font-family: serif;
     font-size: 16px;
@@ -45,11 +49,8 @@ h1 {
     font-size: 24px;
 }
 
-.blog {
-    max-width: 100ch;
-}
-
 footer {
+    margin-top: 0.5rem;
     padding-top: 0.5rem;
     display: flex;
     gap: 1rem;

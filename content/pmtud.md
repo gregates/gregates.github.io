@@ -271,7 +271,7 @@ separate, non-optimized path to the network. Since we expected 3.5% of our datag
 fragmented, and the rate limit was around 1000 per second, that means we could reach a total
 transaction rate of around 28,500 datagrams per second before hitting the rate limit, which explains
 why the initial portion of the load test would see the normal, low error rate. Then, after exceeding
-that transaction rate, we would expect a loss rate `tps * 0.035 - 1000` datagrams per second (plus
+that transaction rate, we would expect a loss rate of `tps * 0.035 - 1000` datagrams per second (plus
 our normal failures), where
 `tps` is the throughput our load generator was pushing. And this would cause our failure rate to asymptotically approach
 3.5% or so.

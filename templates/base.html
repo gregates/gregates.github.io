@@ -4,6 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  {%- if page.extra.og.image -%}
+  <meta property="og:image" content="{{ page.extra.og.image }}"/>
+  {%- endif -%}
   <title>gregat.es</title>
   <link href="/g.css" rel="stylesheet" />
 </head>

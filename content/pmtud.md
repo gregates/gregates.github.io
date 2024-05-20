@@ -1,6 +1,9 @@
 +++
 title = "PMTUD: an AWS debugging story"
 date = 2024-05-19
+
+[extra.og]
+image = "/s3cache-test-run-failed.png"
 +++
 
 This is the story of my most fondly remembered project from my time on the S3 storage team in AWS.

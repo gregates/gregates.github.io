@@ -3,7 +3,7 @@ title = "PMTUD: an AWS debugging story"
 date = 2024-05-19
 
 [extra.og]
-image = "/s3cache-test-run-failed.png"
+image = "/s3cache-test-run-failed.webp"
 +++
 
 This is the story of my most fondly remembered project from my time on the S3 storage team in AWS.
@@ -96,7 +96,7 @@ new failure mode that we weren't.
 ## Normal operation
 
 So we'd run S3Cache on some box and point the load generator at it, and gradually ramp up GET TPS.
-A normal, qualifying result would look like this: ![normal load test result with error rate spiking at 180,000 TPS](/s3cache-test-run-normal.png)
+A normal, qualifying result would look like this: ![normal load test result with error rate spiking at 180,000 TPS](/s3cache-test-run-normal.webp)
 This is an entirely fake graph with made up numbers, but it shows the shape of things. If this were a real result, it would indicate that we can operate S3Cache on this type of box up to 160,000 TPS. So we'd want however much capacity would spread the load out to around 100,000 TPS per instance, leaving enough extra capacity to absorb a loss of &frac13; with no loss of availability.
 
 We observed that failures increased gradually with GET throughput, even before reaching the
@@ -118,7 +118,7 @@ overflowing socket buffers.
 
 Here's what happened when we attempted to qualify S3Cache on an EC2 instance.
 ![failed load test result for EC2 with error rate spiking at just 40,000 TPS and asymptotically
-approaching about 3.5%](/s3cache-test-run-failed.png)
+approaching about 3.5%](/s3cache-test-run-failed.webp)
 The failure rate in this graph jumped up to an unacceptably high error rate very early in the run, and then gradually
 increased after that. After the jump, the curve was logarithmic in shape, with what
 appeared to be a limit around at around 3.5%.

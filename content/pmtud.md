@@ -304,7 +304,7 @@ So if fragmentation had been working fine for us for so long, it's worth asking 
 avoid it (like the plague)? A typical answer is that the internet is composed of a bunch of links with
 varying behavior. They have different MTU sizes, some of them might not handle fragmented packets at
 all or might handle them incorrectly (as in [this Google Compute Engine
-issue](https://issuetracker.google.com/issues/35904565#c22), some of them might rate limit fragments
+issue](https://issuetracker.google.com/issues/35904565#c22)), some of them might rate limit fragments
 (ENA!). Fragmentation also increases resource utilization on the nodes that need to do the
 fragmentation, and therefore might reduce throughput or increase latency, or cause drops like
 those that we saw at S3Cache during garbage collection pauses.

@@ -1,6 +1,7 @@
 _site
 *.swp
 *.swo
+public/
 
 .sass-cache
 .bundle

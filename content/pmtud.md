@@ -89,7 +89,7 @@ that is exactly what we saw on the load generator when we first attempted to ram
 production-like load. The load generator fell over well before S3Cache did.
 
 I won't get into the details of how I resolved that problem &mdash; basically by shifting to
-parallel load generation, but also some optimization in the load generation code itself. I mention it
+parallel load generation, but also some optimization in the load generator code itself. I mention it
 because we're going to need to distinguish this failure mode, which we were familiar with, from a
 new failure mode that we weren't.
 
@@ -335,7 +335,7 @@ So we were running with some portion of the S3Cache fleet on EC2 for a while, as
 well. We went to stand up more EC2 capacity. There was an availability zone in which the
 5th-generation instances weren't available (I think they were to customers, but they wouldn't let us
 use them there at the time, probably to make sure there was enough supply for customer demand). So
-we did another qualifying run with our load generation on 4th-generation instance types, which
+we did another qualifying run with our load generator on 4th-generation instance types, which
 lacked ENA.
 
 Now, we had specialized our configuration change so that it only applied when we

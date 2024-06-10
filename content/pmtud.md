@@ -1,6 +1,6 @@
 +++
 title = "PMTUD: an AWS debugging story"
-date = 2024-05-19
+date = 2024-06-10
 
 [extra.og]
 image = "/s3cache-test-run-failed.webp"
@@ -9,7 +9,7 @@ image = "/s3cache-test-run-failed.webp"
 This is the story of my most fondly remembered project from my time on the S3 storage team in AWS.
 
 When I joined S3 in 2018, my team owned a service that was just a
-high-throughput, in-memory cache of some critical data needed for every GET or PUT. When telling
+high-throughput, in-memory cache. This cache was simple, but critical &mdash; a cache lookup occurs on every GET or PUT. When telling
 people about it they would ask, "Why not redis or memcached?" The answer was that this service was as old as S3, i.e.,
 about as old as
 memcached and older than redis, so those weren't really options at the time. But it served a similar
@@ -31,19 +31,19 @@ work? My first assignment in S3 was to answer this question.
 
 First, I had to understand how the service worked. Here are the key points.
 
-It spoke a custom network protocol transmitted over either TCP or UDP, like all S3 services.
+It spoke a custom network protocol that could be layered over either TCP or UDP, like all S3 services.
 
 It was written in java and ran on the JVM, like all S3 services at the time.
 
 It listened on multiple ports: one port for TCP requests, which were mainly admin actions and updates,
-  and a configurable *n* ports for UDP requests, which were exclusively GET requests for the data in
+  and a configurable *n* ports for UDP requests, which were exclusively reads of the data in
   the cache.
 
-The most important scaling dimension was GET throughput. This service had to handle
-  S3-scale transactions per second. One for every GET, PUT, and DELETE. We managed that on a
+The most important scaling dimension was read throughput. This service had to handle
+  S3-scale transactions per second. At least one for every GET, PUT, and DELETE. We managed that on a
   relatively small number of instances.
 
-Latency was also important. Typical client-measured latency for a single GET request and response was
+Latency was also important. Typical client-measured latency for a single read was
 around 1 ms at the 99th percentile.
 
 Since we used UDP, we didn't expect 100% availability. It was difficult to define a good availability
@@ -76,13 +76,13 @@ modes that look identical from the client's perspective:
 1. S3Cache failed to send a response.
 2. S3Cache sent a response, but it was not received or processed before the timeout.
 
-Type 1 failures did happen. In fact, this type of failure mostly accounts for the up-to-0.5% of GETs that
+Type 1 failures did happen. In fact, this type of failure mostly accounts for the up-to-0.5% of reads that
 are expected, acceptable failures, as we'll discuss below. But invariably when a client of the
 service observed higher failure rates, it was because *they* were under pressure, and consequently
 failing to process requests in time. This often manifested as an increased number of dropped UDP
 packets, as socket buffers filled up.
 
-You can observe this at `/proc/net/snmp`, which has an
+You can observe this (on Amazon Linux 2) at `/proc/net/snmp`, which has an
 `InErrors` counter for UDP. This counter is incremented when a packet is dropped or has a bad
 checksum. If you're dropping packets because your buffer is full, you'll see this counter go up. And
 that is exactly what we saw on the load generator when we first attempted to ramp it up to
@@ -95,11 +95,12 @@ new failure mode that we weren't.
 
 ## Normal operation
 
-So we'd run S3Cache on some box and point the load generator at it, and gradually ramp up GET TPS.
+So we'd run S3Cache on some box and point the load generator at it, and gradually ramp up our read
+transactions per second (TPS).
 A normal, qualifying result would look like this: ![normal load test result with error rate spiking at 180,000 TPS](/s3cache-test-run-normal.webp)
-This is an entirely fake graph with made up numbers, but it shows the shape of things. If this were a real result, it would indicate that we can operate S3Cache on this type of box up to 160,000 TPS. So we'd want however much capacity would spread the load out to around 100,000 TPS per instance, leaving enough extra capacity to absorb a loss of &frac13; with no loss of availability.
+This is an entirely fake graph with made up numbers, but it shows the shape of things. If this were a real result, it would indicate that we can operate S3Cache on this type of box up to 180,000 TPS. So we'd want however much capacity would spread the load out to around 120,000 TPS per instance, leaving enough extra capacity to absorb a loss of &frac13; with no loss of availability.
 
-We observed that failures increased gradually with GET throughput, even before reaching the
+We observed that failures increased gradually with read throughput, even before reaching the
 point where the service falls over.
 What accounted for those failures? It turned out that if you compared UDP InErrors on
 the S3Cache host to
@@ -110,7 +111,7 @@ UDP packets were being lost when queues formed during GC pauses that overflowed 
 as long as the request rate was low enough, S3Cache could catch up and drain what made it into the
 buffer after the pause ended.
 
-So in normal operation, basically all observed failures of GET requests to S3Cache were the result
+So in normal operation, basically all observed read failures were the result
 of UDP datagrams being dropped by S3Cache's host OS or the client's host OS due to
 overflowing socket buffers.
 
@@ -144,15 +145,15 @@ more normal load test pattern on EC2.
 So, great, problem solved!  We could just compress to reduce datagram size,
 and all would be well.
 
-This proposal had a few drawbacks. One, we didn't know what compression would do to our throughput.
+This possible solution had a few drawbacks. One, we didn't know what compression would do to our throughput.
 Probably it would have been fine for S3Cache, and in fact might have been good for vertical scalability as
 well, because we could just cache the compressed bytes, in theory. But many other services would
 have had extra work to do to compress and decompress, and at the request rates we were talking about, we
-couldn't assume that was a negligible amount of work. It would have required a lot more testing, at any rate.
+couldn't assume that was a negligible amount of work. It would have required a lot more testing, and likely increased our hardware spend.
 
 Two, we'd have had to modify S3Cache *and* all other services that passed around this sort of
 data &mdash; of which there are several. And remember that we were on the critical GET and PUT request path.
-That's a complicated, cross-service deployment.
+That's a complicated, multi-team effort.
 
 Implementing this solution would have taken months to complete. That was longer than we wanted it
 to take. Another reason we wanted to get S3Cache on EC2 is that we needed to vertically scale in
@@ -196,7 +197,7 @@ This raised a question: how was the EC2 host supposed to know that the recipient
 it could fragment accordingly? At the start of this journey I didn't even know what "MTU" stood for,
 so I'd certainly never heard of path MTU discovery (PMTUD), which is the answer to that question. It
 seemed likely that the MTU size was relevant, but I couldn't explain how it interacted with the
-system to produce the failure rate curve we observed. So it was time to learn more.
+system to produce the failure rate curve we observed. It was time to learn more.
 
 ## How does PMTUD work?
 
@@ -220,7 +221,7 @@ it pre-fragments, ensuring that each fragment fits into the smallest known MTU f
 After sending at least as many packets as there are hops on the path, it's guaranteed to learn
 the true path MTU and won't lose any more datagrams, at least not for the "fragmentation needed" reason.
 
-I confirmed that path MTU discovery was enabled by default on the EC2 instances we
+This algorithm is implemented in the Linux kernel, and I confirmed that path MTU discovery was enabled by default on the EC2 instances we
 were testing. So, since they could send jumbo dataframes of up to 9001 B, S3Cache should have been
 sending larger datagrams whole, with the don't fragment flag set, and
 then receiving back ICMP "fragmentation needed" messages with a next-hop MTU of 1500 B, after which
@@ -244,7 +245,7 @@ the load generator. So we needed to understand what lay in between.
 
 ## The Elastic Network Adapter takes the stage
 
-The first stop for a network packet after leaving the OS networking layer is the network
+The first stop for a network packet after leaving the kernel networking layer is the network
 interface. That's not what you'd normally consider a "hop" on the path to the destination, but it is a
 distinct component that handles the packet.
 
@@ -285,7 +286,7 @@ sending datagrams larger than the path MTU. For this to work, we'd need to unset
 fragment" flag, allowing downstream nodes to fragment as needed &mdash; otherwise we'd guarantee
 that all large datagrams would be lost. But since at the EC2 host we get to
 use jumbo frames, fragmentation wouldn't be necessary until some point downstream of ENA. All of this
-could be accomplished with a single setting: `ip_no_pmtu_disc = 1` means *stop doing path MTU
+could be accomplished with a single kernel setting: `ip_no_pmtu_disc = 1` means *stop doing path MTU
 discovery, and unset "don't fragment"*.
 
 *Et voilà!* Astute readers will notice, however, that this solution ignores the networking team's
@@ -310,7 +311,7 @@ those that we saw at S3Cache during garbage collection pauses.
 Also, as we noted above, losing any fragment of a UDP datagram means the whole datagram is
 lost, increasing the probability of datagram loss.
 
-And those are good reasons! And yet, the legacy prod network was more predictable than the internet.
+Those are good reasons! And yet, the network path we were traversing was more predictable than the internet.
 We knew the path MTU would never be less than 1500 B. And we knew that only a small percentage of
 our datagrams would exceed that size. "We" didn't control the network, in the sense of "we" that
 only included my team at S3, but "we" did control every point on the path in the sense of "we" that

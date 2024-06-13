@@ -14,14 +14,14 @@ people about it they would ask, "Why not redis or memcached?" The answer was tha
 about as old as
 memcached and older than redis, so those weren't really options at the time. But it served a similar
 purpose and served it well enough that there had never been any reason to switch. It was a critical
-service &mdash; a cache lookup occurred on every GET or PUT to S3. But it was simple and stable. It
+service &mdash; a cache lookup was needed for every GET or PUT to S3. But it was simple and stable. It
 had hardly changed in over a decade. Until I joined, operating it mostly consisted of occasionally
 scaling the service in growing regions.
 
 S3 was the very first AWS service to launch. So of course it did not, initially, run on AWS itself. In the
 fullness of time, it would, but in 2018 S3 was still mostly operating on custom bare metal hardware
 in Amazon's legacy prod network. Since S3Cache was simple, stable, and stateless, it was a good
-candidate to be one of the first services to make the switch to EC2. The idea was that it would run in EC2 and still
+candidate to be one of the first services to make the switch to EC2. The idea was that it would run on EC2 and still
 communicate with the rest of the S3 services running on legacy hardware via a link between the two
 networks. Everyone thought this would be an easy transition. But how could we **know** that it would
 work? My first assignment in S3 was to answer this question.

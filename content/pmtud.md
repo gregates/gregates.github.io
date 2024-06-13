@@ -9,15 +9,14 @@ image = "/s3cache-test-run-failed.webp"
 This is the story of my most fondly remembered project from my time on the S3 storage team in AWS.
 
 When I joined S3 in 2018, my team owned a service that was just a
-high-throughput, in-memory cache. This cache was simple, but critical &mdash; a cache lookup occurs on every GET or PUT. When telling
-people about it they would ask, "Why not redis or memcached?" The answer was that this service was as old as S3, i.e.,
+high-throughput, in-memory cache. When telling
+people about it they would ask, "Why not redis or memcached?" The answer was that this service (let's call it S3Cache) was as old as S3, i.e.,
 about as old as
 memcached and older than redis, so those weren't really options at the time. But it served a similar
-purpose and served it well enough that there had never been any reason to switch.
-
-This service (let's call it S3Cache) had hardly changed in over a decade.
-Until I joined, operating it mostly consisted of occasionally horizontally or
-vertically scaling the service in growing regions.
+purpose and served it well enough that there had never been any reason to switch. It was a critical
+service &mdash; a cache lookup occurred on every GET or PUT to S3. But it was simple and stable. It
+had hardly changed in over a decade. Until I joined, operating it mostly consisted of occasionally
+scaling the service in growing regions.
 
 S3 was the very first AWS service to launch. So of course it did not, initially, run on AWS itself. In the
 fullness of time, it would, but in 2018 S3 was still mostly operating on custom bare metal hardware

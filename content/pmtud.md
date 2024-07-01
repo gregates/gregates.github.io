@@ -288,7 +288,7 @@ use jumbo frames, fragmentation wouldn't be necessary until some point downstrea
 could be accomplished with a single kernel setting: `ip_no_pmtu_disc = 1` means *stop doing path MTU
 discovery, and unset "don't fragment"*.
 
-*Et voilà!* Astute readers will notice, however, that this solution ignores the networking team's
+*Et voilà!* Astute readers will notice that this solution ignores the networking team's
 point #1, which they insisted on quite emphatically. Avoiding fragmentation for TCP segments is,
 after all, the whole point of PMTUD. For UDP, however, avoiding fragmentation requires application-level
 support, since the protocol has no mechanism for sending a datagram in multiple segments.

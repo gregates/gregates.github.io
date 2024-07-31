@@ -3,7 +3,7 @@ title = "Pivot is just a shorter, fatter group by"
 date = 2024-07-31
 
 [extra.og]
-image = "baby_names_pivot_config.webp"
+image = "/baby_names_pivot_config.webp"
 +++
 
 I first heard the term "pivot table" in, I think, 2012. At the time, I had no idea what a pivot
@@ -34,7 +34,7 @@ data is a table with 4 columns and 2,116,840 rows. If you want to see the data y
 make a copy of my [Row Zero workbook](https://rowzero.io/workbook/644C5FB13CA060884AC9172C/3?copy)
 by clicking that link. Or you can just refer to the screenshot below to see a sample of the data.
 
-![several rows of data in a table with columns Year, Name, Sex, and Count](/baby_names_table.png)
+![several rows of data in a table with columns Year, Name, Sex, and Count](/baby_names_table.webp)
 
 Let's call Year, Name, Sex, and Count "fields" of our data (because pivot uses the word
 "column" for something else).
@@ -49,7 +49,7 @@ You can also compute uniques for multiple fields of a table. This produces one r
 baby names table would produce two rows per year, like so:
 
 ![a table with two columns, Year and Sex, where each year has two rows, one with "M" in Sex and one
-with "F"](/baby_names_unique_year_sex.png)
+with "F"](/baby_names_unique_year_sex.webp)
 
 Each row in the output table corresponds to one or more rows in the input table. This operation only
 gives you the actually occuring combinations, not all possible combinations of values from the
@@ -82,7 +82,7 @@ field *by* Year and Sex. It's a way of summarizing the data in our input table.
 For example, if we wanted to sum the counts for each name by year and sex, we would do `table.groupby(["Year", "Sex"], { "Name": omit, "Count": sum })`. This will tell us how many babies of each sex there are for each year. The output would look like:
 
 ![a table with three columns, Year, Sex, and Sum of Count, where each year has two rows, one with "M" in Sex and one
-with "F"](/baby_names_sum_of_count_by_year_and_sex.png)
+with "F"](/baby_names_sum_of_count_by_year_and_sex.webp)
 
 This table has the same number of rows as the example in the previous section, it just adds an
 additional column summarizing the Count field for each row.
@@ -107,7 +107,7 @@ where we move "Sex" to columns. Here's what you get:
 
 ![a table with three columns, Year, F, and M, where each year has a single row, and the sum of count
 for each sex has been put in the corresponding
-column](/baby_names_sum_of_count_by_year_and_sex_pivoted.png)
+column](/baby_names_sum_of_count_by_year_and_sex_pivoted.webp)
 
 We no longer have a Sex column on our output table. Instead, we have one column per unique value
 of the Sex field. We also no longer have a Sum of Count column. Instead, the "M" and "F" columns are
@@ -148,7 +148,7 @@ Zero](https://rowzero.io), you instantly get a chart showing count of baby boys 
 time.
 
 ![a line chart showing the change over time of the number of baby boys and baby girls in the SSA
-data](/baby_names_pivot_chart.png)
+data](/baby_names_pivot_chart.webp)
 
 Each column becomes its own graphable series of data in the pivot. Pivot tables are especially
 powerful when combined with charts in a spreadsheet.

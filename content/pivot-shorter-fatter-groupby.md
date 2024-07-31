@@ -1,0 +1,168 @@
++++
+title = "Pivot is just a shorter, fatter group by"
+date = 2024-07-31
+
+[extra.og]
+image = "baby_names_pivot_config.webp"
++++
+
+I first heard the term "pivot table" in, I think, 2012. At the time, I had no idea what a pivot
+table was. I made some desultory efforts to understand what they are and how one uses them, but I
+found Excel's interface inscrutable. Excel's documentation and Google were no help, either. Even
+today all you get is a bunch of "pivot tables are useful for aggregating data to make decisions" and
+suggestions to play around with them in Excel until you figure it out. I quickly decided it wasn't
+worth understanding.
+
+Eleven years later I took up the task of implementing pivot tables for [Row
+Zero](https://rowzero.io). It was only then that I was finally forced to understood them. Here, I
+take up the task of attempting to explain pivot tables in a way that would have been helpful to me a
+decade ago.
+
+The headline: pivot is just a shorter, fatter group by. But, what's a "group by", and what would it
+mean for such a thing to be fat or short. The rest of this article will attempt to clarify by first
+discussing other operations that pivot resembles: unique, and group by. If we understand those,
+it's only a short distance from there to the place where the title of this article will make sense.
+
+All of these operations are operations on tabular data. That means data which is arranged in
+**columns** and **rows**. And these operations also output a table. Table in, different table out.
+In Excel, which is where pivot tables come from, a table can be represented as a range of data, like
+A1:D2000. But the operations aren't specific to spreadsheets and can be done on any data that's
+arranged as a table.
+
+I'm going to be using the Social Security Administration's baby name dataset for my examples. This
+data is a table with 4 columns and 2,116,840 rows. If you want to see the data yourself, you can
+make a copy of my [Row Zero workbook](https://rowzero.io/workbook/644C5FB13CA060884AC9172C/3?copy)
+by clicking that link. Or you can just refer to the screenshot below to see a sample of the data.
+
+![several rows of data in a table with columns Year, Name, Sex, and Count](/baby_names_table.png)
+
+Let's call Year, Name, Sex, and Count "fields" of our data (because we're going to use the word
+"column" for something else).
+
+## Column Uniques
+A common operation on a column of data is to remove duplicates to produce a shorter column of values
+that are all unique, with no repetition. For example, in our baby name data, the Sex field only has
+two values: it's always either M or F. If we were to compute the unique values for that field, we'd
+get just two rows.
+
+You can also compute uniques for multiple fields of a table. This produces one row per unique
+**combination** of values from the different fields. For example, uniques for Year & Sex in our
+baby names table would produce two rows per year, like so:
+
+![a table with two columns, Year and Sex, where each year has two rows, one with "M" in Sex and one
+with "F"](/baby_names_unique_year_sex.png)
+
+Each row in the output table corresponds to one or more rows in the input table. This operation only
+gives you the actually occuring combinations, not all possible combinations of values from the
+fields. Say, for example, you added a row to the table that was `1880,Edna,U,5`. Since only this
+row has the value U for Sex, you'd get a row for `1880,U` in the output table, but not one for
+`1980,U`.
+
+In pseudo-code, we can imagine that we're calling a method on the table and specifying which fields
+we want to compute uniques for. Something like: `table.uniques(["Year", "Sex"])`.
+
+Computing uniques for Year, Name, Sex, and Count in our baby names data would just give us back the same
+table, since there are no duplicate rows in the input table.
+
+## Group By
+
+Our column uniques operation on our table required specifying a list of fields to compute uniques
+for.
+Now imagine that we extend the operation so that, in addition to
+these parameters, you have to tell us what to do with the **other** fields in the table.
+
+Let's define some options. Once thing you could do is **omit** a field from the output table. That's
+implicitly what we did in the previous section. Our pseudo-code function call would now look
+like `table.uniques(["Year", "Sex"], { "Name": omit, "Count": omit })`.
+
+But we could imagine other ways of including a column. Remember that each row in our output table
+corresponds to one or more rows of the input table. So we could say something like, "Add up the
+value of the Count field for all corresponding rows of the input table". This is a "group by" operation. We call it that because we're aggregating the values of the Count
+column *by* Year and Sex. It's a way of summarizing the data in our input table.
+
+For example, if we wanted to sum the counts for each name by year and sex, we would do `table.groupby(["Year", "Sex"], { "Name": omit, "Count": sum })`. This will tell us how many babies of each sex there are for each year. The output would look like:
+
+![a table with three columns, Year, Sex, and Sum of Count, where each year has two rows, one with "M" in Sex and one
+with "F"](/baby_names_sum_of_count_by_year_and_sex.png)
+
+This table has the same number of rows as the example in the previous section, it just adds an
+additional column summarizing the Count field for each row.
+
+You can see how we could easily extend this with different aggregation options on the fields:
+average, count, median, etc. in addition to sum. You could also allow specifying the same field
+multiple times with *different* aggregations, if you wanted both Sum of Count and Average Count in
+in the output table, for example.
+
+## Pivot
+
+So now we're in a position to define the pivot operation. Just as column uniques can be thought of
+as a special case of the groupby operation, where all other columns are omitted, groupby can be
+thought of as a special case of the pivot operation.
+
+A pivot differs from a groupby just in that each of the fields we're grouping by must be put into
+one of two buckets: "rows", or "columns". The special case that's equivalent to groupby is when
+they're all "rows". So we could rewrite our groupby in pseudo-code as `table.pivot(rows: ["Year",
+"Sex"], columns: [], { "Name": omit, "Count": sum })`.
+
+The obvious question is what happens if we move one of our rows to columns? Let's look at an example
+where we move "Sex" to columns. Here's what you get:
+
+![a table with three columns, Year, F, and M, where each year has a single row, and the sum of count
+for each sex has been put in the corresponding
+column](/baby_names_sum_of_count_by_year_and_sex_pivoted.png)
+
+We no longer have a Sex column on our output table. Instead, we have one column per unique value
+of the Sex field. We also no longer have a Sum of Count column. Instead, the "M" and "F" columns are
+implicitly showing the Sum of Count for the corresponding Sex, for each row. The table also has
+fewer rows &mdash; in fact it's precisely half the size, because we now have just one row per year
+instead of two.
+
+The thing to see is that the data in the output table hasn't changed. It's just been
+rearranged. The Sum of Count for `1955,F` is still there, it's just now the value of the F column
+for the row 1955. And the `1955,M` Sum of Count is also still there, also on the 1955 row (in the M
+column, naturally).
+
+In this particular case, our pivot table is the same width as the groupby from the last section, but
+that's only because the Sex field has just two unique values &mdash; if it had more, our pivot
+output would be wider. And it's shorter, because the output table only needs one row per year
+instead of one row per year/sex combo. So this pivot is just a shorter, fatter version of the
+groupby we already did.
+
+It gets a little more complicated when you have more than one aggregation, or more than one field in
+columns, but the basic idea is the same. We just do a groupby, and then rearrange the table to make
+it shorter and fatter. No new information is contained in the pivot. It's just presented differently
+and is (maybe) easier to read.
+
+So if you understand groupby, you also understand pivot. In fact, all of the screenshots in this
+article are screenshots of pivot tables. Since groupby is just a special case of pivot, and uniques
+is just a special case of groupby, all of these operations can be expressed as pivots. It's the same fundamental summarization of
+the input data. For me, that was the crucial insight that finally make pivot tables understandable.
+
+## Why Pivot?
+
+When I've tried this explanation out on people in the past, a common response has been, "What's the
+point of pivot, then?" If it's the same summary as groupby, why pivot?
+
+One obvious answer is that you just prefer the table layout that the pivot produces, or find it more
+legible. A less obvious answer is that it's *very* useful for constructing graphs. If you select the
+whole pivot table from the last section and click the "Insert chart" button in [Row
+Zero](https://rowzero.io), you instantly get a chart showing count of baby boys vs. baby girls over
+time.
+
+![a line chart showing the change over time of the number of baby boys and baby girls in the SSA
+data](/baby_names_pivot_chart.png)
+
+Each column becomes its own graphable series of data in the pivot. Pivot tables are especially
+powerful when combined with charts in a spreadsheet.
+
+## Conclusion
+When you're staring at the inscrutable pivot table configuration pane in Excel, or the hopefully
+slightly less inscrutable version in [Row Zero](https://rowzero.io), just remember that the "Rows"
+and "Columns" sections are just diffent ways of specifying which fields you want to group by. And
+"Values" is where you specify your aggregations for the other fields. ("Filters" just let you
+filter the input data *before* applying the pivot transformation.) For me, the simplest way to
+construct a pivot is to imagine the groupby I want to perform, and construct that first, using
+"Rows" only and no "Columns". Then I maybe move a Row or two to Columns, to get the final shape I want.
+
+And that's pivot explained as simply as I know how.
+

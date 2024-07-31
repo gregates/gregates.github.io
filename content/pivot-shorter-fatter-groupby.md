@@ -36,12 +36,11 @@ by clicking that link. Or you can just refer to the screenshot below to see a sa
 
 ![several rows of data in a table with columns Year, Name, Sex, and Count](/baby_names_table.png)
 
-Let's call Year, Name, Sex, and Count "fields" of our data (because we're going to use the word
+Let's call Year, Name, Sex, and Count "fields" of our data (because pivot uses the word
 "column" for something else).
 
-## Column Uniques
-A common operation on a column of data is to remove duplicates to produce a shorter column of values
-that are all unique, with no repetition. For example, in our baby name data, the Sex field only has
+## Uniques
+A common operation on a field of data is to remove duplicates. For example, in our baby name data, the Sex field only has
 two values: it's always either M or F. If we were to compute the unique values for that field, we'd
 get just two rows.
 
@@ -66,7 +65,7 @@ table, since there are no duplicate rows in the input table.
 
 ## Group By
 
-Our column uniques operation on our table required specifying a list of fields to compute uniques
+Our uniques operation on our table required specifying a list of fields to compute uniques
 for.
 Now imagine that we extend the operation so that, in addition to
 these parameters, you have to tell us what to do with the **other** fields in the table.
@@ -75,10 +74,10 @@ Let's define some options. Once thing you could do is **omit** a field from the 
 implicitly what we did in the previous section. Our pseudo-code function call would now look
 like `table.uniques(["Year", "Sex"], { "Name": omit, "Count": omit })`.
 
-But we could imagine other ways of including a column. Remember that each row in our output table
+But we could imagine other ways of including a field. Remember that each row in our output table
 corresponds to one or more rows of the input table. So we could say something like, "Add up the
 value of the Count field for all corresponding rows of the input table". This is a "group by" operation. We call it that because we're aggregating the values of the Count
-column *by* Year and Sex. It's a way of summarizing the data in our input table.
+field *by* Year and Sex. It's a way of summarizing the data in our input table.
 
 For example, if we wanted to sum the counts for each name by year and sex, we would do `table.groupby(["Year", "Sex"], { "Name": omit, "Count": sum })`. This will tell us how many babies of each sex there are for each year. The output would look like:
 
@@ -95,9 +94,8 @@ in the output table, for example.
 
 ## Pivot
 
-So now we're in a position to define the pivot operation. Just as column uniques can be thought of
-as a special case of the groupby operation, where all other columns are omitted, groupby can be
-thought of as a special case of the pivot operation.
+So now we're in a position to define the pivot operation. Just as uniques can be thought of
+as a special case of groupby, groupby can be thought of as a special case of the pivot operation.
 
 A pivot differs from a groupby just in that each of the fields we're grouping by must be put into
 one of two buckets: "rows", or "columns". The special case that's equivalent to groupby is when
@@ -162,7 +160,7 @@ and "Columns" sections are just diffent ways of specifying which fields you want
 "Values" is where you specify your aggregations for the other fields. ("Filters" just let you
 filter the input data *before* applying the pivot transformation.) For me, the simplest way to
 construct a pivot is to imagine the groupby I want to perform, and construct that first, using
-"Rows" only and no "Columns". Then I maybe move a Row or two to Columns, to get the final shape I want.
+Rows only and no Columns. Then I maybe move a Row or two to Columns, to get the final shape I want.
 
 And that's pivot explained as simply as I know how.
 

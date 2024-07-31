@@ -19,7 +19,7 @@ take up the task of attempting to explain pivot tables in a way that would have 
 decade ago.
 
 The headline: pivot is just a shorter, fatter group by. But, what's a "group by", and what would it
-mean for such a thing to be fat or short. The rest of this article will attempt to clarify by first
+mean for such a thing to be fat or short? The rest of this article will attempt to clarify by first
 discussing other operations that pivot resembles: unique, and group by. If we understand those,
 it's only a short distance from there to the place where the title of this article will make sense.
 

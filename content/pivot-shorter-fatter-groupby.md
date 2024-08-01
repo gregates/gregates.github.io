@@ -133,8 +133,9 @@ and is (maybe) easier to read.
 
 So if you understand groupby, you also understand pivot. In fact, all of the screenshots in this
 article are screenshots of pivot tables. Since groupby is just a special case of pivot, and uniques
-is just a special case of groupby, all of these operations can be expressed as pivots. It's the same fundamental summarization of
-the input data. For me, that was the crucial insight that finally make pivot tables understandable.
+is just a special case of groupby, all of these operations can be expressed as pivots. It's the same
+fundamental summarization of the input data. For me, that was the crucial insight that finally made
+pivot tables understandable.
 
 ## Why Pivot?
 

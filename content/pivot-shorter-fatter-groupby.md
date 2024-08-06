@@ -14,7 +14,7 @@ suggestions to play around with them in Excel until you figure it out. I quickly
 worth understanding.
 
 Eleven years later I took up the task of implementing pivot tables for [Row
-Zero](https://rowzero.io). It was only then that I was finally forced to understood them. Here, I
+Zero](https://rowzero.io). It was only then that I was finally forced to grapple with them. Here, I
 take up the task of attempting to explain pivot tables in a way that would have been helpful to me a
 decade ago.
 

@@ -1,6 +1,7 @@
 +++
 title = "Big data is dead. So what?"
 date = 2024-08-10
+draft = true
 +++
 
 In a 2023 blog post, Jordan Tigani, one of the engineers who created Google BigQuery, declared that
@@ -41,21 +42,8 @@ In that post, Stucchio lists several tools for data analysis and when it's appro
 The reason to prefer Excel to R, or SQL to Hadoop, is ease of use. You'll extract
 insights from your data faster and more efficiently by using the simplest tool you can.
 
+But in the last decade, the managed cloud database services I mentioned above have taken off.
+Snowflake and Databricks give you all the computing power of Hadoop, but with comparable ease-of-use
+to a SQL database.
 
-## "Big data" is a marketing term
 
-Today, Tigani puts the "big data" threshold at 10 TB rather than 5, and one of his premises is that
-the point at which you have to use distributed computing keeps getting bigger over time. Big data
-tools were marketed, over the last decade, with the promise that your data was going to grow faster
-than this threshold. Even if you didn't need fancy tools like Hadoop **yet**, you surely would in
-the near future. But that hasn't necessarily come to pass.
-
-When I was at Tableau, doing performance analysis, all the data I worked with was in Snowflake. One
-of our tables was huge &mdash; it contained detailed, trace-level data for every API request to
-Tableau Cloud. It was so big that, with the warehouse size I had access to and the query timeouts
-configured for me, it wasn't actually possible to run a query that did a full table scan. So all my
-analysis took the form of using Snowflake to filter the data, then exporting to Tableau to do my
-actual analysis on a subset of the data. The theoretical power of Snowflake went unused, mostly. In
-theory we could have used a much bigger warehouse and let the queries run longer, and crunched the
-whole table. But that sort of power was too expensive to put in the hands of a lowly performance
-engineer like myself.

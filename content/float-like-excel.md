@@ -30,7 +30,7 @@ can get away with using 52 bits for a 53-bit number because the most significant
 is guaranteed to be non-zero, which in binary means it must be 1. So let's disambiguate: we'll call
 the (unsigned) integer represented by the 52 bits the *fraction*, and the *significand* is always a
 53 bit number, and is recovered by adding the leading 1, i.e., the significand is 1.*fraction*. Note that this is a binary
-fraction, so multiplying by 2<sup>*n*</sup> just shifts the decimal place *n* place to the right, like
+fraction, so multiplying by 2<sup>*n*</sup> just shifts the decimal point *n* places to the right, like
 multiplying by 10<sup>*n*</sup> does in decimal.
 
 Then we can recover the number encoded in the bits as:

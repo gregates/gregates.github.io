@@ -20,7 +20,7 @@ The binary64 format encodes numbers in 64 bits. It uses 1 bit for the *sign*, li
 format. 11 bits are used to encode the *exponent*, and 52 bits for the *significand*, sometimes also
 called the *mantissa*.
 
-As an 11-bit unsigned integer exponent can range from 0 to 2047. But we want to
+As an 11-bit unsigned integer, the exponent can range from 0 to 2047. But we want to
 support negative exponents, so the intended value is recovered by subtracting 1023, also known as
 the *bias*.
 

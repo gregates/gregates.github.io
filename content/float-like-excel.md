@@ -1,6 +1,9 @@
 +++
 title = "Float like Excel"
 date = 2024-11-27
+
+[extra.og]
+image = "/excel-loss-of-precision.gif"
 +++
 
 Microsoft Excel stores numbers in a binary floating-point format. Specifically, [the
@@ -106,6 +109,8 @@ in the range 9,007,199,254,740,990 to 9,007,199,254,740,999.
 This is true even though 9,007,199,254,741,000 is accepted as-is by Excel, and is closer to
 9,007,199,254,740,999 than the value it actually rounds to. So this is not rounding &mdash; it's
 truncation to 15 significant digits.
+
+![Animated gif showing Excel parsing the numbers 9,007,199,254,740,989 to 9,007,199,254,741,000, demonstrating the loss of precision.](/excel-loss-of-precision.gif)
 
 ## Pros and cons of Excel's behavior
 

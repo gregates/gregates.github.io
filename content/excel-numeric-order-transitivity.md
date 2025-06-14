@@ -1,6 +1,9 @@
 +++
 title = "Excel filter control violates transitivity"
 date = 2025-06-13
+
+[extra.og]
+image = "/excel-intransitive.webp"
 +++
 
 You find a lot of weirdness when you try to implement an Excel compatible spreadsheet. Filters, in

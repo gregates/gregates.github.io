@@ -10,7 +10,7 @@ Seven for SUVs, eyes on the phone,
 
 None for the cyclists, doomed to die,
 
-One for the asshole, speeding alone.
+One for our hero, speeding alone.
 
 He's the flow of traffic, don't impede that guy.
 

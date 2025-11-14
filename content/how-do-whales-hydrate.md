@@ -1,6 +1,9 @@
 +++
 title = "How do whales hydrate?"
 date = 2025-11-14
+
+[extra.og]
+image = "/claude-output-how-do-whales-hydrate.webp"
 +++
 
 A wonder of the modern world is that we all have tiny computers in our pockets that can quickly

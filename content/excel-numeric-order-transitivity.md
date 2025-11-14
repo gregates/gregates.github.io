@@ -26,7 +26,7 @@ Consider an Excel sheet with the following initial setup.
 ```
 
 If you create a filter on column A here, and click the filter control, Excel shows you each of the
-**distinct** values in A2:A6 for you to select or unselect. Like this:
+**distinct** values in A2:A7 for you to select or unselect. Like this:
 
 ```
 ☑   0.00001

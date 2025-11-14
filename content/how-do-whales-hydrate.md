@@ -164,11 +164,13 @@ invested in appearing smart and knowledgable, and will confidently assert things
 are, in fact, speculative (but plausible!) hypotheses. Many of the latter are still intellectually
 honest enough to back down when pressed or challenged sufficiently aggressively, but prefer to start
 from a position of **confident bluster**, in order to keep up appearances. I always preferred the
-type who's more upfront about the limits of her knowledge.
+type who's more upfront about the limits of their knowledge.
 
 It should perhaps therefore be no surprise that I find the confident bluster of LLMs off-putting. A
 google search is more like talking to someone who uncritically passes along everything they ever
-heard about a topic, forcing you to judge for yourself what's trustworthy and what isn't. A chat
+heard about a topic. "That's what I heard from so-and-so, anyway," they add, distancing themselves
+from endorsing the claim themselves. This forces you to judge for yourself what's trustworthy and what
+isn't. A chat
 with an LLM is much more like talking to someone who is highly invested in seeming smart and
 knowledgable, such that you have to constantly be on guard not to let yourself be influenced by that
 performance of confidence, and work to poke holes in the stories they tell you. It's exhausting and

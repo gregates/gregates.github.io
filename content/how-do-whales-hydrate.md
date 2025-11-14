@@ -100,7 +100,7 @@ choice is Claude.
 (**Disclaimer:** in general, I think it is a sound principle never to reproduce and ask people to
 read the output of your own chat sessions with an LLM. In this case, I will make an exception,
 because the point of this post is to discuss the quality of that output, rather than to suggest that
-it as worth reading.)
+it is worth reading.)
 
 As LLMs are wont to do, Claude initially answered my question by enumerating *every* hypothesis that
 you might find by googling and asserting that the explanation is the combination of these factors.

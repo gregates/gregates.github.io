@@ -148,7 +148,38 @@ sentences from its sources,
 unlike the reddit answer google gave us. But the straightforward question instead produced just
 confident bluster (that was at least reflective of the going hypotheses).
 
+## Confident bluster
+
+Philosophy graduate students are, almost by definition, very good at coming up with
+plausible-sounding hypotheses to explain things they don't understand. Before the advent of
+googling, as I mentioned, it was common, and fun, to sit in the grad student lounge on the 14th
+floor of the Cathedral of Learning and just talk to my fellow grad students about things, even about
+things we had no relevant expertise into. And aside from being fun, it was often enlightening in
+various ways! One thing philosophy teaches you is there can be tremendous value just in considering
+the extent of the space of possibilities.
+
+But different people use this power in different ways. Some are very humble and present their
+speculative hypotheses, or vaguely remembered second-hand information, as such. Some are quite
+invested in appearing smart and knowledgable, and will confidently assert things to be true that
+are, in fact, speculative (but plausible!) hypotheses. Many of the latter are still intellectually
+honest enough to back down when pressed or challenged sufficiently aggressively, but prefer to start
+from a position of **confident bluster**, in order to keep up appearances. I always preferred the
+type who's more upfront about the limits of her knowledge.
+
+It should perhaps therefore be no surprise that I find the confident bluster of LLMs off-putting. A
+google search is more like talking to someone who uncritically passes along everything they ever
+heard about a topic, forcing you to judge for yourself what's trustworthy and what isn't. A chat
+with an LLM is much more like talking to someone who is highly invested in seeming smart and
+knowledgable, such that you have to constantly be on guard not to let yourself be influenced by that
+performance of confidence, and work to poke holes in the stories they tell you. It's exhausting and
+not all that easy to do.
+
+Of course, Claude has no desire to seem smart and knowledgable; this behavior is determined at one
+remove. It's Anthropic (and Google, Open AI, etc.) who want you to believe that their chat bots are
+knowledgable and trustworthy, not the chat bots themselves. There is nevertheless overwhelming
+commercial incentive for their models to engage in confident bluster.
+
 ## Conclusion
 
 We don't know how whales hydrate, but it's easy to mistakenly conclude that we do by relying on your
-pocket computer. Be skeptical.
+pocket computer. Be skeptical, especially when using LLM chat bots.

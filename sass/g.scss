@@ -68,10 +68,16 @@ img {
 }
 
 footer {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  font-family: monospace;
+  p {
+    margin: 0.5rem;
+  }
+  .links {
     margin-top: 0.5rem;
-    padding-top: 0.5rem;
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
-    font-family: monospace;
+  }
 }

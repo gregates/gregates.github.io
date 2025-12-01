@@ -7,10 +7,10 @@ One of my favorite public datasets is the baby name data published every year by
 the United States Social Security Administration (SSA). When I joined
 [Row Zero](https://rowzero.io), one of the first things I did was gather this data
 into a single csv (it's published as one csv per year) and upload it to S3 for us
-to use as a test dataset. It's nice because it's not too big &mdash; less than 8 KiB
+to use as a test dataset. It's nice because it's not very big &mdash; less than 8 KiB
 gzipped &mdash; but it's still too big for Excel since it has more than 2 million rows.
 
-We've done a lot of fun ad hoc analyses of this data set. One of my colleagues produced
+We've done a lot of fun *ad hoc* analyses of this data set. One of my colleagues produced
 a graph of baby name popularity over time by final letter, which prompted me to do
 a deeper dive on the popularity of baby boy names ending in with the letter n, and
 specifically with the suffix -ayden, -aiden, or -aden. I published that on Row Zero's blog. 

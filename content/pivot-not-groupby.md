@@ -59,7 +59,8 @@ by state, year, and sex and then rearranging. We've also computed aggregations:
 1. at the state and sex level (the subtotals in the expandable/collapsible state rows);
 2. at the sex-only level (the grand total row at the bottom, not pictured);
 3. at the state-only level (the grand total column in the expandable/collapsible state rows);
-4. of the entire source table (the sum for the whole dataset, shown in the bottom right corner of
+4. at the state and year level (the grand total column for each year row under a state);
+5. of the entire source table (the sum for the whole dataset, shown in the bottom right corner of
    the pivot table and not pictured in the screenshot).
 
 And then, in additional to adding the Grand Total row and column, we inserted subtotal rows

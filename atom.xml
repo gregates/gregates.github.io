@@ -1,0 +1,1112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title></title>
+    <link rel="self" type="application/atom+xml" href="https://gregat.es/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://gregat.es"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2026-05-07T00:00:00+00:00</updated>
+    <id>https://gregat.es/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Pivot is more than a shorter, fatter group by</title>
+        <published>2026-05-07T00:00:00+00:00</published>
+        <updated>2026-05-07T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://gregat.es/pivot-not-groupby/"/>
+        <id>https://gregat.es/pivot-not-groupby/</id>
+        
+        <content type="html" xml:base="https://gregat.es/pivot-not-groupby/">&lt;p&gt;In a &lt;a href=&quot;&#x2F;pivot-shorter-fatter-groupby&#x2F;&quot;&gt;previous post&lt;&#x2F;a&gt;, I explained that the pivot operation on a
+table of data is equivalent to a groupby operation on that data, but with the output table
+rearranged into a squatter configuration.&lt;&#x2F;p&gt;
+&lt;p&gt;But pivot tables are more than a groupby operation on tabular data! They&#x27;re more, even, than a
+&lt;strong&gt;pivot&lt;&#x2F;strong&gt; operation on tabular data. That&#x27;s because pivot tables — as they&#x27;re actually used in Excel
+and other spreadsheets like &lt;a href=&quot;https:&#x2F;&#x2F;rowzero.com&#x2F;home&quot;&gt;Row Zero&lt;&#x2F;a&gt; are typically meant for human
+consumption. They&#x27;re a beautifully laid-out, interactive summary that allows a human reader to
+understand something about a larger table of data. To do this job effectively, they need to be
+augmented with lots of features that go beyond simply aggregating data.&lt;&#x2F;p&gt;
+&lt;p&gt;One of the confusing things about pivot tables is that they&#x27;re trying to be two things at once: a
+data transformation operation, and a bunch of reporting-oriented display features. But if you
+understand the data transformation operation, it&#x27;s not too hard to see how the reporting features
+are built on top of that basic data pivot.&lt;&#x2F;p&gt;
+&lt;p&gt;Here&#x27;s a screenshot of a pivot table of the Social Security Administration&#x27;s baby names
+data by U.S. state.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;baby_names_pivot_collapsed.webp&quot; alt=&quot;A pivot table with state and year in the row labels column, and with M, F, and Grand Total columns summarizing the number of babies born each year, by state. The state labels are collapsed and only show the subtotal for all years, except for IN, which is expanded to show the breakdown by year. The F column is colored pink and the M column is colored blue. The rows in the IN group are colored green. Subtotals and headers have bold formatting. Column headers have a teal background.&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;There&#x27;s a lot more going on in this screenshot than in the previous explainer post. Here, although
+we&#x27;re grouping by three fields — state and year in rows, and sex in columns — the row groupings have
+been merged into a hierarchical single column in which the outer grouping, state, can be expanded or
+collapsed, to allow you to see either a summary by state, or to look within an individual state at
+the change over time.&lt;&#x2F;p&gt;
+&lt;p&gt;Additionally, we have applied formatting to make it easier to tell, at a glance, which column is F
+and which is M. And we&#x27;ve also highlighted the group we&#x27;re currently interested in with a green
+background color.&lt;&#x2F;p&gt;
+&lt;p&gt;It&#x27;s not obvious from the screenshot, but these formats have been applied at the
+group level. What I mean is: let&#x27;s say the number of groups grows, because the source data adds a
+new state, or because time has passed and there&#x27;s a new year in our data set. The new
+rows will automatically get the appropriate highlighting. Because we&#x27;ve formatted the whole F and M
+columns, the new rows will get those formats. And because we&#x27;ve formatted the whole IN group, any
+new rows for years will get the green background if and only if they&#x27;re nested under IN. (Everything
+described in this paragraph is true in Row Zero, but not really in Excel. Excel&#x27;s pivot tables
+operate on fixed, unchanging data, and don&#x27;t automatically update to reflect changes in the source
+table.)&lt;&#x2F;p&gt;
+&lt;p&gt;Finally, notice that subtotals for each state and grand totals across columns have been precomputed
+and are displayed for us, without us having to do any additional calculations. This is a big deal,
+because it means that generating this pivot table actually took a lot more work than just grouping
+by state, year, and sex and then rearranging. We&#x27;ve also computed aggregations:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;at the state and sex level (the subtotals in the expandable&#x2F;collapsible state rows);&lt;&#x2F;li&gt;
+&lt;li&gt;at the sex-only level (the grand total row at the bottom, not pictured);&lt;&#x2F;li&gt;
+&lt;li&gt;at the state-only level (the grand total column in the expandable&#x2F;collapsible state rows);&lt;&#x2F;li&gt;
+&lt;li&gt;at the state and year level (the grand total column for each year row under a state);&lt;&#x2F;li&gt;
+&lt;li&gt;of the entire source table (the sum for the whole dataset, shown in the bottom right corner of
+the pivot table and not pictured in the screenshot).&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;And then, in additional to adding the Grand Total row and column, we inserted subtotal rows
+throughout the table, for each state.&lt;&#x2F;p&gt;
+&lt;p&gt;Pivot tables can also have additional features layered on top of them. A neat one is “drill down” -
+you can double click on one of the aggregated data cells in a pivot to instantly get a new sheet
+that has the unaggregated data on it, but just for that data point. If you&#x27;ve ever heard a
+business-type in a meeting ask to “double click” on something to dive deeper into the details, this
+is literally that!&lt;&#x2F;p&gt;
+&lt;p&gt;The pivot table still represents a summary of the same data, but it&#x27;s been grouped in multiple ways,
+displayed at once in one convenient, interactive output format. As we&#x27;ve built out pivot table
+features at &lt;a href=&quot;https:&#x2F;&#x2F;rowzero.com&#x2F;home&quot;&gt;Row Zero&lt;&#x2F;a&gt;, we&#x27;ve been mindful of the differences between
+pivot as a &lt;strong&gt;data operation&lt;&#x2F;strong&gt; and pivot tables a reporting tool.&lt;&#x2F;p&gt;
+&lt;p&gt;A neat thing about pivot tables in &lt;a href=&quot;https:&#x2F;&#x2F;rowzero.com&#x2F;home&quot;&gt;Row Zero&lt;&#x2F;a&gt; is that there are two modes.
+The standard mode is this style of display-oriented pivot. I like to call it a “report” pivot.
+It&#x27;s great as the end product of a chain of analysis, meant to deliver a summary for review or
+discussion. The data table mode produces just the re-arranged table of data, without all the bells
+and whistles. This is actually also super useful! In Row Zero, you can easily repivot this type of
+table, building a chain of pivot operations, with computed columns on them that can feed into the
+next pivot. These make great building blocks — you can easily construct a sort of data pipeline that
+feeds into the final, display-oriented report output.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>The Trumpiest baby names of 2024</title>
+        <published>2025-12-10T00:00:00+00:00</published>
+        <updated>2025-12-10T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://gregat.es/baby-names-trumpiest/"/>
+        <id>https://gregat.es/baby-names-trumpiest/</id>
+        
+        <content type="html" xml:base="https://gregat.es/baby-names-trumpiest/">&lt;p&gt;One of my favorite public datasets is the baby name data published every year by the United States
+Social Security Administration (SSA). I like to do little analyses of this data in &lt;a href=&quot;https:&#x2F;&#x2F;rowzero.com&quot;&gt;Row
+Zero&lt;&#x2F;a&gt; from time to time, such as my earlier exploration of the popularity of
+baby names &lt;a href=&quot;&#x2F;baby-names-rise-of-n&quot;&gt;by final letter&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;My latest project is a report on which baby names had the most partisan political valence in 2024
+— the Trumpiest (and least Trumpy) baby names. The general idea is to identify which names are
+more popular in red states vs. blue states. You can get a copy of the report, along with
+all the SSA data through 2024 and the calculations I did, by &lt;a href=&quot;https:&#x2F;&#x2F;rowzero.com&#x2F;workbook&#x2F;197192F7CFA3241FB175B901&#x2F;3?copy&quot;&gt;copying my
+workbook&lt;&#x2F;a&gt;. Or if you just want the
+summary report, here it is:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;baby-names-trumpiest.webp&quot; alt=&quot;Two lists of 20 Trumpiest baby names. The Trumpiest boy names are: Hudson, Waylon, Maverick, Cooper, Stetson, Beau, Asher, Walker, Grayson, Brooks, Colter, Weston, Sawyer, Ryker, Elijah, Hayes, Wyatt, Rhett, Oliver, William. The Trumpiest girl names are: Lainey, Ivy, Willow, Paisley, Evelyn, Ellie, Oaklynn, Hazel, Harper, Ember, Wrenley, Aurora, Oakley, Hadley, Eleanor, Amelia, Emery, Millie, Kinsley, Josie.&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;baby-names-least-trumpy.webp&quot; alt=&quot;Two lists of the 20 least Trumpy baby names. The least Trumpy boy names are: Julian, Luca, Noah, Ethan, Mateo, Liam, Dylan, Leo, Lucas, Cameron, Benjamin, Sebastian, Anthony, Nathan, Alexander, Santiago, Daniel, Aiden, Ian, Jayden. The least Trumpy girl names are: Zoe, Maya, Mia, Sofia, Maeve, Grace, Camila, Eliana, Gianna, Sloane, Mila, Valentina, Chloe, Genesis, Naomi, Madeline, Luna, Kaia, Frances, Victoria.&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>How do whales hydrate?</title>
+        <published>2025-11-14T00:00:00+00:00</published>
+        <updated>2025-11-14T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://gregat.es/how-do-whales-hydrate/"/>
+        <id>https://gregat.es/how-do-whales-hydrate/</id>
+        
+        <content type="html" xml:base="https://gregat.es/how-do-whales-hydrate/">&lt;p&gt;A wonder of the modern world is that we all have tiny computers in our pockets that can quickly
+retrieve vast quantities of information. Because of this, it&#x27;s common to assume that if something is
+knowable, it can be known simply by pulling out this computer and typing in the right question. A
+decade ago, the place one typed this question was a search engine called &quot;Google&quot;. I was in graduate
+school, in philosophy, to observe the transition from &quot;I wonder if X? Let&#x27;s wildly speculate or make
+an educated guess about X!&quot; (this one was a favorite passtime of philosophy grad students) to &quot;I
+wonder if X? Let&#x27;s google it!&quot;.&lt;&#x2F;p&gt;
+&lt;p&gt;It is trivial to observe that not everything that is knowable is known. Even if we accept
+the premise that everything that is known is encoded as information retrievable from our pocket
+computers, it follows that not everything that is knowable is googleable. Therefore, the common
+assumption is false.&lt;&#x2F;p&gt;
+&lt;p&gt;In fact, the common assumption is pernicious precisely because it entails that everything that is
+knowable is known. This is obviously false if you
+think about it even for a second. And yet, it&#x27;s common practice to assume that everything knowable,
+or at least everything worth knowing, or at least everything &lt;em&gt;you&lt;&#x2F;em&gt; might want to know, is known.&lt;&#x2F;p&gt;
+&lt;p&gt;If one does think about it for a second, one might admit that there are things that are knowable but
+unknown, yet still assume that there is a sort of &quot;frontier&quot; of scientific knowledge that has
+expanded greatly in our own lifetimes, such that now only esoteric, cutting-edge stuff outside this
+frontier remains unknown — quantum physics, what&#x27;s going on in far-flung corners of universe,
+extremely difficult mathematics that you&#x27;ve never heard of and never will, stuff like that. But the
+observable world around us is basically well-understood at this point, right? The sort of questions
+most people would think up and wonder about — we can just ask google. Some smart scientist has
+already figured it out and written down the answer.&lt;&#x2F;p&gt;
+&lt;p&gt;Because of this, it&#x27;s better to illustrate with a counterexample. My favorite is: &quot;How do whales
+hydrate?&quot; The answer to this question is knowable. And it&#x27;s worth knowing every bit as much as any
+other fact of marine biology. It&#x27;s not some trivial thing that I can claim we don&#x27;t know through
+some trick of epistemology or logic — it&#x27;s just a question about the natural world we happen
+not to know the answer to.&lt;&#x2F;p&gt;
+&lt;p&gt;Every time I have asked someone this question, they have immediately assumed that the answer is both
+known and googleable. I do not believe it is known, but I&#x27;m not certain of that — perhaps
+there is some marine biologist out there who has answered this question, and I just haven&#x27;t learned
+about it yet. I can&#x27;t say for sure. But I can show you that it&#x27;s not googleable.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;google-results&quot;&gt;Google results&lt;&#x2F;h2&gt;
+&lt;p&gt;When I first developed this counterexample, as I remember it, the google results made it relatively clear that the
+science on whale hydration was unsettled (though some results overstated the strength of the
+evidence for various hypotheses). This is less true today. For example, at the time of
+writing, the first page of google results includes a short blog post from a Dr. Richard Johnson,
+apparently a professor of medicine at the University of Colorado. The entirety of the blog post
+reads:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;You may have never thought about this question, but how do whales get water?  Ocean water turns out to be too salty for the whale, so the whale gets most of its water from the food it eats, such as from fish, krill and plankton. However, a lot of the water the what gets is from its fat, for when fat is broken down, it produces water—which is sometimes referred to as metabolic water.  One of the reasons the whale is the fattest animal in the world is that it has substantial water needs.  The observation that fat serves as a water source was instrumental in the discovery that dehydration is a stimulus to gain fat.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;This post then references two academic journal articles, giving it a patina of scholarly authority.
+But a perusal of those sources reveals no direct evidence for the claims in the post beyond
+establishing some plausibility as hypotheses. That is not the same as no evidence, but an untested
+hypothesis is not knowledge.&lt;&#x2F;p&gt;
+&lt;p&gt;Other sources acknowledge the limitations of our knowledge to some extent, but nevertheless provide
+definitive-sounding answers to the question. For example, the website
+&lt;a href=&quot;https:&#x2F;&#x2F;whalescientists.com&#x2F;do-whales-drink&#x2F;&quot;&gt;whalescientists.com&lt;&#x2F;a&gt; addresses this question by
+confidently asserting&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Whales (whether they are toothed whales or baleen whales) do not voluntarily ingest water. At least not that we really know of. They find another way to “make” their own water. How? By transforming their food into the water.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;despite going on to conclude that &quot;The question remains unanswered today&quot; several paragraphs later.&lt;&#x2F;p&gt;
+&lt;p&gt;This &lt;a href=&quot;https:&#x2F;&#x2F;www.scientificamerican.com&#x2F;article&#x2F;how-can-sea-mammals-drink&#x2F;&quot;&gt;&lt;em&gt;Scientific
+American&lt;&#x2F;em&gt; article&lt;&#x2F;a&gt; does, in my
+opinion, a better job of discussing the state of our knowledge and some plausible hypotheses without
+overstating the case for any one hypothesis, and concludes with a clear statement that&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;For most whales and dolphins, however, we simply do not know how they get their water, because it is difficult to observe these animals.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;So anyone who reads through the top results and considers them carefully should come away with the
+conclusion that we don&#x27;t know how whales hydrate. Unfortunately, if you only look at the first
+result (as of this writing), you will find a reddit post where someone asked this question. The answers make it clear
+that other people also googled this question, read the same sources I discuss above, and took away
+a different lesson. One redditor, for example, quotes the very &lt;em&gt;Scientific American&lt;&#x2F;em&gt;
+article I do above, but instead of quoting the sentence that says we don&#x27;t know, instead chooses to
+quote only this:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;sea-dwelling mammals can get water through their food, and they can produce it internally from the metabolic breakdown of food&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;In other words, they quote one plausible hypothesis, and leave it at that.&lt;&#x2F;p&gt;
+&lt;p&gt;This shows why the assumption that everything knowable is googleable is pernicious. Because googling
+can easily lead you to assume that something is known when it is not.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;llm-results&quot;&gt;LLM results&lt;&#x2F;h2&gt;
+&lt;p&gt;Of course, today one may be more likely to ask a chat bot backed by a large language model (LLM)
+rather than google. So I recently decided to try that out, to see if it&#x27;s any better. My LLM of
+choice is Claude.&lt;&#x2F;p&gt;
+&lt;p&gt;(&lt;strong&gt;Disclaimer:&lt;&#x2F;strong&gt; in general, I think it is a sound principle never to reproduce and ask people to
+read the output of your own chat sessions with an LLM. In this case, I will make an exception,
+because the point of this post is to discuss the quality of that output, rather than to suggest that
+it is worth reading.)&lt;&#x2F;p&gt;
+&lt;p&gt;As LLMs are wont to do, Claude initially answered my question by enumerating &lt;em&gt;every&lt;&#x2F;em&gt; hypothesis that
+you might find by googling and asserting that the explanation is the combination of these factors.
+I&#x27;ve truncated the output for brevity, because LLMs are so, so verbose.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Whales have evolved several clever adaptations to stay hydrated while living in saltwater:&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Metabolic water production:&lt;&#x2F;strong&gt; …&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Efficient kidneys:&lt;&#x2F;strong&gt; …&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Minimal water loss:&lt;&#x2F;strong&gt; …&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Food moisture:&lt;&#x2F;strong&gt; …&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Interestingly, while whales inevitably ingest some seawater while feeding, their bodies are efficient enough to handle and excrete the excess salt without becoming dehydrated. It&#x27;s a beautifully balanced system that allows these massive mammals to thrive in an environment that would quickly dehydrate most other animals!&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;No hint whatsoever that this is still an open question. And, unlike google, where there are many
+results you can read and weigh against one another to try to get a more complete picture, the LLM
+just asserts.&lt;&#x2F;p&gt;
+&lt;p&gt;Of course, you can ask follow-up questions. So I asked it for sources, and it gave me some for each
+of its four hypotheses above, using its own ability to perform a google search. These sources were,
+unsurprisingly, the same ones I noted above (plus something from the Dutch Shark Society on the
+question of reduced water loss).&lt;&#x2F;p&gt;
+&lt;p&gt;Perhaps interestingly, Claude here actually gave me sources for &lt;strong&gt;five&lt;&#x2F;strong&gt; claims, including the claim
+that whales routinely drink seawater, which it notably had not asserted in the previous answer.
+Nevertheless, it offered a correction on this one point (citing the &lt;em&gt;Scientific American&lt;&#x2F;em&gt; article
+and whalescientists.com).&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Whether whales routinely drink seawater: I should correct this - it&#x27;s actually not well
+established that whales routinely drink seawater voluntarily, though some may ingest it
+incidentally while feeding.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Claude at this point concluded:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;So my initial explanation was generally accurate, though I should have been clearer that most whales probably don&#x27;t voluntarily drink seawater regularly - they mainly rely on metabolic water from their food!&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;So I asked it directly what evidence there is for that conclusion, other than mere plausibility as a
+hypothesis. At this point it finally produced an answer that included these sentences:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;You&#x27;ve hit on a crucial point. The honest answer from the scientific literature is: we don&#x27;t actually know for certain.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;It then cited the same sentences from our sources that I excerpted above, which state that the
+answer to this question remains unknown. So the right prompting got it to focus on the relevant
+sentences from its sources,
+unlike the reddit answer google gave us. But the straightforward question instead produced just
+confident bluster (that was at least reflective of the going hypotheses).&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;confident-bluster&quot;&gt;Confident bluster&lt;&#x2F;h2&gt;
+&lt;p&gt;Philosophy graduate students are, almost by definition, very good at coming up with
+plausible-sounding hypotheses to explain things they don&#x27;t understand. Before the advent of
+googling, as I mentioned, it was common, and fun, to sit in the grad student lounge on the 14th
+floor of the Cathedral of Learning and just talk to my fellow grad students about things, even about
+things we had no relevant expertise into. And aside from being fun, it was often enlightening in
+various ways! One thing philosophy teaches you is there can be tremendous value just in considering
+the extent of the space of possibilities.&lt;&#x2F;p&gt;
+&lt;p&gt;But different people use this power in different ways. Some are very humble and present their
+speculative hypotheses, or vaguely remembered second-hand information, as such. Some are quite
+invested in appearing smart and knowledgable, and will confidently assert things to be true that
+are, in fact, speculative (but plausible!) hypotheses. Many of the latter are still intellectually
+honest enough to back down when pressed or challenged sufficiently aggressively, but prefer to start
+from a position of &lt;strong&gt;confident bluster&lt;&#x2F;strong&gt;, in order to keep up appearances. I always preferred the
+type who&#x27;s more upfront about the limits of their knowledge.&lt;&#x2F;p&gt;
+&lt;p&gt;It should perhaps therefore be no surprise that I find the confident bluster of LLMs off-putting. A
+google search is more like talking to someone who uncritically passes along everything they ever
+heard about a topic. &quot;That&#x27;s what I heard from so-and-so, anyway,&quot; they add, distancing themselves
+from endorsing the claim themselves. This forces you to judge for yourself what&#x27;s trustworthy and what
+isn&#x27;t. A chat
+with an LLM is much more like talking to someone who is highly invested in seeming smart and
+knowledgable, such that you have to constantly be on guard not to let yourself be influenced by that
+performance of confidence, and work to poke holes in the stories they tell you. It&#x27;s exhausting and
+not all that easy to do.&lt;&#x2F;p&gt;
+&lt;p&gt;Of course, Claude has no desire to seem smart and knowledgable; this behavior is determined at one
+remove. It&#x27;s Anthropic (and Google, Open AI, etc.) who want you to believe that their chat bots are
+knowledgable and trustworthy, not the chat bots themselves. There is nevertheless overwhelming
+commercial incentive for their models to engage in confident bluster.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;&#x2F;h2&gt;
+&lt;p&gt;We don&#x27;t know how whales hydrate, but it&#x27;s easy to mistakenly conclude that we do by relying on your
+pocket computer. Be skeptical, especially when using LLM chat bots.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Excel filter control violates transitivity</title>
+        <published>2025-06-13T00:00:00+00:00</published>
+        <updated>2025-06-13T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://gregat.es/excel-numeric-order-transitivity/"/>
+        <id>https://gregat.es/excel-numeric-order-transitivity/</id>
+        
+        <content type="html" xml:base="https://gregat.es/excel-numeric-order-transitivity/">&lt;p&gt;You find a lot of weirdness when you try to implement an Excel compatible spreadsheet. Filters, in
+particular, have got to be one of the weirdest spreadsheet features. Today, I learned that the order
+in which Excel presents items in its filter control violates transitivity, and hence is not even a
+proper partial order.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;how-does-excel-sort-numeric-filter-options&quot;&gt;How does Excel sort (numeric) filter options?&lt;&#x2F;h2&gt;
+&lt;p&gt;Consider an Excel sheet with the following initial setup.&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;      A
+&lt;&#x2F;span&gt;&lt;span&gt;1  data
+&lt;&#x2F;span&gt;&lt;span&gt;2  0.00001
+&lt;&#x2F;span&gt;&lt;span&gt;3   0.0001
+&lt;&#x2F;span&gt;&lt;span&gt;4    0.001
+&lt;&#x2F;span&gt;&lt;span&gt;5      100
+&lt;&#x2F;span&gt;&lt;span&gt;6      1.1
+&lt;&#x2F;span&gt;&lt;span&gt;7      1.1
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;If you create a filter on column A here, and click the filter control, Excel shows you each of the
+&lt;strong&gt;distinct&lt;&#x2F;strong&gt; values in A2:A7 for you to select or unselect. Like this:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;☑   0.00001
+&lt;&#x2F;span&gt;&lt;span&gt;☑   0.0001
+&lt;&#x2F;span&gt;&lt;span&gt;☑   0.001
+&lt;&#x2F;span&gt;&lt;span&gt;☑   1.1
+&lt;&#x2F;span&gt;&lt;span&gt;☑   100
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Notice that 1.1 is shown only once. That&#x27;s the first thing to notice.&lt;&#x2F;p&gt;
+&lt;p&gt;The second thing to notice is that the options in the checkbox list are sorted in ascending
+numerical order. So 1.1 comes before 100, even though 1.1 appears below 100 in the worksheet.&lt;&#x2F;p&gt;
+&lt;p&gt;The third thing to notice is that the equivalence relation Excel uses to deduplicate &lt;strong&gt;respects
+formatting&lt;&#x2F;strong&gt;. So, for example, if I format A7 as a percentage, then I get the following instead:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;☑   0.00001
+&lt;&#x2F;span&gt;&lt;span&gt;☑   0.0001
+&lt;&#x2F;span&gt;&lt;span&gt;☑   0.001
+&lt;&#x2F;span&gt;&lt;span&gt;☑   1.1
+&lt;&#x2F;span&gt;&lt;span&gt;☑   110%
+&lt;&#x2F;span&gt;&lt;span&gt;☑   100
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Now, the order is &lt;em&gt;still&lt;&#x2F;em&gt; numeric. We can see that because 110% is ordered before 100. If these
+values were ordered as they appear in the worksheet, or lexicographically, we would expect the
+opposite order.&lt;&#x2F;p&gt;
+&lt;p&gt;But we now have a tie: there are two values with the numeric
+value 1.1. So we need to decide how to break ties. Here Excel does appear to use lexicographical
+ordering. Because the character &lt;code&gt;.&lt;&#x2F;code&gt; comes before the charater &lt;code&gt;1&lt;&#x2F;code&gt; (in ASCII and UTF-8 encoding), 1.1
+sorts before 110%. This is true even if we format A6 as percentage rather than A7, so we know it&#x27;s
+not just using the sheet order.&lt;&#x2F;p&gt;
+&lt;p&gt;So the rule appears to be:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Deduplicate based on the formatted values.&lt;&#x2F;li&gt;
+&lt;li&gt;Sort in numeric order (ascending), breaking ties with lexicographical order on the formatted
+values.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h2 id=&quot;why-isn-t-this-a-partial-order&quot;&gt;Why isn&#x27;t this a partial order?&lt;&#x2F;h2&gt;
+&lt;p&gt;To see the transitivity violation in the headline, let&#x27;s apply some more formatting. Starting from
+our original example, let&#x27;s format A2 and A4 with exactly 2 decimal places of precision. This causes
+both to be displayed as &lt;code&gt;0.00&lt;&#x2F;code&gt;. And let&#x27;s format A3 with 3 decimal places of precision, yielding a
+display value of &lt;code&gt;0.000&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;So now Excel treats A2 and A4 as the same, since they display the same. So our list of filter
+options is:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;☑   0.00
+&lt;&#x2F;span&gt;&lt;span&gt;☑   0.000
+&lt;&#x2F;span&gt;&lt;span&gt;☑   1.1
+&lt;&#x2F;span&gt;&lt;span&gt;☑   100
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Now, that &lt;strong&gt;looks like&lt;&#x2F;strong&gt; we&#x27;re displaying the options in lexicographical order by display value. But
+we&#x27;ve already seen that isn&#x27;t the case. We&#x27;re going to make two more edits to demonstrate the issue.&lt;&#x2F;p&gt;
+&lt;p&gt;First, let&#x27;s delete the value in A4. This produces &lt;strong&gt;no change&lt;&#x2F;strong&gt; to the filter options, which is
+what we&#x27;d expect, because we still have the same set of distinct values.&lt;&#x2F;p&gt;
+&lt;p&gt;Ok, now ctrl-Z to undo that. And then let&#x27;s delete A2. Aha! Now the order of options in the filter
+control has changed. We get:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#2b303b;color:#c0c5ce;&quot;&gt;&lt;code&gt;&lt;span&gt;☑   0.000
+&lt;&#x2F;span&gt;&lt;span&gt;☑   0.00
+&lt;&#x2F;span&gt;&lt;span&gt;☑   1.1
+&lt;&#x2F;span&gt;&lt;span&gt;☑   100
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;If we think about the algorithm we described in the last section, this is also not surprising,
+because the numeric value of A4 is greater than the numeric value of A3, and we only use
+lexicographical ordering to break ties. So even though &lt;strong&gt;as text&lt;&#x2F;strong&gt; &lt;code&gt;0.000&lt;&#x2F;code&gt; is greater than &lt;code&gt;0.00&lt;&#x2F;code&gt;,
+it comes first in the list of filter options because the numerical value is smaller.&lt;&#x2F;p&gt;
+&lt;p&gt;In other words, for purpose of display in the filter control, A2 &amp;lt; A3, and A3 &amp;lt; A4. If this were a
+partial order, that would entail, by transitivity, that A2 &amp;lt; A4. But the equivalence relation we&#x27;re
+using (same display) yields A2 == A4. Transitivity does not hold.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;why-does-this-matter&quot;&gt;Why does this matter?&lt;&#x2F;h2&gt;
+&lt;p&gt;In some ways it doesn&#x27;t; it would not surprise me if no one has ever noticed this fact about Excel,
+even including the people who implemented the filter dialog ordering algorithm (it also wouldn&#x27;t
+surprise me if they had and just were OK with it).&lt;&#x2F;p&gt;
+&lt;p&gt;But algorithmically it does matter, if you&#x27;re trying to implement something similar. For example,
+the following two procedures for producing a sorted, deduplicated list should be equivalent:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;First deduplicate (by collecting into a hash set, say), then sort the deduplicated values.&lt;&#x2F;li&gt;
+&lt;li&gt;First sort, then deduplicate by removing adjacent elements that are equivalent.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;The way Excel&#x27;s implemented sorting the filter options, these algorithms do not produce the same
+result. If we think of them as using one of these procedures on a list of (number, formatted display
+value) pairs, where equivalence is based only on the second element but ordering goes by way of
+comparing the first element (using the 2nd to break ties), Excel is clearly using the 1st procudure
+and not the 2nd one. If they used the 2nd, you&#x27;d end up with &lt;code&gt;0.00&lt;&#x2F;code&gt; displayed twice in our case,
+which would be incorrect.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Float like Excel</title>
+        <published>2024-11-27T00:00:00+00:00</published>
+        <updated>2024-11-27T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://gregat.es/float-like-excel/"/>
+        <id>https://gregat.es/float-like-excel/</id>
+        
+        <content type="html" xml:base="https://gregat.es/float-like-excel/">&lt;p&gt;Microsoft Excel stores numbers in a binary floating-point format. Specifically, &lt;a href=&quot;https:&#x2F;&#x2F;learn.microsoft.com&#x2F;en-us&#x2F;office&#x2F;troubleshoot&#x2F;excel&#x2F;floating-point-arithmetic-inaccurate-result&quot;&gt;the
+documentation&lt;&#x2F;a&gt;
+tells us that Excel &quot;was designed around&quot; &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;IEEE_754&quot;&gt;IEEE 754&lt;&#x2F;a&gt; and
+uses a version of the binary64 type specified in that document. In the course of building &lt;a href=&quot;https:&#x2F;&#x2F;rowzero.io&#x2F;home&quot;&gt;the
+world&#x27;s fastest spreadsheet&lt;&#x2F;a&gt;, I&#x27;ve had occasion to look into some of the
+nuances of how Excel handles numbers. In this post, I will explain one way in which Excel&#x27;s behavior
+surprised me. Excel discards more numeric precision than is strictly necessary for the binary64
+format (more commonly known as double-precision floating point numbers, or &quot;doubles&quot; for short).&lt;&#x2F;p&gt;
+&lt;p&gt;(If you&#x27;re already an expert on the binary64 format, feel free to skip the next two sections.)&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;quick-primer-on-binary64&quot;&gt;Quick primer on binary64&lt;&#x2F;h2&gt;
+&lt;p&gt;The binary64 format encodes numbers in 64 bits. It uses 1 bit for the &lt;em&gt;sign&lt;&#x2F;em&gt;, like any signed number
+format. 11 bits are used to encode the &lt;em&gt;exponent&lt;&#x2F;em&gt;, and 52 bits for the &lt;em&gt;significand&lt;&#x2F;em&gt;, sometimes also
+called the &lt;em&gt;mantissa&lt;&#x2F;em&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;As an 11-bit unsigned integer, the exponent can range from 0 to 2047. But we want to
+support negative exponents, so the intended value is recovered by subtracting 1023, also known as
+the &lt;em&gt;bias&lt;&#x2F;em&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;The 52 bits of the significand are used as the fractional part of a number with a leading 1 (except
+in the subnormal case, which we&#x27;ll ignore — Excel explicitly doesn&#x27;t support it, anyway). We
+can get away with using 52 bits for a 53-bit number because the most significant digit of any number
+is guaranteed to be non-zero, which in binary means it must be 1. So let&#x27;s disambiguate: we&#x27;ll call
+the (unsigned) integer represented by the 52 bits the &lt;em&gt;fraction&lt;&#x2F;em&gt;, and the &lt;em&gt;significand&lt;&#x2F;em&gt; is always a
+53 bit number, and is recovered by adding the leading 1, i.e., the significand is 1.&lt;em&gt;fraction&lt;&#x2F;em&gt;. Note that this is a binary
+fraction, so multiplying by 2&lt;sup&gt;&lt;em&gt;n&lt;&#x2F;em&gt;&lt;&#x2F;sup&gt; just shifts the decimal point &lt;em&gt;n&lt;&#x2F;em&gt; places to the right, like
+multiplying by 10&lt;sup&gt;&lt;em&gt;n&lt;&#x2F;em&gt;&lt;&#x2F;sup&gt; does in decimal.&lt;&#x2F;p&gt;
+&lt;p&gt;Then we can recover the number encoded in the bits as:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(-1)&lt;sup&gt;&lt;em&gt;sign&lt;&#x2F;em&gt;&lt;&#x2F;sup&gt; × &lt;em&gt;significand&lt;&#x2F;em&gt; × 2&lt;sup&gt;&lt;em&gt;exponent&lt;&#x2F;em&gt;-1023&lt;&#x2F;sup&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Let&#x27;s also define a &lt;em&gt;representable&lt;&#x2F;em&gt; number as one which can be recovered, using this formula, from
+a binary64 number.&lt;&#x2F;p&gt;
+&lt;p&gt;A few facts that follow from these definitions:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Not every number is representable. For example, 1234567890.123456789 — it&#x27;s not possible to
+encode this many significant decimal digits in 53 binary digits.&lt;&#x2F;li&gt;
+&lt;li&gt;The largest representable number is 1.7976931348623157e308 (where &quot;e308&quot; is scientific notation
+meaning &quot;×10&lt;sup&gt;308&lt;&#x2F;sup&gt;&quot;).&lt;&#x2F;li&gt;
+&lt;li&gt;The least representable number is -1.7976931348623157e308.&lt;&#x2F;li&gt;
+&lt;li&gt;The smallest representable fraction (again ignoring subnormal numbers) is 2.2250738585072014e-308.&lt;&#x2F;li&gt;
+&lt;li&gt;In general, decimal numbers with 15 significant digits or fewer which are neither too large nor
+too small &lt;em&gt;are&lt;&#x2F;em&gt; representable, but some numbers with as many as 17 significant decimal digits are representable.&lt;&#x2F;li&gt;
+&lt;li&gt;An example of the last is 2&lt;sup&gt;53&lt;&#x2F;sup&gt;, which is equivalent to 9,007,199,254,740,992 (16
+significant digits). This number is just barely too big to fit in the 53 bits of the
+significand. But since it&#x27;s exactly 2&lt;sup&gt;52&lt;&#x2F;sup&gt; × 2&lt;sup&gt;1&lt;&#x2F;sup&gt;, it can be represented that
+way.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;So what happens when you have a number that isn&#x27;t representable, and you need to store it in this
+format?&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;rounding-rules&quot;&gt;Rounding rules&lt;&#x2F;h2&gt;
+&lt;p&gt;Well, you have no choice but to round. But round to what? The nearest representable number is the
+option that introduces the least rounding error — the smallest delta between the number you
+want and the number you get. So that&#x27;s what the IEEE 754 specification says to do. And then you also
+need a rule for breaking ties, when there are two equidistant representable numbers. The typical,
+but not necessarily required, rule is &quot;round ties to even&quot;, which is more colloquially known as
+&quot;banker&#x27;s rounding&quot;. In binary64, since there&#x27;s only one even digit, that means if you&#x27;re
+equidistant to two representable numbers, you pick the one with a 0 in the least digit in the
+significand.&lt;&#x2F;p&gt;
+&lt;p&gt;Here&#x27;s an example. As noted above, 2&lt;sup&gt;53&lt;&#x2F;sup&gt; is representable. We saw that this was because it
+can be represented as a 53-bit number multiplied by 2. This is true for &lt;em&gt;every&lt;&#x2F;em&gt; even integer in the
+range 2&lt;sup&gt;53&lt;&#x2F;sup&gt; to 2&lt;sup&gt;54&lt;&#x2F;sup&gt; - 1. But the odd integers are not representable.&lt;&#x2F;p&gt;
+&lt;p&gt;So if we try to parse 2&lt;sup&gt;53&lt;&#x2F;sup&gt; + 1, we have to round it either to 2&lt;sup&gt;53&lt;&#x2F;sup&gt; or
+2&lt;sup&gt;53&lt;&#x2F;sup&gt; + 2. The former is representable as 2&lt;sup&gt;52&lt;&#x2F;sup&gt; × 2; the latter is
+representable as (2&lt;sup&gt;52&lt;&#x2F;sup&gt; + 1) × 2. For the former, the binary significand is a one
+followed by 52 zeros. The latter has a one followed by 51 zeros and a trailing one. So the rule says
+to choose the former. And this is what we see in, for example, rust&#x27;s &lt;code&gt;f64&lt;&#x2F;code&gt; type. The following
+program executes successfully:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; a = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;f64&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;powi&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;53&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; b = a + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1.0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let&lt;&#x2F;span&gt;&lt;span&gt; c = a + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2.0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    assert_eq!(a, b);
+&lt;&#x2F;span&gt;&lt;span&gt;    assert_ne!(a, c);
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;what-does-excel-do&quot;&gt;What does Excel do?&lt;&#x2F;h2&gt;
+&lt;p&gt;So we&#x27;re now in a position to state how Excel diverges from what I&#x27;d expect from an implementation
+of IEEE 754 binary64 numbers. Excel does not round to the nearest representable number. Instead,
+they truncate to 15 significant decimal digits, which as we noted above is guaranteed to be
+representable. And they do this even if a number with more than 15 significant decimal digits is
+representable without rounding!&lt;&#x2F;p&gt;
+&lt;p&gt;For example if you type 9,007,199,254,740,992 (2&lt;sup&gt;53&lt;&#x2F;sup&gt;) into a cell in Excel, what you get
+back is 9,007,199,254,740,990. Note the final digit. You get the same result if you enter any number
+in the range 9,007,199,254,740,990 to 9,007,199,254,740,999.&lt;&#x2F;p&gt;
+&lt;p&gt;This is true even though 9,007,199,254,741,000 is accepted as-is by Excel, and is closer to
+9,007,199,254,740,999 than the value it actually rounds to. So this is not rounding — it&#x27;s
+truncation to 15 significant digits.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;excel-loss-of-precision.gif&quot; alt=&quot;Animated gif showing Excel parsing the numbers 9,007,199,254,740,989 to 9,007,199,254,741,000, demonstrating the loss of precision.&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;pros-and-cons-of-excel-s-behavior&quot;&gt;Pros and cons of Excel&#x27;s behavior&lt;&#x2F;h2&gt;
+&lt;p&gt;A consequence of what Excel does is that it introduces a larger overall rounding error. In rust, if
+you subtract 2&lt;sup&gt;53&lt;&#x2F;sup&gt; from 2&lt;sup&gt;53&lt;&#x2F;sup&gt; + 2, you get 2, which is the precise, correct
+result. In Excel, you get 0. If you introduce many such errors, and then do, say, a sum over a bunch
+of numbers with individual small rounding errors, the total error can add up to be quite large.
+This is the reason for rounding to the nearest representable number — to reduce error
+introduced by rounding. It&#x27;s also the &lt;a href=&quot;https:&#x2F;&#x2F;stackoverflow.com&#x2F;questions&#x2F;45223778&#x2F;is-bankers-rounding-really-more-numerically-stable&quot;&gt;reason to use banker&#x27;s rounding&lt;&#x2F;a&gt; rather than the more familiar rule we learn in school (round ties away from zero).&lt;&#x2F;p&gt;
+&lt;p&gt;So why do what Excel does? Excel&#x27;s behavior gives you the following property: no number it displays
+will contain a significant digit that&#x27;s different from one you typed. By limiting to 15 significant
+decimal places, it can
+guarantee that the truncated number is precisely representable. And by truncating instead of
+rounding, it can guarantee that the significant digits that remain are exactly the same as the
+input.&lt;&#x2F;p&gt;
+&lt;p&gt;I imagine this is the property that they wanted. An Excel user might feel, if they
+typed 9,007,199,254,740,993 and got back 9,007,199,254,740,992, that this was a bug. Or, potentially
+worse, wouldn&#x27;t even realize it had changed, and would later wrongly infer that the number they
+entered was 9,007,199,254,740,992.&lt;&#x2F;p&gt;
+&lt;p&gt;Of course, the actual behavior might also appear to be a bug, but I imagine it is easier to explain
+&quot;we only support 15 significant digits of precision&quot; than it is to explain binary64 in all its
+complex glory. Is it less surprising for a 2 to become a 0 than a 4? I guess, maybe.&lt;&#x2F;p&gt;
+&lt;p&gt;It&#x27;s worth noting that Google sheets emulates Excel exactly here. Is that just extreme dedication to
+Excel-compatibility? Or is it because they agree that this behavior is desirable?&lt;&#x2F;p&gt;
+&lt;p&gt;The cost of this is that Excel sacrifices more precision than is strictly necessary. Personally, I&#x27;m
+not sure that trade-off is worth it.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Traffic poem</title>
+        <published>2024-11-15T00:00:00+00:00</published>
+        <updated>2024-11-15T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://gregat.es/traffic-poem/"/>
+        <id>https://gregat.es/traffic-poem/</id>
+        
+        <content type="html" xml:base="https://gregat.es/traffic-poem/">&lt;div class=&quot;poem&quot;&gt;
+Three lanes for pickup trucks, lift to the sky,
+&lt;p&gt;Seven for SUVs, eyes on the phone,&lt;&#x2F;p&gt;
+&lt;p&gt;None for the cyclists, doomed to die,&lt;&#x2F;p&gt;
+&lt;p&gt;One for our hero, speeding alone.&lt;&#x2F;p&gt;
+&lt;p&gt;He&#x27;s the flow of traffic, don&#x27;t impede that guy.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;span class=&quot;indent&quot;&gt;One law to rule them all, one law to mind them,&lt;&#x2F;span&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;span class=&quot;indent&quot;&gt;One law to bring them all and in the right lane bind them.&lt;&#x2F;span&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;He&#x27;s the flow of traffic, don&#x27;t impede that guy.&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Pivot is just a shorter, fatter group by</title>
+        <published>2024-07-31T00:00:00+00:00</published>
+        <updated>2024-07-31T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://gregat.es/pivot-shorter-fatter-groupby/"/>
+        <id>https://gregat.es/pivot-shorter-fatter-groupby/</id>
+        
+        <content type="html" xml:base="https://gregat.es/pivot-shorter-fatter-groupby/">&lt;p&gt;I first heard the term &quot;pivot table&quot; in, I think, 2012. At the time, I had no idea what a pivot
+table was. I made some desultory efforts to understand what they are and how one uses them, but I
+found Excel&#x27;s interface inscrutable. Excel&#x27;s documentation and Google were no help, either. Even
+today all you get is a bunch of &quot;pivot tables are useful for aggregating data to make decisions&quot; and
+suggestions to play around with them in Excel until you figure it out. I quickly decided it wasn&#x27;t
+worth understanding.&lt;&#x2F;p&gt;
+&lt;p&gt;Eleven years later I took up the task of implementing pivot tables for &lt;a href=&quot;https:&#x2F;&#x2F;rowzero.io&quot;&gt;Row
+Zero&lt;&#x2F;a&gt;. It was only then that I was finally forced to grapple with them. Here, I
+take up the task of attempting to explain pivot tables in a way that would have been helpful to me a
+decade ago.&lt;&#x2F;p&gt;
+&lt;p&gt;The headline: pivot is just a shorter, fatter group by. But, what&#x27;s a &quot;group by&quot;, and what would it
+mean for such a thing to be fat or short? The rest of this article will attempt to clarify by first
+discussing other operations that pivot resembles: unique, and group by. If we understand those,
+it&#x27;s only a short distance from there to the place where the title of this article will make sense.&lt;&#x2F;p&gt;
+&lt;p&gt;All of these operations are operations on tabular data. That means data which is arranged in
+&lt;strong&gt;columns&lt;&#x2F;strong&gt; and &lt;strong&gt;rows&lt;&#x2F;strong&gt;. And these operations also output a table. Table in, different table out.
+In Excel, which is where pivot tables come from, a table can be represented as a range of data, like
+A1:D2000. But the operations aren&#x27;t specific to spreadsheets and can be done on any data that&#x27;s
+arranged as a table.&lt;&#x2F;p&gt;
+&lt;p&gt;I&#x27;m going to be using the Social Security Administration&#x27;s baby name dataset for my examples. This
+data is a table with 4 columns and 2,116,840 rows. If you want to see the data yourself, you can
+make a copy of my &lt;a href=&quot;https:&#x2F;&#x2F;rowzero.io&#x2F;workbook&#x2F;644C5FB13CA060884AC9172C&#x2F;3?copy&quot;&gt;Row Zero workbook&lt;&#x2F;a&gt;
+by clicking that link. Or you can just refer to the screenshot below to see a sample of the data.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;baby_names_table.webp&quot; alt=&quot;several rows of data in a table with columns Year, Name, Sex, and Count&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Let&#x27;s call Year, Name, Sex, and Count &quot;fields&quot; of our data (because pivot uses the word
+&quot;column&quot; for something else).&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;uniques&quot;&gt;Uniques&lt;&#x2F;h2&gt;
+&lt;p&gt;A common operation on a field of data is to remove duplicates. For example, in our baby name data, the Sex field only has
+two values: it&#x27;s always either M or F. If we were to compute the unique values for that field, we&#x27;d
+get just two rows.&lt;&#x2F;p&gt;
+&lt;p&gt;You can also compute uniques for multiple fields of a table. This produces one row per unique
+&lt;strong&gt;combination&lt;&#x2F;strong&gt; of values from the different fields. For example, uniques for Year &amp;amp; Sex in our
+baby names table would produce two rows per year, like so:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;baby_names_unique_year_sex.webp&quot; alt=&quot;a table with two columns, Year and Sex, where each year has two rows, one with &amp;quot;M&amp;quot; in Sex and one with &amp;quot;F&amp;quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Each row in the output table corresponds to one or more rows in the input table. This operation only
+gives you the actually occuring combinations, not all possible combinations of values from the
+fields. Say, for example, you added a row to the table that was &lt;code&gt;1880,Edna,U,5&lt;&#x2F;code&gt;. Since only this
+row has the value U for Sex, you&#x27;d get a row for &lt;code&gt;1880,U&lt;&#x2F;code&gt; in the output table, but not one for
+&lt;code&gt;1980,U&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;In pseudo-code, we can imagine that we&#x27;re calling a method on the table and specifying which fields
+we want to compute uniques for. Something like: &lt;code&gt;table.uniques([&quot;Year&quot;, &quot;Sex&quot;])&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Computing uniques for Year, Name, Sex, and Count in our baby names data would just give us back the same
+table, since there are no duplicate rows in the input table.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;group-by&quot;&gt;Group By&lt;&#x2F;h2&gt;
+&lt;p&gt;Our uniques operation on our table required specifying a list of fields to compute uniques
+for.
+Now imagine that we extend the operation so that, in addition to
+these parameters, you have to tell us what to do with the &lt;strong&gt;other&lt;&#x2F;strong&gt; fields in the table.&lt;&#x2F;p&gt;
+&lt;p&gt;Let&#x27;s define some options. Once thing you could do is &lt;strong&gt;omit&lt;&#x2F;strong&gt; a field from the output table. That&#x27;s
+implicitly what we did in the previous section. Our pseudo-code function call would now look
+like &lt;code&gt;table.uniques([&quot;Year&quot;, &quot;Sex&quot;], { &quot;Name&quot;: omit, &quot;Count&quot;: omit })&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;But we could imagine other ways of including a field. Remember that each row in our output table
+corresponds to one or more rows of the input table. So we could say something like, &quot;Add up the
+value of the Count field for all corresponding rows of the input table&quot;. This is a &quot;group by&quot; operation. We call it that because we&#x27;re aggregating the values of the Count
+field &lt;em&gt;by&lt;&#x2F;em&gt; Year and Sex. It&#x27;s a way of summarizing the data in our input table.&lt;&#x2F;p&gt;
+&lt;p&gt;For example, if we wanted to sum the counts for each name by year and sex, we would do &lt;code&gt;table.groupby([&quot;Year&quot;, &quot;Sex&quot;], { &quot;Name&quot;: omit, &quot;Count&quot;: sum })&lt;&#x2F;code&gt;. This will tell us how many babies of each sex there are for each year. The output would look like:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;baby_names_sum_of_count_by_year_and_sex.webp&quot; alt=&quot;a table with three columns, Year, Sex, and Sum of Count, where each year has two rows, one with &amp;quot;M&amp;quot; in Sex and one with &amp;quot;F&amp;quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;This table has the same number of rows as the example in the previous section, it just adds an
+additional column summarizing the Count field for each row.&lt;&#x2F;p&gt;
+&lt;p&gt;You can see how we could easily extend this with different aggregation options on the fields:
+average, count, median, etc. in addition to sum. You could also allow specifying the same field
+multiple times with &lt;em&gt;different&lt;&#x2F;em&gt; aggregations, if you wanted both Sum of Count and Average Count in
+in the output table, for example.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;pivot&quot;&gt;Pivot&lt;&#x2F;h2&gt;
+&lt;p&gt;So now we&#x27;re in a position to define the pivot operation. Just as uniques can be thought of
+as a special case of groupby, groupby can be thought of as a special case of the pivot operation.&lt;&#x2F;p&gt;
+&lt;p&gt;A pivot differs from a groupby just in that each of the fields we&#x27;re grouping by must be put into
+one of two buckets: &quot;rows&quot;, or &quot;columns&quot;. The special case that&#x27;s equivalent to groupby is when
+they&#x27;re all &quot;rows&quot;. So we could rewrite our groupby in pseudo-code as &lt;code&gt;table.pivot(rows: [&quot;Year&quot;, &quot;Sex&quot;], columns: [], { &quot;Name&quot;: omit, &quot;Count&quot;: sum })&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;The obvious question is what happens if we move one of our rows to columns? Let&#x27;s look at an example
+where we move &quot;Sex&quot; to columns. Here&#x27;s what you get:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;baby_names_sum_of_count_by_year_and_sex_pivoted.webp&quot; alt=&quot;a table with three columns, Year, F, and M, where each year has a single row, and the sum of count for each sex has been put in the corresponding column&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;We no longer have a Sex column on our output table. Instead, we have one column per unique value
+of the Sex field. We also no longer have a Sum of Count column. Instead, the &quot;M&quot; and &quot;F&quot; columns are
+implicitly showing the Sum of Count for the corresponding Sex, for each row. The table also has
+fewer rows — in fact it&#x27;s precisely half the size, because we now have just one row per year
+instead of two.&lt;&#x2F;p&gt;
+&lt;p&gt;The thing to see is that the data in the output table hasn&#x27;t changed. It&#x27;s just been
+rearranged. The Sum of Count for &lt;code&gt;1955,F&lt;&#x2F;code&gt; is still there, it&#x27;s just now the value of the F column
+for the row 1955. And the &lt;code&gt;1955,M&lt;&#x2F;code&gt; Sum of Count is also still there, also on the 1955 row (in the M
+column, naturally).&lt;&#x2F;p&gt;
+&lt;p&gt;In this particular case, our pivot table is the same width as the groupby from the last section, but
+that&#x27;s only because the Sex field has just two unique values — if it had more, our pivot
+output would be wider. And it&#x27;s shorter, because the output table only needs one row per year
+instead of one row per year&#x2F;sex combo. So this pivot is just a shorter, fatter version of the
+groupby we already did.&lt;&#x2F;p&gt;
+&lt;p&gt;It gets a little more complicated when you have more than one aggregation, or more than one field in
+columns, but the basic idea is the same. We just do a groupby, and then rearrange the table to make
+it shorter and fatter. No new information is contained in the pivot. It&#x27;s just presented differently
+and is (maybe) easier to read.&lt;&#x2F;p&gt;
+&lt;p&gt;So if you understand groupby, you also understand pivot. In fact, all of the screenshots in this
+article are screenshots of pivot tables. Since groupby is just a special case of pivot, and uniques
+is just a special case of groupby, all of these operations can be expressed as pivots. It&#x27;s the same
+fundamental summarization of the input data. For me, that was the crucial insight that finally made
+pivot tables understandable.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;why-pivot&quot;&gt;Why Pivot?&lt;&#x2F;h2&gt;
+&lt;p&gt;When I&#x27;ve tried this explanation out on people in the past, a common response has been, &quot;What&#x27;s the
+point of pivot, then?&quot; If it&#x27;s the same summary as groupby, why pivot?&lt;&#x2F;p&gt;
+&lt;p&gt;One obvious answer is that you just prefer the table layout that the pivot produces, or find it more
+legible. A less obvious answer is that it&#x27;s &lt;em&gt;very&lt;&#x2F;em&gt; useful for constructing graphs. If you select the
+whole pivot table from the last section and click the &quot;Insert chart&quot; button in &lt;a href=&quot;https:&#x2F;&#x2F;rowzero.io&quot;&gt;Row
+Zero&lt;&#x2F;a&gt;, you instantly get a chart showing count of baby boys vs. baby girls over
+time.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;baby_names_pivot_chart.webp&quot; alt=&quot;a line chart showing the change over time of the number of baby boys and baby girls in the SSA data&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Each column becomes its own graphable series of data in the pivot. Pivot tables are especially
+powerful when combined with charts in a spreadsheet.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;&#x2F;h2&gt;
+&lt;p&gt;When you&#x27;re staring at the inscrutable pivot table configuration pane in Excel, or the hopefully
+slightly less inscrutable version in &lt;a href=&quot;https:&#x2F;&#x2F;rowzero.io&quot;&gt;Row Zero&lt;&#x2F;a&gt;, just remember that the &quot;Rows&quot;
+and &quot;Columns&quot; sections are just diffent ways of specifying which fields you want to group by. And
+&quot;Values&quot; is where you specify your aggregations for the other fields. (&quot;Filters&quot; just let you
+filter the input data &lt;em&gt;before&lt;&#x2F;em&gt; applying the pivot transformation.) For me, the simplest way to
+construct a pivot is to imagine the groupby I want to perform, and construct that first, using
+Rows only and no Columns. Then I maybe move a Row or two to Columns, to get the final shape I want.&lt;&#x2F;p&gt;
+&lt;p&gt;And that&#x27;s pivot explained as simply as I know how.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>PMTUD: an AWS debugging story</title>
+        <published>2024-06-10T00:00:00+00:00</published>
+        <updated>2024-06-10T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://gregat.es/pmtud/"/>
+        <id>https://gregat.es/pmtud/</id>
+        
+        <content type="html" xml:base="https://gregat.es/pmtud/">&lt;p&gt;This is the story of my most fondly remembered project from my time on the S3 storage team in AWS.&lt;&#x2F;p&gt;
+&lt;p&gt;When I joined S3 in 2018, my team owned a service that was just a
+high-throughput, in-memory cache. When telling
+people about it they would ask, &quot;Why not redis or memcached?&quot; The answer was that this service (let&#x27;s call it S3Cache) was as old as S3, i.e.,
+about as old as
+memcached and older than redis, so those weren&#x27;t really options at the time. But it served a similar
+purpose and served it well enough that there had never been any reason to switch. It was a critical
+service — a cache lookup was needed for every GET or PUT to S3. But it was simple and stable. It
+had hardly changed in over a decade. Until I joined, operating it mostly consisted of occasionally
+scaling the service in growing regions.&lt;&#x2F;p&gt;
+&lt;p&gt;S3 was the very first AWS service to launch. So of course it did not, initially, run on AWS itself. In the
+fullness of time, it would, but in 2018 S3 was still mostly operating on custom bare metal hardware
+in Amazon&#x27;s legacy prod network. Since S3Cache was simple, stable, and stateless, it was a good
+candidate to be one of the first services to make the switch to EC2. The idea was that it would run on EC2 and still
+communicate with the rest of the S3 services running on legacy hardware via a link between the two
+networks. Everyone thought this would be an easy transition. But how could we &lt;strong&gt;know&lt;&#x2F;strong&gt; that it would
+work? My first assignment in S3 was to answer this question.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;understanding-s3cache&quot;&gt;Understanding S3Cache&lt;&#x2F;h2&gt;
+&lt;p&gt;First, I had to understand how the service worked. Here are the key points.&lt;&#x2F;p&gt;
+&lt;p&gt;It spoke a custom network protocol that could be layered over either TCP or UDP, like all S3 services.&lt;&#x2F;p&gt;
+&lt;p&gt;It was written in java and ran on the JVM, like all S3 services at the time.&lt;&#x2F;p&gt;
+&lt;p&gt;It listened on multiple ports: one port for TCP requests, which were mainly admin actions and updates,
+and a configurable &lt;em&gt;n&lt;&#x2F;em&gt; ports for UDP requests, which were exclusively reads of the data in
+the cache.&lt;&#x2F;p&gt;
+&lt;p&gt;The most important scaling dimension was read throughput. This service had to handle
+S3-scale transactions per second. At least one for every GET, PUT, and DELETE. We managed that on a
+relatively small number of instances.&lt;&#x2F;p&gt;
+&lt;p&gt;Latency was also important. Typical client-measured latency for a single read was
+around 1 ms at the 99th percentile.&lt;&#x2F;p&gt;
+&lt;p&gt;Since we used UDP, we didn&#x27;t expect 100% availability. It was difficult to define a good availability
+metric for alarms for this service, for reasons that we&#x27;ll cover in the next section, but we
+generally were fine with client-reported failure rates of 0.5% or lower. With low enough latency and
+high enough throughput, retrying some small proportion of failures was OK.&lt;&#x2F;p&gt;
+&lt;p&gt;The UDP listeners were designed to avoid allocations and reuse buffers, so garbage collection on this service would be
+infrequent and fast. This was important to preserve our latency, throughput, and availability goals,
+as we will see below.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;my-first-project&quot;&gt;My first project&lt;&#x2F;h2&gt;
+&lt;p&gt;In order to qualify S3Cache for operation on EC2, we needed to be able to start it up on an EC2
+instance, throw some load at it,
+observe that latency and error rates were within acceptable bounds, and measure throughput.
+We expected to use a larger number of smaller instances in EC2, but we needed to know how many instances of what size we would
+need.&lt;&#x2F;p&gt;
+&lt;p&gt;We happened to have a load generator lying around that could theoretically serve this purpose. Now, nobody had used this thing in a while, so I had some work to do to make it useful. First, I
+added a seed step to warm the cache with fake-but-realisitic-looking data. Then, I had to change it to be reliable enough to actually measure S3Cache&#x27;s
+performance, rather than its own performance.&lt;&#x2F;p&gt;
+&lt;p&gt;The library we all used to communicate over UDP worked by just keeping requests around for some
+short time, and matching them by request ID against the incoming response datagram. Since
+UDP provides no delivery guarantees or any capability to detect and retransmit lost packets,
+basically all failures looked like request timeouts. But we can distinguish two different failure
+modes that look identical from the client&#x27;s perspective:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;S3Cache failed to send a response.&lt;&#x2F;li&gt;
+&lt;li&gt;S3Cache sent a response, but it was not received or processed before the timeout.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;Type 1 failures did happen. In fact, this type of failure mostly accounts for the up-to-0.5% of reads that
+are expected, acceptable failures, as we&#x27;ll discuss below. But invariably when a client of the
+service observed higher failure rates, it was because &lt;em&gt;they&lt;&#x2F;em&gt; were under pressure, and consequently
+failing to process requests in time. This often manifested as an increased number of dropped UDP
+packets, as socket buffers filled up.&lt;&#x2F;p&gt;
+&lt;p&gt;You can observe this (on Amazon Linux 2) at &lt;code&gt;&#x2F;proc&#x2F;net&#x2F;snmp&lt;&#x2F;code&gt;, which has an
+&lt;code&gt;InErrors&lt;&#x2F;code&gt; counter for UDP. This counter is incremented when a packet is dropped or has a bad
+checksum. If you&#x27;re dropping packets because your buffer is full, you&#x27;ll see this counter go up. And
+that is exactly what we saw on the load generator when we first attempted to ramp it up to
+production-like load. The load generator fell over well before S3Cache did.&lt;&#x2F;p&gt;
+&lt;p&gt;I won&#x27;t get into the details of how I resolved that problem — basically by shifting to
+parallel load generation, but also some optimization in the load generator code itself. I mention it
+because we&#x27;re going to need to distinguish this failure mode, which we were familiar with, from a
+new failure mode that we weren&#x27;t.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;normal-operation&quot;&gt;Normal operation&lt;&#x2F;h2&gt;
+&lt;p&gt;So we&#x27;d run S3Cache on some box and point the load generator at it, and gradually ramp up our read
+transactions per second (TPS).
+A normal, qualifying result would look like this: &lt;img src=&quot;&#x2F;s3cache-test-run-normal.webp&quot; alt=&quot;normal load test result with error rate spiking at 180,000 TPS&quot; &#x2F;&gt;
+This is an entirely fake graph with made up numbers, but it shows the shape of things. If this were a real result, it would indicate that we can operate S3Cache on this type of box up to 180,000 TPS. So we&#x27;d want however much capacity would spread the load out to around 120,000 TPS per instance, leaving enough extra capacity to absorb a loss of ⅓ with no loss of availability.&lt;&#x2F;p&gt;
+&lt;p&gt;We observed that failures increased gradually with read throughput, even before reaching the
+point where the service falls over.
+What accounted for those failures? It turned out that if you compared UDP InErrors on
+the S3Cache host to
+the failure rate, the curves matched almost perfectly. And I further discovered that the InErrors
+weren&#x27;t distributed evenly over time, but instead occurred in bursts — bursts that
+corresponded to pauses for garbage collection in the JVM. What was happening was that some
+UDP packets were being lost when queues formed during GC pauses that overflowed the socket buffers. But
+as long as the request rate was low enough, S3Cache could catch up and drain what made it into the
+buffer after the pause ended.&lt;&#x2F;p&gt;
+&lt;p&gt;So in normal operation, basically all observed read failures were the result
+of UDP datagrams being dropped by S3Cache&#x27;s host OS or the client&#x27;s host OS due to
+overflowing socket buffers.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;ec2-qualifying-run&quot;&gt;EC2 qualifying run&lt;&#x2F;h2&gt;
+&lt;p&gt;Here&#x27;s what happened when we attempted to qualify S3Cache on an EC2 instance.
+&lt;img src=&quot;&#x2F;s3cache-test-run-failed.webp&quot; alt=&quot;failed load test result for EC2 with error rate spiking at just 40,000 TPS and asymptotically approaching about 3.5%&quot; &#x2F;&gt;
+The failure rate in this graph jumped up to an unacceptably high error rate very early in the run, and then gradually
+increased after that. After the jump, the curve was logarithmic in shape, with what
+appeared to be a limit around at around 3.5%.&lt;&#x2F;p&gt;
+&lt;p&gt;The real mystery was that we did not observe elevated UDP InErrors at either end.
+This was a new, previously unseen failure mode.&lt;&#x2F;p&gt;
+&lt;p&gt;We also observed that the request counts recorded by S3Cache more-or-less matched what was being sent
+(modulo the usual amount of InError loss), and to all
+appearances these requests were being successfully processed and a response sent. But the load
+generator never saw the responses. Something was happening in between.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;the-first-clue&quot;&gt;The first clue&lt;&#x2F;h2&gt;
+&lt;p&gt;It happened that a colleague on another team was looking at a similar issue, and had already
+identified that the datagram loss correlated with size — their hypothesis was that we
+were specifically losing datagrams larger than approximately 1500 B. Most of the
+datagrams were smaller than 1500 B, and
+the ones that were larger weren&#x27;t much larger. We quickly validated this hypothesis by
+modifying the load generator to seed only data smaller than that, and seeing that this produced a
+more normal load test pattern on EC2.&lt;&#x2F;p&gt;
+&lt;p&gt;So, great, problem solved!  We could just compress to reduce datagram size,
+and all would be well.&lt;&#x2F;p&gt;
+&lt;p&gt;This possible solution had a few drawbacks. One, we didn&#x27;t know what compression would do to our throughput.
+Probably it would have been fine for S3Cache, and in fact might have been good for vertical scalability as
+well, because we could just cache the compressed bytes, in theory. But many other services would
+have had extra work to do to compress and decompress, and at the request rates we were talking about, we
+couldn&#x27;t assume that was a negligible amount of work. It would have required a lot more testing, and likely increased our hardware spend.&lt;&#x2F;p&gt;
+&lt;p&gt;Two, we&#x27;d have had to modify S3Cache &lt;em&gt;and&lt;&#x2F;em&gt; all other services that passed around this sort of
+data — of which there are several. And remember that we were on the critical GET and PUT request path.
+That&#x27;s a complicated, multi-team effort.&lt;&#x2F;p&gt;
+&lt;p&gt;Implementing this solution would have taken months to complete. That was longer than we wanted it
+to take. Another reason we wanted to get S3Cache on EC2 is that we needed to vertically scale in
+some regions, but we didn&#x27;t necessarily have hardware available in those regions we could
+scale to. EC2 solved that problem. It wasn&#x27;t a hard deadline — there were other
+potential solutions — but the delay would have meant even more work to solve this secondary issue.&lt;&#x2F;p&gt;
+&lt;p&gt;Moreover, while this certainly would have worked around the issue, I wasn&#x27;t happy. We still didn&#x27;t
+really understand the root cause. Why were we losing datagrams over 1500 B? And why did the rate
+of loss correlate with throughput? We had shown that we were losing only large datagrams, but not
+that we were losing all large datagrams.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;what-wasn-t-the-explanation&quot;&gt;What &lt;em&gt;wasn&#x27;t&lt;&#x2F;em&gt; the explanation?&lt;&#x2F;h2&gt;
+&lt;p&gt;The ready-to-hand hypothesis for why 1500 B was a relevant threshold was that this was the maximum
+transmission unit (MTU) of the network interface on the hosts we were using in the legacy
+prod network. That meant that any datagram larger than that size would need to be fragmented and
+sent across two IP packets. So we immediately
+considered the hypothesis that we were losing fragmented packets as an explanation for why we were
+losing larger datagrams. But the hypothesis that we were losing all fragmented packets didn&#x27;t fit
+the evidence.&lt;&#x2F;p&gt;
+&lt;p&gt;The load generator seeded all the data in the cache for the qualifying run, so we knew its
+properties, and could infer that about 3.5% of datagrams would have been larger than 1500 B. The
+load generator&#x27;s access pattern was random, so this should have resulted in a constant 3.5% failure
+rate if all fragmented datagrams were lost.&lt;&#x2F;p&gt;
+&lt;p&gt;Moreover, the 1500 B MTU was a relevant factor &lt;em&gt;without&lt;&#x2F;em&gt; EC2 in the picture. Fragmentation is not
+great in UDP generally, since it increases the probability that a
+datagram is lost — if any single fragment is lost, the entire datagram is. But nevertheless
+we&#x27;d been living with a non-trivial fragmentation rate for years. It&#x27;s
+worth noting here that, when S3Cache was originally designed, all of its responses would have fit in
+1500 B, so this was an unplanned change in the system&#x27;s behavior that had gone unnoticed because it
+had never caused a problem before.&lt;&#x2F;p&gt;
+&lt;p&gt;Another hypothesis we considered was that the EC2 instance was &lt;em&gt;not&lt;&#x2F;em&gt; fragmenting larger datagrams,
+because it had a 9001 B MTU on its network interface.
+So maybe these datagrams were being lost because they were too big to fit down the pipe.
+But that, too, failed to fit the evidence, as it would have resulted in a loss of all too-big datagrams.&lt;&#x2F;p&gt;
+&lt;p&gt;This raised a question: how was the EC2 host supposed to know that the recipient&#x27;s MTU was 1500 B, so that
+it could fragment accordingly? At the start of this journey I didn&#x27;t even know what &quot;MTU&quot; stood for,
+so I&#x27;d certainly never heard of path MTU discovery (PMTUD), which is the answer to that question. It
+seemed likely that the MTU size was relevant, but I couldn&#x27;t explain how it interacted with the
+system to produce the failure rate curve we observed. It was time to learn more.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;how-does-pmtud-work&quot;&gt;How does PMTUD work?&lt;&#x2F;h2&gt;
+&lt;p&gt;Path MTU discovery is a process that uses the &lt;a href=&quot;https:&#x2F;&#x2F;datatracker.ietf.org&#x2F;doc&#x2F;html&#x2F;rfc792&quot;&gt;Internet Control Message
+Protocol (ICMP)&lt;&#x2F;a&gt; to determine the minimum MTU of every
+hop along the path to a particular destination. The header of
+an IP packet contains
+flags used to control and identify fragments. One of these bit flags means &quot;Don&#x27;t fragment&quot;, and
+when this flag is set, a gateway is required to drop the packet if it is larger than the MTU of the
+next hop in the packet&#x27;s journey. It &lt;em&gt;may&lt;&#x2F;em&gt; also return a type 3 &quot;destination unreachable&quot; ICMP
+message with code 4 to indicate that the packet was dropped and why.&lt;&#x2F;p&gt;
+&lt;p&gt;Now that&#x27;s not enough information: if you want to try again, you need to know not only that the packet was too big,
+but how small the fragments need to be for transmission to succeed. So &lt;a href=&quot;https:&#x2F;&#x2F;datatracker.ietf.org&#x2F;doc&#x2F;html&#x2F;rfc1191#section-4&quot;&gt;RFC 1191&lt;&#x2F;a&gt;, which specifies PMTUD, elevates the ICMP response to a requirement and requires the
+inclusion of the next-hop MTU in a portion of the ICMP response that was unused.&lt;&#x2F;p&gt;
+&lt;p&gt;With that information, the sender can discover the minimum MTU for a path by always setting
+the don&#x27;t fragment bit, and, any time it gets an ICMP &quot;fragmentation needed&quot; message, it caches the
+next-hop MTU by destination. Then the next time it sends a datagram to a destination in the cache,
+it pre-fragments, ensuring that each fragment fits into the smallest known MTU for that path.
+After sending at least as many packets as there are hops on the path, it&#x27;s guaranteed to learn
+the true path MTU and won&#x27;t lose any more datagrams, at least not for the &quot;fragmentation needed&quot; reason.&lt;&#x2F;p&gt;
+&lt;p&gt;This algorithm is implemented in the Linux kernel, and I confirmed that path MTU discovery was enabled by default on the EC2 instances we
+were testing. So, since they could send jumbo dataframes of up to 9001 B, S3Cache should have been
+sending larger datagrams whole, with the don&#x27;t fragment flag set, and
+then receiving back ICMP &quot;fragmentation needed&quot; messages with a next-hop MTU of 1500 B, after which
+it would cache this by destination and pre-fragment large datagrams to the same destination.&lt;&#x2F;p&gt;
+&lt;p&gt;Since UDP has no mechanism for re-transmitting, and our application layer didn&#x27;t either, datagrams
+lost while probing for the path MTU would have been lost for good. That should have accounted for
+a small number of errors, but it couldn&#x27;t explain the majority. The load was generated from only a
+handful of hosts, so we should have lost only a handful of datagrams before learning the path MTU
+for all of them, after which fragmentation should have kept our packets small enough to fit down the
+pipe.&lt;&#x2F;p&gt;
+&lt;p&gt;At this point, I considered the possibility that we weren&#x27;t successfully caching the path MTU, or
+were invalidating the cache. But I couldn&#x27;t imagine why that would be happening, and found it hard
+to get clear on the details of the caching strategy Amazon Linux would have been using. So I didn&#x27;t
+pursue this line of inquiry, thinking it was probably a red herring (it was).&lt;&#x2F;p&gt;
+&lt;p&gt;Instead, having confirmed that large datagrams would have been fragmented, I suspected that some,
+but not all, fragmented datagrams were being dropped by a node on the path in between S3Cache and
+the load generator. So we needed to understand what lay in between.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;the-elastic-network-adapter-takes-the-stage&quot;&gt;The Elastic Network Adapter takes the stage&lt;&#x2F;h2&gt;
+&lt;p&gt;The first stop for a network packet after leaving the kernel networking layer is the network
+interface. That&#x27;s not what you&#x27;d normally consider a &quot;hop&quot; on the path to the destination, but it is a
+distinct component that handles the packet.&lt;&#x2F;p&gt;
+&lt;p&gt;In 2016, Amazon announced the &lt;a href=&quot;https:&#x2F;&#x2F;aws.amazon.com&#x2F;about-aws&#x2F;whats-new&#x2F;2016&#x2F;06&#x2F;introducing-elastic-network-adapter-ena-the-next-generation-network-interface-for-ec2-instances&#x2F;&quot;&gt;Elastic Network Adapter
+(ENA)&lt;&#x2F;a&gt;,
+a new virtual network interface for next-generation EC2 instances. The instances we were load testing
+were 5th-generation general purpose or memory optimized instances, which was the first generation of
+these instance types to use ENA.&lt;&#x2F;p&gt;
+&lt;p&gt;I was fortunate enough, working at AWS, to be able to speak directly to the EC2 networking team. And
+when I reached out to them, they immediately told me:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Don&#x27;t send fragmented packets. They&#x27;re bad; we don&#x27;t offer performance guarantees in that case.
+Unexpected behavior can result.&lt;&#x2F;li&gt;
+&lt;li&gt;If you do send fragmented packets, the current version of ENA doesn&#x27;t fast-track those, but
+offloads to a less efficient processor.&lt;&#x2F;li&gt;
+&lt;li&gt;In order to avoid load on the CPU, ENA rate limits fragmented packets to around 1000 per
+second.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;It was at precisely this point that I had enough information to determine what was happening. Using
+path MTU discovery, S3Cache&#x27;s host OS was determining that the path MTU was 1500 B, and fragmenting
+datagrams that didn&#x27;t fit. It was sending those fragments to ENA, which sent them through a
+separate, non-optimized path to the network. Since we expected 3.5% of our datagrams to be
+fragmented, and the rate limit was around 1000 per second, that means we could reach a total
+transaction rate of around 28,500 datagrams per second before hitting the rate limit, which explains
+why the initial portion of the load test would see the normal, low error rate. Then, after exceeding
+that transaction rate, we would expect a loss rate of &lt;code&gt;tps * 0.035 - 1000&lt;&#x2F;code&gt; datagrams per second (plus
+our normal failures), where
+&lt;code&gt;tps&lt;&#x2F;code&gt; is the throughput our load generator was pushing. And this would cause our failure rate to asymptotically approach
+3.5% or so.&lt;&#x2F;p&gt;
+&lt;p&gt;I should note, by the way, that I believe the networking team was working on removing this
+limitation, and I don&#x27;t know whether it still exists. But it did in 2018.&lt;&#x2F;p&gt;
+&lt;p&gt;Now that we understood what was happening, a possible workaround presented itself. If we wanted to fragment our
+datagrams but also bypass the rate limit in ENA, we could just &lt;strong&gt;never fragment&lt;&#x2F;strong&gt; at S3Cache, even when
+sending datagrams larger than the path MTU. For this to work, we&#x27;d need to unset the &quot;don&#x27;t
+fragment&quot; flag, allowing downstream nodes to fragment as needed — otherwise we&#x27;d guarantee
+that all large datagrams would be lost. But since at the EC2 host we get to
+use jumbo frames, fragmentation wouldn&#x27;t be necessary until some point downstream of ENA. All of this
+could be accomplished with a single kernel setting: &lt;code&gt;ip_no_pmtu_disc = 1&lt;&#x2F;code&gt; means &lt;em&gt;stop doing path MTU
+discovery, and unset &quot;don&#x27;t fragment&quot;&lt;&#x2F;em&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;Et voilà!&lt;&#x2F;em&gt; Astute readers will notice that this solution ignores the networking team&#x27;s
+point #1, which they insisted on quite emphatically. Avoiding fragmentation for TCP segments is,
+after all, the whole point of PMTUD. For UDP, however, avoiding fragmentation requires application-level
+support, since the protocol has no mechanism for sending a datagram in multiple segments.
+Or, ideally when using UDP, you just guarantee that your maximum datagram size is less than your minimum path MTU
+for all destinations.&lt;&#x2F;p&gt;
+&lt;p&gt;We didn&#x27;t have any application-level support for this. We were relying on IP fragmentation, and had
+been relying on it (unnoticed) for years. It just hadn&#x27;t been an issue until we hit the ENA rate
+limit.&lt;&#x2F;p&gt;
+&lt;p&gt;So if fragmentation had been working fine for us for so long, it&#x27;s worth asking why the advice to
+avoid it (like the plague)? A typical answer is that the internet is composed of a bunch of links with
+varying behavior. They have different MTU sizes, some of them might not handle fragmented packets at
+all or might handle them incorrectly (as in &lt;a href=&quot;https:&#x2F;&#x2F;issuetracker.google.com&#x2F;issues&#x2F;35904565#c22&quot;&gt;this Google Compute Engine
+issue&lt;&#x2F;a&gt;), some of them might rate limit fragments
+(ENA!). Fragmentation also increases resource utilization on the nodes that need to do the
+fragmentation, and therefore might reduce throughput or increase latency, or cause drops like
+those that we saw at S3Cache during garbage collection pauses.
+Also, as we noted above, losing any fragment of a UDP datagram means the whole datagram is
+lost, increasing the probability of datagram loss.&lt;&#x2F;p&gt;
+&lt;p&gt;Those are good reasons! And yet, the network path we were traversing was more predictable than the internet.
+We knew the path MTU would never be less than 1500 B. And we knew that only a small percentage of
+our datagrams would exceed that size. &quot;We&quot; didn&#x27;t control the network, in the sense of &quot;we&quot; that
+only included my team at S3, but &quot;we&quot; did control every point on the path in the sense of &quot;we&quot; that
+included Amazon as a whole. So even increased resource utilization on the network links due to
+fragmenting 3.5% of S3Cache datagrams was something that we could just choose to accept and deal with
+(and in practice we didn&#x27;t think it would really be a problem).&lt;&#x2F;p&gt;
+&lt;p&gt;Moreover, if we set &lt;code&gt;ip_no_pmtu_disc = 1&lt;&#x2F;code&gt;, we&#x27;d only be asking downstream nodes to do fragmentation on
+a temporary basis. Eventually, all of S3Cache&#x27;s clients would also be on EC2, and also using jumbo
+frames, after which, for the foreseeable future, datagram size would never exceed the path MTU.
+We&#x27;d be back to the state the system was originally designed for, where we could safely assume that our UDP
+datagrams were unfragmented.&lt;&#x2F;p&gt;
+&lt;p&gt;We made this one-liner change and saw that as expected it
+resulted in normal load test results on EC2. We could deploy that to S3Cache only and unblock
+migration to EC2 without a months-long coordinated cross-team effort.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;coda-another-pmtud-udp-failure-mode&quot;&gt;Coda: another PMTUD + UDP failure mode&lt;&#x2F;h2&gt;
+&lt;p&gt;So we were running with some portion of the S3Cache fleet on EC2 for a while, as a test, and all was
+well. We went to stand up more EC2 capacity. There was an availability zone in which the
+5th-generation instances weren&#x27;t available (I think they were to customers, but they wouldn&#x27;t let us
+use them there at the time, probably to make sure there was enough supply for customer demand). So
+we did another qualifying run with our load generator on 4th-generation instance types, which
+lacked ENA.&lt;&#x2F;p&gt;
+&lt;p&gt;Now, we had specialized our configuration change so that it only applied when we
+detected the presence of the ENA network interface, so on these 4th-gen instances we were still
+doing PMTUD. But without ENA, we didn&#x27;t have the fragmentation rate limit, so the qualifying run looked normal and
+we went ahead and deployed on the 4th-gen instances.&lt;&#x2F;p&gt;
+&lt;p&gt;And we immediately got a high-severity alarm from one of S3Cache&#x27;s clients.&lt;&#x2F;p&gt;
+&lt;p&gt;This particular client was not on the GET and PUT path, and was a very low-volume client
+compared to our clients that were. It was also a low-volume client compared
+to our load generator. So we hadn&#x27;t really simulated this client&#x27;s usage pattern in our qualifying
+run. Whoops!&lt;&#x2F;p&gt;
+&lt;p&gt;We rolled back the deployment until we could figure out what was going on. Fortunately, at this
+point we had built up a pretty good mental model of UDP failure modes and how they interact with
+path MTU discovery. So we saw the problem right away. Recall that all large datagrams sent prior to
+learning that path MTU would be lost forever, and the client would be forced to retry. For high
+volume clients, these failures were so few that they just went unnoticed in the aggregate failure
+rate, and would be retried successfully. But this was a low-volume client, meaning that these lost
+datagrams were a much higher proportion of the total. They were quite noticeable in the aggregate
+statistics.&lt;&#x2F;p&gt;
+&lt;p&gt;In the legacy network that hadn&#x27;t been an issue, because S3Cache&#x27;s own MTU was 1500 B, which was the same
+as the path MTU. So it would always fragment to the size of the path MTU, and no discovery was ever
+needed. But the 4th-gen EC2 instances also used jumbo frames, so the MTU was bigger than the
+path MTU, even without ENA.&lt;&#x2F;p&gt;
+&lt;p&gt;Fortunately, the fix was similar — we just needed to fragment without doing discovery.
+This could be accomplished by disabling PMTUD on &lt;em&gt;all&lt;&#x2F;em&gt; EC2 instance types, not just those with ENA.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;&#x2F;h2&gt;
+&lt;p&gt;So why is this my most fondly remembered project? It didn&#x27;t deliver any direct value for customers.
+It was the kind of boring operational work that many software engineers hate. All I was doing was
+deploying a simple service on new hardware.&lt;&#x2F;p&gt;
+&lt;p&gt;But it turned out to be both hard and interesting. Hard, because there was a lot I didn&#x27;t know about
+the system and what assumptions it implicitly made about the network stack when I started.
+Interesting, because I got to learn all that in the process. And it resulted in a solution that was simultaneously:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;jury-rigged hackery — a temporary workaround that ignored &quot;best practices&quot;;&lt;&#x2F;li&gt;
+&lt;li&gt;elegant — it directly and straightforwardly addressed the root cause with minimal code changes;&lt;&#x2F;li&gt;
+&lt;li&gt;cost-effective — it avoided months of cross-team effort to permanently solve a temporary
+problem.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;In other words, it&#x27;s a good example of balancing real-world constraints and finding the right set of
+trade-offs. The way we resolved the issue is not the only way it could have been done. One might
+even argue that the solution could be improved upon in various ways. But I think we got it roughly
+right.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Oddities and difficulties in cross-cultural communication</title>
+        <published>2024-05-07T00:00:00+00:00</published>
+        <updated>2024-05-07T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://gregat.es/language-barrier/"/>
+        <id>https://gregat.es/language-barrier/</id>
+        
+        <content type="html" xml:base="https://gregat.es/language-barrier/">&lt;p&gt;Working in tech in Seattle, I have had a lot of colleagues from India, China, and several other countries. Almost all of them spoke English as a second language. This caused communication difficulties in at least one case I vividly remember (because it was my fault), and communication oddities in many more.&lt;&#x2F;p&gt;
+&lt;p&gt;One fun example was when one of my Indian colleagues told me that a meeting had been &quot;preponed&quot;. I thought he was coining a new word by back-formation, perhaps as a little joke. I looked it up later only to learn that, while &quot;prepone&quot; is not a word in American or British English, it is a word in Indian English. I told him about it the next time I saw him and we both had a chuckle. He didn&#x27;t realize that this word wasn&#x27;t available in American English, any more than I knew it was available in Indian English.&lt;&#x2F;p&gt;
+&lt;p&gt;A less fun example involved a Chinese software engineer I worked with. His English was adequate, but not great. We had a lot of trouble communicating. One thing that I found frustrating was that he would often begin answers to my questions with &quot;That one…&quot;, where the antecedent was unclear to me. I sometimes would interrupt him and ask for clarification, which just led to more frustration all around.&lt;&#x2F;p&gt;
+&lt;p&gt;Some time after I switched teams, I learned a bit of Mandarin myself. And I learned that the expression &quot;那个&quot; — &quot;nàge&quot; in pinyin — can be literally translated as &quot;that one&quot;. And while it does have that meaning, it&#x27;s also used as a filler word, like &quot;um&quot; in English. So when he was saying &quot;That one…&quot;, he didn&#x27;t mean it at all. He was trying to collect his thoughts and figure out how to express them in English — a process I interrupted. He just didn&#x27;t know a better way to express that than a literal translation of &quot;那个&quot; that doesn&#x27;t work in English.&lt;&#x2F;p&gt;
+&lt;p&gt;And I just plowed ahead, heedless of the difficulty and assuming that he meant what I heard. I should have stopped myself and realized that if what he said didn&#x27;t make sense, it was likely just a language issue, not indicative of sloppy or imprecise thinking. I should have let him complete his thought before jumping to conclusions about what he was trying to say.&lt;&#x2F;p&gt;
+&lt;p&gt;That mistake still haunts me. But it serves me well as a cautionary tale today, a reminder of what can go wrong when I am insufficiently charitable in my interpretations of what other people are saying.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>The rise of -n</title>
+        <published>2024-04-04T00:00:00+00:00</published>
+        <updated>2024-04-04T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://gregat.es/baby-names-rise-of-n/"/>
+        <id>https://gregat.es/baby-names-rise-of-n/</id>
+        
+        <content type="html" xml:base="https://gregat.es/baby-names-rise-of-n/">&lt;p&gt;One of my favorite public datasets is the baby name data published every year by
+the United States Social Security Administration (SSA). When I joined
+&lt;a href=&quot;https:&#x2F;&#x2F;rowzero.io&quot;&gt;Row Zero&lt;&#x2F;a&gt;, one of the first things I did was gather this data
+into a single csv (it&#x27;s published as one csv per year) and upload it to S3 for us
+to use as a test dataset. It&#x27;s nice because it&#x27;s not very big — less than 8 KiB
+gzipped — but it&#x27;s still too big for Excel since it has more than 2 million rows.&lt;&#x2F;p&gt;
+&lt;p&gt;We&#x27;ve done a lot of fun &lt;em&gt;ad hoc&lt;&#x2F;em&gt; analyses of this data set. One of my colleagues produced
+a graph of baby name popularity over time by final letter, which prompted me to do
+a deeper dive on the popularity of baby boy names ending in with the letter n, and
+specifically with the suffix -ayden, -aiden, or -aden. I published that on Row Zero&#x27;s blog.
+You can read it here: &lt;a href=&quot;https:&#x2F;&#x2F;rowzero.io&#x2F;blog&#x2F;baby-names-rise-of-n&quot;&gt;The Rise of -n&lt;&#x2F;a&gt;.
+That blog post also has a link to a Row Zero workbook containing all the SSA baby name
+data from 1880 to 2022, which you can copy to do your own analysis.&lt;&#x2F;p&gt;
+&lt;p&gt;Some fun takeaways:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;The most popular final letter for baby boys in the U.S. has been n since 1963.&lt;&#x2F;li&gt;
+&lt;li&gt;The most popular final letter for baby girls in the U.S. has been a since 1935.&lt;&#x2F;li&gt;
+&lt;li&gt;Peak popularity of boy names ending in n was in 2011, at 36.4% of all baby boy names
+in the SSA data.&lt;&#x2F;li&gt;
+&lt;li&gt;Although -n names are broadly popular, the peak in 2011 was driven specifically by
+-aiden, -ayden, and -aden names, without which the peak would have been earlier and lower.&lt;&#x2F;li&gt;
+&lt;li&gt;Among Gen Z boys in the U.S., 2.6% have names ending in -ayden, -aiden, or -aden. This is a little
+bit higher than the popularity of Matthew for Millenials.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Again, you can read the full analysis (including graphs!) over at &lt;a href=&quot;https:&#x2F;&#x2F;rowzero.io&#x2F;blog&#x2F;baby-names-rise-of-n&quot;&gt;Row Zero&#x27;s
+blog&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

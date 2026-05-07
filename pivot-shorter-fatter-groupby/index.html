@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1"><meta property="og:image" content="&#x2F;baby_names_pivot_config.webp"/><meta property="author" content="Greg Gates"/>
+  <title>gregat.es</title>
+  <link href="/g.css" rel="stylesheet" />
+  <script data-goatcounter="https://gregates.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+
+<body>
+  
+<h1 class="title">
+  Pivot is just a shorter, fatter group by
+</h1>
+<p class="subtitle"><strong>2024-07-31</strong></p>
+<main class="blog">
+    <p>I first heard the term "pivot table" in, I think, 2012. At the time, I had no idea what a pivot
+table was. I made some desultory efforts to understand what they are and how one uses them, but I
+found Excel's interface inscrutable. Excel's documentation and Google were no help, either. Even
+today all you get is a bunch of "pivot tables are useful for aggregating data to make decisions" and
+suggestions to play around with them in Excel until you figure it out. I quickly decided it wasn't
+worth understanding.</p>
+<p>Eleven years later I took up the task of implementing pivot tables for <a href="https://rowzero.io">Row
+Zero</a>. It was only then that I was finally forced to grapple with them. Here, I
+take up the task of attempting to explain pivot tables in a way that would have been helpful to me a
+decade ago.</p>
+<p>The headline: pivot is just a shorter, fatter group by. But, what's a "group by", and what would it
+mean for such a thing to be fat or short? The rest of this article will attempt to clarify by first
+discussing other operations that pivot resembles: unique, and group by. If we understand those,
+it's only a short distance from there to the place where the title of this article will make sense.</p>
+<p>All of these operations are operations on tabular data. That means data which is arranged in
+<strong>columns</strong> and <strong>rows</strong>. And these operations also output a table. Table in, different table out.
+In Excel, which is where pivot tables come from, a table can be represented as a range of data, like
+A1:D2000. But the operations aren't specific to spreadsheets and can be done on any data that's
+arranged as a table.</p>
+<p>I'm going to be using the Social Security Administration's baby name dataset for my examples. This
+data is a table with 4 columns and 2,116,840 rows. If you want to see the data yourself, you can
+make a copy of my <a href="https://rowzero.io/workbook/644C5FB13CA060884AC9172C/3?copy">Row Zero workbook</a>
+by clicking that link. Or you can just refer to the screenshot below to see a sample of the data.</p>
+<p><img src="/baby_names_table.webp" alt="several rows of data in a table with columns Year, Name, Sex, and Count" /></p>
+<p>Let's call Year, Name, Sex, and Count "fields" of our data (because pivot uses the word
+"column" for something else).</p>
+<h2 id="uniques">Uniques</h2>
+<p>A common operation on a field of data is to remove duplicates. For example, in our baby name data, the Sex field only has
+two values: it's always either M or F. If we were to compute the unique values for that field, we'd
+get just two rows.</p>
+<p>You can also compute uniques for multiple fields of a table. This produces one row per unique
+<strong>combination</strong> of values from the different fields. For example, uniques for Year &amp; Sex in our
+baby names table would produce two rows per year, like so:</p>
+<p><img src="/baby_names_unique_year_sex.webp" alt="a table with two columns, Year and Sex, where each year has two rows, one with &quot;M&quot; in Sex and one with &quot;F&quot;" /></p>
+<p>Each row in the output table corresponds to one or more rows in the input table. This operation only
+gives you the actually occuring combinations, not all possible combinations of values from the
+fields. Say, for example, you added a row to the table that was <code>1880,Edna,U,5</code>. Since only this
+row has the value U for Sex, you'd get a row for <code>1880,U</code> in the output table, but not one for
+<code>1980,U</code>.</p>
+<p>In pseudo-code, we can imagine that we're calling a method on the table and specifying which fields
+we want to compute uniques for. Something like: <code>table.uniques(["Year", "Sex"])</code>.</p>
+<p>Computing uniques for Year, Name, Sex, and Count in our baby names data would just give us back the same
+table, since there are no duplicate rows in the input table.</p>
+<h2 id="group-by">Group By</h2>
+<p>Our uniques operation on our table required specifying a list of fields to compute uniques
+for.
+Now imagine that we extend the operation so that, in addition to
+these parameters, you have to tell us what to do with the <strong>other</strong> fields in the table.</p>
+<p>Let's define some options. Once thing you could do is <strong>omit</strong> a field from the output table. That's
+implicitly what we did in the previous section. Our pseudo-code function call would now look
+like <code>table.uniques(["Year", "Sex"], { "Name": omit, "Count": omit })</code>.</p>
+<p>But we could imagine other ways of including a field. Remember that each row in our output table
+corresponds to one or more rows of the input table. So we could say something like, "Add up the
+value of the Count field for all corresponding rows of the input table". This is a "group by" operation. We call it that because we're aggregating the values of the Count
+field <em>by</em> Year and Sex. It's a way of summarizing the data in our input table.</p>
+<p>For example, if we wanted to sum the counts for each name by year and sex, we would do <code>table.groupby(["Year", "Sex"], { "Name": omit, "Count": sum })</code>. This will tell us how many babies of each sex there are for each year. The output would look like:</p>
+<p><img src="/baby_names_sum_of_count_by_year_and_sex.webp" alt="a table with three columns, Year, Sex, and Sum of Count, where each year has two rows, one with &quot;M&quot; in Sex and one with &quot;F&quot;" /></p>
+<p>This table has the same number of rows as the example in the previous section, it just adds an
+additional column summarizing the Count field for each row.</p>
+<p>You can see how we could easily extend this with different aggregation options on the fields:
+average, count, median, etc. in addition to sum. You could also allow specifying the same field
+multiple times with <em>different</em> aggregations, if you wanted both Sum of Count and Average Count in
+in the output table, for example.</p>
+<h2 id="pivot">Pivot</h2>
+<p>So now we're in a position to define the pivot operation. Just as uniques can be thought of
+as a special case of groupby, groupby can be thought of as a special case of the pivot operation.</p>
+<p>A pivot differs from a groupby just in that each of the fields we're grouping by must be put into
+one of two buckets: "rows", or "columns". The special case that's equivalent to groupby is when
+they're all "rows". So we could rewrite our groupby in pseudo-code as <code>table.pivot(rows: ["Year", "Sex"], columns: [], { "Name": omit, "Count": sum })</code>.</p>
+<p>The obvious question is what happens if we move one of our rows to columns? Let's look at an example
+where we move "Sex" to columns. Here's what you get:</p>
+<p><img src="/baby_names_sum_of_count_by_year_and_sex_pivoted.webp" alt="a table with three columns, Year, F, and M, where each year has a single row, and the sum of count for each sex has been put in the corresponding column" /></p>
+<p>We no longer have a Sex column on our output table. Instead, we have one column per unique value
+of the Sex field. We also no longer have a Sum of Count column. Instead, the "M" and "F" columns are
+implicitly showing the Sum of Count for the corresponding Sex, for each row. The table also has
+fewer rows — in fact it's precisely half the size, because we now have just one row per year
+instead of two.</p>
+<p>The thing to see is that the data in the output table hasn't changed. It's just been
+rearranged. The Sum of Count for <code>1955,F</code> is still there, it's just now the value of the F column
+for the row 1955. And the <code>1955,M</code> Sum of Count is also still there, also on the 1955 row (in the M
+column, naturally).</p>
+<p>In this particular case, our pivot table is the same width as the groupby from the last section, but
+that's only because the Sex field has just two unique values — if it had more, our pivot
+output would be wider. And it's shorter, because the output table only needs one row per year
+instead of one row per year/sex combo. So this pivot is just a shorter, fatter version of the
+groupby we already did.</p>
+<p>It gets a little more complicated when you have more than one aggregation, or more than one field in
+columns, but the basic idea is the same. We just do a groupby, and then rearrange the table to make
+it shorter and fatter. No new information is contained in the pivot. It's just presented differently
+and is (maybe) easier to read.</p>
+<p>So if you understand groupby, you also understand pivot. In fact, all of the screenshots in this
+article are screenshots of pivot tables. Since groupby is just a special case of pivot, and uniques
+is just a special case of groupby, all of these operations can be expressed as pivots. It's the same
+fundamental summarization of the input data. For me, that was the crucial insight that finally made
+pivot tables understandable.</p>
+<h2 id="why-pivot">Why Pivot?</h2>
+<p>When I've tried this explanation out on people in the past, a common response has been, "What's the
+point of pivot, then?" If it's the same summary as groupby, why pivot?</p>
+<p>One obvious answer is that you just prefer the table layout that the pivot produces, or find it more
+legible. A less obvious answer is that it's <em>very</em> useful for constructing graphs. If you select the
+whole pivot table from the last section and click the "Insert chart" button in <a href="https://rowzero.io">Row
+Zero</a>, you instantly get a chart showing count of baby boys vs. baby girls over
+time.</p>
+<p><img src="/baby_names_pivot_chart.webp" alt="a line chart showing the change over time of the number of baby boys and baby girls in the SSA data" /></p>
+<p>Each column becomes its own graphable series of data in the pivot. Pivot tables are especially
+powerful when combined with charts in a spreadsheet.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>When you're staring at the inscrutable pivot table configuration pane in Excel, or the hopefully
+slightly less inscrutable version in <a href="https://rowzero.io">Row Zero</a>, just remember that the "Rows"
+and "Columns" sections are just diffent ways of specifying which fields you want to group by. And
+"Values" is where you specify your aggregations for the other fields. ("Filters" just let you
+filter the input data <em>before</em> applying the pivot transformation.) For me, the simplest way to
+construct a pivot is to imagine the groupby I want to perform, and construct that first, using
+Rows only and no Columns. Then I maybe move a Row or two to Columns, to get the final shape I want.</p>
+<p>And that's pivot explained as simply as I know how.</p>
+
+    <a href="/">&#171; archive</a>
+</main>
+
+  <footer>
+      <details>
+          <summary>About the author</summary>
+          <p>
+            Greg Gates is the VP of Pivot Tables at
+            <a href="https://rowzero.com/home">Row Zero</a>. Prior to that,
+            he worked on performance at Tableau, distributed systems
+            in AWS (specifically S3), and frontend for the Amazon retail website.
+          </p>
+          <p>
+            Before any of that, Greg received a Ph.D. in philosophy from the
+            University of Pittsburgh, with a focus on epistemology.
+          </p>
+      </details>
+      <div class="links">
+          <a href="https://rowzero.com/home">Row Zero</a>
+          <a href="https://github.com/gregates">GitHub</a>
+          <a href="https://www.linkedin.com/in/greg-gates-87482420">LinkedIn</a>
+          <a href="https://bsky.app/profile/gregat.es">Bluesky</a>
+          <a href="https://gregat.es/atom.xml">Feed</a>
+      </div>
+  </footer>
+</body>
+
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1"><meta property="og:image" content="baby_names_pivot_collapsed.webp"/><meta property="author" content="Greg Gates"/>
+  <title>gregat.es</title>
+  <link href="/g.css" rel="stylesheet" />
+  <script data-goatcounter="https://gregates.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+
+<body>
+  
+<h1 class="title">
+  Pivot is more than a shorter, fatter group by
+</h1>
+<p class="subtitle"><strong>2026-05-07</strong></p>
+<main class="blog">
+    <p>In a <a href="/pivot-shorter-fatter-groupby/">previous post</a>, I explained that the pivot operation on a
+table of data is equivalent to a groupby operation on that data, but with the output table
+rearranged into a squatter configuration.</p>
+<p>But pivot tables are more than a groupby operation on tabular data! They're more, even, than a
+<strong>pivot</strong> operation on tabular data. That's because pivot tables — as they're actually used in Excel
+and other spreadsheets like <a href="https://rowzero.com/home">Row Zero</a> are typically meant for human
+consumption. They're a beautifully laid-out, interactive summary that allows a human reader to
+understand something about a larger table of data. To do this job effectively, they need to be
+augmented with lots of features that go beyond simply aggregating data.</p>
+<p>One of the confusing things about pivot tables is that they're trying to be two things at once: a
+data transformation operation, and a bunch of reporting-oriented display features. But if you
+understand the data transformation operation, it's not too hard to see how the reporting features
+are built on top of that basic data pivot.</p>
+<p>Here's a screenshot of a pivot table of the Social Security Administration's baby names
+data by U.S. state.</p>
+<p><img src="/baby_names_pivot_collapsed.webp" alt="A pivot table with state and year in the row labels column, and with M, F, and Grand Total columns summarizing the number of babies born each year, by state. The state labels are collapsed and only show the subtotal for all years, except for IN, which is expanded to show the breakdown by year. The F column is colored pink and the M column is colored blue. The rows in the IN group are colored green. Subtotals and headers have bold formatting. Column headers have a teal background." /></p>
+<p>There's a lot more going on in this screenshot than in the previous explainer post. Here, although
+we're grouping by three fields — state and year in rows, and sex in columns — the row groupings have
+been merged into a hierarchical single column in which the outer grouping, state, can be expanded or
+collapsed, to allow you to see either a summary by state, or to look within an individual state at
+the change over time.</p>
+<p>Additionally, we have applied formatting to make it easier to tell, at a glance, which column is F
+and which is M. And we've also highlighted the group we're currently interested in with a green
+background color.</p>
+<p>It's not obvious from the screenshot, but these formats have been applied at the
+group level. What I mean is: let's say the number of groups grows, because the source data adds a
+new state, or because time has passed and there's a new year in our data set. The new
+rows will automatically get the appropriate highlighting. Because we've formatted the whole F and M
+columns, the new rows will get those formats. And because we've formatted the whole IN group, any
+new rows for years will get the green background if and only if they're nested under IN. (Everything
+described in this paragraph is true in Row Zero, but not really in Excel. Excel's pivot tables
+operate on fixed, unchanging data, and don't automatically update to reflect changes in the source
+table.)</p>
+<p>Finally, notice that subtotals for each state and grand totals across columns have been precomputed
+and are displayed for us, without us having to do any additional calculations. This is a big deal,
+because it means that generating this pivot table actually took a lot more work than just grouping
+by state, year, and sex and then rearranging. We've also computed aggregations:</p>
+<ol>
+<li>at the state and sex level (the subtotals in the expandable/collapsible state rows);</li>
+<li>at the sex-only level (the grand total row at the bottom, not pictured);</li>
+<li>at the state-only level (the grand total column in the expandable/collapsible state rows);</li>
+<li>at the state and year level (the grand total column for each year row under a state);</li>
+<li>of the entire source table (the sum for the whole dataset, shown in the bottom right corner of
+the pivot table and not pictured in the screenshot).</li>
+</ol>
+<p>And then, in additional to adding the Grand Total row and column, we inserted subtotal rows
+throughout the table, for each state.</p>
+<p>Pivot tables can also have additional features layered on top of them. A neat one is “drill down” -
+you can double click on one of the aggregated data cells in a pivot to instantly get a new sheet
+that has the unaggregated data on it, but just for that data point. If you've ever heard a
+business-type in a meeting ask to “double click” on something to dive deeper into the details, this
+is literally that!</p>
+<p>The pivot table still represents a summary of the same data, but it's been grouped in multiple ways,
+displayed at once in one convenient, interactive output format. As we've built out pivot table
+features at <a href="https://rowzero.com/home">Row Zero</a>, we've been mindful of the differences between
+pivot as a <strong>data operation</strong> and pivot tables a reporting tool.</p>
+<p>A neat thing about pivot tables in <a href="https://rowzero.com/home">Row Zero</a> is that there are two modes.
+The standard mode is this style of display-oriented pivot. I like to call it a “report” pivot.
+It's great as the end product of a chain of analysis, meant to deliver a summary for review or
+discussion. The data table mode produces just the re-arranged table of data, without all the bells
+and whistles. This is actually also super useful! In Row Zero, you can easily repivot this type of
+table, building a chain of pivot operations, with computed columns on them that can feed into the
+next pivot. These make great building blocks — you can easily construct a sort of data pipeline that
+feeds into the final, display-oriented report output.</p>
+
+    <a href="/">&#171; archive</a>
+</main>
+
+  <footer>
+      <details>
+          <summary>About the author</summary>
+          <p>
+            Greg Gates is the VP of Pivot Tables at
+            <a href="https://rowzero.com/home">Row Zero</a>. Prior to that,
+            he worked on performance at Tableau, distributed systems
+            in AWS (specifically S3), and frontend for the Amazon retail website.
+          </p>
+          <p>
+            Before any of that, Greg received a Ph.D. in philosophy from the
+            University of Pittsburgh, with a focus on epistemology.
+          </p>
+      </details>
+      <div class="links">
+          <a href="https://rowzero.com/home">Row Zero</a>
+          <a href="https://github.com/gregates">GitHub</a>
+          <a href="https://www.linkedin.com/in/greg-gates-87482420">LinkedIn</a>
+          <a href="https://bsky.app/profile/gregat.es">Bluesky</a>
+          <a href="https://gregat.es/atom.xml">Feed</a>
+      </div>
+  </footer>
+</body>
+
+</html>
